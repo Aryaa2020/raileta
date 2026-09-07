@@ -1,0 +1,192 @@
+[
+  {
+    "record_id": "9147e9911498-row-82",
+    "train_number": "22832",
+    "actual_delay_minutes": 30.0,
+    "predicted_delay_minutes": 19.37428717856885,
+    "lower_minutes": 4.397212423069523,
+    "upper_minutes": 99.2396892281968,
+    "absolute_error_minutes": 10.62571282143115,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-2",
+    "train_number": "12238",
+    "actual_delay_minutes": 75.0,
+    "predicted_delay_minutes": 20.013285326437042,
+    "lower_minutes": 4.397212423069523,
+    "upper_minutes": 88.90075373407021,
+    "absolute_error_minutes": 54.98671467356296,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-83",
+    "train_number": "22832",
+    "actual_delay_minutes": 9.0,
+    "predicted_delay_minutes": 30.27046744202995,
+    "lower_minutes": 13.849077096821567,
+    "upper_minutes": 99.2396892281968,
+    "absolute_error_minutes": 21.27046744202995,
+    "covered": false
+  },
+  {
+    "record_id": "9147e9911498-row-3",
+    "train_number": "12238",
+    "actual_delay_minutes": 20.0,
+    "predicted_delay_minutes": 31.896174527137273,
+    "lower_minutes": 14.204582933336189,
+    "upper_minutes": 88.90075373407021,
+    "absolute_error_minutes": 11.896174527137273,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-84",
+    "train_number": "22832",
+    "actual_delay_minutes": 14.0,
+    "predicted_delay_minutes": 32.87168646276846,
+    "lower_minutes": 8.001102314577091,
+    "upper_minutes": 113.65788318646747,
+    "absolute_error_minutes": 18.87168646276846,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-4",
+    "train_number": "12238",
+    "actual_delay_minutes": 90.0,
+    "predicted_delay_minutes": 34.497393547875774,
+    "lower_minutes": 8.356608151091718,
+    "upper_minutes": 109.1896114327273,
+    "absolute_error_minutes": 55.502606452124226,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-5",
+    "train_number": "12238",
+    "actual_delay_minutes": 10.0,
+    "predicted_delay_minutes": 24.919134430850256,
+    "lower_minutes": 8.356608151091718,
+    "upper_minutes": 105.77691925050601,
+    "absolute_error_minutes": 14.919134430850256,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-86",
+    "train_number": "22832",
+    "actual_delay_minutes": 1.0,
+    "predicted_delay_minutes": 20.692208325004437,
+    "lower_minutes": 8.001102314577091,
+    "upper_minutes": 95.8269970459755,
+    "absolute_error_minutes": 19.692208325004437,
+    "covered": false
+  },
+  {
+    "record_id": "9147e9911498-row-6",
+    "train_number": "12238",
+    "actual_delay_minutes": 30.0,
+    "predicted_delay_minutes": 22.317915410111755,
+    "lower_minutes": 8.356608151091718,
+    "upper_minutes": 85.48806155184892,
+    "absolute_error_minutes": 7.682084589888245,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-87",
+    "train_number": "22832",
+    "actual_delay_minutes": 0.0,
+    "predicted_delay_minutes": 31.25982948270583,
+    "lower_minutes": 13.243990321796039,
+    "upper_minutes": 94.10107859438322,
+    "absolute_error_minutes": 31.25982948270583,
+    "covered": false
+  },
+  {
+    "record_id": "9147e9911498-row-7",
+    "train_number": "12238",
+    "actual_delay_minutes": 5.0,
+    "predicted_delay_minutes": 32.88553656781316,
+    "lower_minutes": 8.356608151091718,
+    "upper_minutes": 83.76214310025664,
+    "absolute_error_minutes": 27.885536567813162,
+    "covered": false
+  },
+  {
+    "record_id": "9147e9911498-row-88",
+    "train_number": "22832",
+    "actual_delay_minutes": 20.0,
+    "predicted_delay_minutes": 34.17897273497279,
+    "lower_minutes": 13.849077096821567,
+    "upper_minutes": 112.193187486889,
+    "absolute_error_minutes": 14.178972734972788,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-8",
+    "train_number": "12238",
+    "actual_delay_minutes": 40.0,
+    "predicted_delay_minutes": 35.80467982008012,
+    "lower_minutes": 14.204582933336189,
+    "upper_minutes": 101.85425199276241,
+    "absolute_error_minutes": 4.195320179919882,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-9",
+    "train_number": "12238",
+    "actual_delay_minutes": 90.0,
+    "predicted_delay_minutes": 35.80467982008012,
+    "lower_minutes": 14.204582933336189,
+    "upper_minutes": 101.85425199276241,
+    "absolute_error_minutes": 54.19532017991988,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-89",
+    "train_number": "22832",
+    "actual_delay_minutes": 244.0,
+    "predicted_delay_minutes": 34.17897273497279,
+    "lower_minutes": 13.849077096821567,
+    "upper_minutes": 112.193187486889,
+    "absolute_error_minutes": 209.82102726502723,
+    "covered": false
+  },
+  {
+    "record_id": "9147e9911498-row-10",
+    "train_number": "12238",
+    "actual_delay_minutes": 15.0,
+    "predicted_delay_minutes": 36.373053144806,
+    "lower_minutes": 8.356608151091718,
+    "upper_minutes": 108.87008220655557,
+    "absolute_error_minutes": 21.373053144806,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-90",
+    "train_number": "22832",
+    "actual_delay_minutes": 188.0,
+    "predicted_delay_minutes": 34.74734605969868,
+    "lower_minutes": 8.001102314577091,
+    "upper_minutes": 113.33835396029573,
+    "absolute_error_minutes": 153.25265394030131,
+    "covered": false
+  },
+  {
+    "record_id": "9147e9911498-row-91",
+    "train_number": "22832",
+    "actual_delay_minutes": 60.0,
+    "predicted_delay_minutes": 34.17897273497279,
+    "lower_minutes": 8.001102314577091,
+    "upper_minutes": 112.193187486889,
+    "absolute_error_minutes": 25.82102726502721,
+    "covered": true
+  },
+  {
+    "record_id": "9147e9911498-row-11",
+    "train_number": "12238",
+    "actual_delay_minutes": 50.0,
+    "predicted_delay_minutes": 35.80467982008012,
+    "lower_minutes": 8.356608151091718,
+    "upper_minutes": 101.85425199276241,
+    "absolute_error_minutes": 14.195320179919882,
+    "covered": true
+  }
+]

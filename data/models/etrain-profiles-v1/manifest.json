@@ -1,0 +1,2903 @@
+{
+  "version": "profile-lgbm-17856fece628-a02a76ce",
+  "model_sha256": "a02a76ce4174f1b6b971090e9e63df1684d393f7ccdc4f63f7f4076cfe81d908",
+  "dataset": {
+    "file": "F:\\sah\\raileta\\etrain_delays.csv",
+    "sha256": "17856fece628251a9174fa677d40d333a014c92b24b42687e9a9cb418e59964a",
+    "original_rows": 1900,
+    "unique_profiles": 1829,
+    "usable_rows": 1595,
+    "excluded": [
+      {
+        "csv_line": 134,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 135,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 136,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 137,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 138,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 139,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 140,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 141,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 142,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 143,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 144,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 145,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 146,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 147,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 148,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 149,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 150,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 151,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 152,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 153,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 154,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 155,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 156,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 157,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 158,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 159,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 160,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 161,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 162,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 163,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 164,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 165,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 166,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 167,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 168,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 169,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 170,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 171,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 172,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 173,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 174,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 175,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 176,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 177,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 178,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 179,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 180,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 181,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 182,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 183,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 184,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 185,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 186,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 187,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 188,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 189,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 190,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 191,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 192,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 193,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 194,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 195,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 196,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 197,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 198,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 199,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 200,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 201,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 202,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 203,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 204,
+        "reason": "Older duplicate train/station profile"
+      },
+      {
+        "csv_line": 6,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 11,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 13,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 20,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 24,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 25,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 34,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 39,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 40,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 48,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 61,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 76,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 92,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 100,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 102,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 109,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 116,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 639,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 641,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 648,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 656,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 657,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 658,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 672,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 217,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 224,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 226,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 248,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 257,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 272,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 273,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 279,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 289,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 298,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 302,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 309,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 321,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 335,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 340,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 386,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 396,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 399,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 444,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 446,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 461,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 462,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 463,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 467,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 468,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 488,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 509,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 526,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 527,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 530,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 534,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 537,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 544,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 546,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 550,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 552,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 566,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 606,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 610,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 708,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 712,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 735,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 741,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 748,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 785,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 788,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 789,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 790,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 795,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 800,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 805,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 808,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 827,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 841,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 843,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 856,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 870,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 891,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 908,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 911,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 916,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 917,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 920,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 933,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 946,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 955,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 963,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 977,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 979,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 991,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 992,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1014,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1032,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1057,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1059,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1062,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1067,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1071,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1074,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1079,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1081,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1091,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1092,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1097,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1098,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1101,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1104,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1107,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1108,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1119,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1133,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1158,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1160,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1164,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1175,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1180,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1184,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1193,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1202,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1219,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1228,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1230,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1237,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1251,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1255,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1257,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1271,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1282,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1287,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1289,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1300,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1302,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1303,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1308,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1310,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1313,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1314,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1321,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1329,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1330,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1331,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1336,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1337,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1338,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1345,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1348,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1353,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1363,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1366,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1368,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1369,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1375,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1389,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1391,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1394,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1398,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1403,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1415,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1429,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1440,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1442,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1443,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1450,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1452,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1454,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1459,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1463,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1470,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1474,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1480,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1487,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1490,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1499,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1512,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1513,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1522,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1529,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1530,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1533,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1539,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1542,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1543,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1548,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1549,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1559,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1570,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1574,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1577,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1593,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1594,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1595,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1598,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1600,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1603,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1605,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1615,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1620,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1627,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1649,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1672,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1674,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1676,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1687,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1701,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1707,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1713,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1717,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1718,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1719,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1726,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1729,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1733,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1740,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1743,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1746,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1756,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1797,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1810,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1815,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1817,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1831,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1839,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1849,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1863,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1870,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1873,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1874,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1876,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1877,
+        "reason": "Missing or invalid average delay target"
+      },
+      {
+        "csv_line": 1894,
+        "reason": "Missing or invalid average delay target"
+      }
+    ],
+    "granularity": "Aggregate train/station delay profile, not an individual train run",
+    "provenance": "user_supplied_etrain_export_unverified",
+    "time_semantics": "scraped_at is collection time, never arrival/departure time",
+    "history_period": "Source URLs request d=1y; exact averaging dates and sample counts are not supplied"
+  },
+  "dataset_kind": "aggregate_profiles",
+  "seed": 2026,
+  "train_groups": {
+    "live_demo": [
+      "12682",
+      "12679",
+      "12673",
+      "17058",
+      "22221",
+      "11028",
+      "12622",
+      "12926",
+      "12009",
+      "12434",
+      "12841",
+      "12050",
+      "12202",
+      "11027",
+      "12637",
+      "12681",
+      "16127",
+      "12245"
+    ],
+    "test": [
+      "12424",
+      "22226",
+      "12626",
+      "20665",
+      "12019",
+      "12621",
+      "12957",
+      "22652",
+      "22222",
+      "16339",
+      "12314",
+      "12904",
+      "22301",
+      "12010",
+      "12306",
+      "22601",
+      "12638",
+      "12296"
+    ],
+    "train": [
+      "12625",
+      "12433",
+      "12260",
+      "12953",
+      "12236",
+      "12958",
+      "12510",
+      "12020",
+      "12302",
+      "12954",
+      "12235",
+      "12367",
+      "12368",
+      "12002",
+      "12246",
+      "12631",
+      "12001",
+      "22602",
+      "12313",
+      "12632",
+      "12261",
+      "12674",
+      "12903",
+      "12842",
+      "12259",
+      "12201",
+      "12262",
+      "12295",
+      "22651",
+      "22302",
+      "11014",
+      "12840",
+      "12137",
+      "12423",
+      "12163",
+      "12049",
+      "11013",
+      "12305",
+      "12839",
+      "16340",
+      "12925",
+      "15959",
+      "16128",
+      "12680",
+      "15960",
+      "20666",
+      "17057",
+      "12301",
+      "12138",
+      "22225",
+      "12952",
+      "12951",
+      "12509",
+      "12164"
+    ]
+  },
+  "sizes": {
+    "live_demo": 284,
+    "test": 276,
+    "train": 1035
+  },
+  "ratios_by_train": {
+    "train": 0.6,
+    "test": 0.2,
+    "live_demo": 0.2
+  },
+  "fit_size": 805,
+  "calibration_size": 230,
+  "fit_ids": [
+    "17856fece628-row-12",
+    "17856fece628-row-14",
+    "17856fece628-row-15",
+    "17856fece628-row-16",
+    "17856fece628-row-17",
+    "17856fece628-row-18",
+    "17856fece628-row-19",
+    "17856fece628-row-62",
+    "17856fece628-row-63",
+    "17856fece628-row-64",
+    "17856fece628-row-65",
+    "17856fece628-row-66",
+    "17856fece628-row-67",
+    "17856fece628-row-68",
+    "17856fece628-row-69",
+    "17856fece628-row-70",
+    "17856fece628-row-71",
+    "17856fece628-row-72",
+    "17856fece628-row-73",
+    "17856fece628-row-74",
+    "17856fece628-row-75",
+    "17856fece628-row-77",
+    "17856fece628-row-78",
+    "17856fece628-row-79",
+    "17856fece628-row-80",
+    "17856fece628-row-81",
+    "17856fece628-row-82",
+    "17856fece628-row-83",
+    "17856fece628-row-84",
+    "17856fece628-row-85",
+    "17856fece628-row-86",
+    "17856fece628-row-87",
+    "17856fece628-row-88",
+    "17856fece628-row-89",
+    "17856fece628-row-90",
+    "17856fece628-row-91",
+    "17856fece628-row-205",
+    "17856fece628-row-206",
+    "17856fece628-row-207",
+    "17856fece628-row-208",
+    "17856fece628-row-209",
+    "17856fece628-row-210",
+    "17856fece628-row-211",
+    "17856fece628-row-212",
+    "17856fece628-row-213",
+    "17856fece628-row-214",
+    "17856fece628-row-225",
+    "17856fece628-row-227",
+    "17856fece628-row-228",
+    "17856fece628-row-229",
+    "17856fece628-row-230",
+    "17856fece628-row-231",
+    "17856fece628-row-232",
+    "17856fece628-row-233",
+    "17856fece628-row-234",
+    "17856fece628-row-235",
+    "17856fece628-row-236",
+    "17856fece628-row-237",
+    "17856fece628-row-238",
+    "17856fece628-row-239",
+    "17856fece628-row-240",
+    "17856fece628-row-241",
+    "17856fece628-row-242",
+    "17856fece628-row-243",
+    "17856fece628-row-244",
+    "17856fece628-row-245",
+    "17856fece628-row-246",
+    "17856fece628-row-247",
+    "17856fece628-row-249",
+    "17856fece628-row-250",
+    "17856fece628-row-251",
+    "17856fece628-row-252",
+    "17856fece628-row-253",
+    "17856fece628-row-254",
+    "17856fece628-row-255",
+    "17856fece628-row-256",
+    "17856fece628-row-258",
+    "17856fece628-row-259",
+    "17856fece628-row-260",
+    "17856fece628-row-314",
+    "17856fece628-row-315",
+    "17856fece628-row-316",
+    "17856fece628-row-317",
+    "17856fece628-row-318",
+    "17856fece628-row-319",
+    "17856fece628-row-320",
+    "17856fece628-row-322",
+    "17856fece628-row-323",
+    "17856fece628-row-324",
+    "17856fece628-row-325",
+    "17856fece628-row-326",
+    "17856fece628-row-327",
+    "17856fece628-row-328",
+    "17856fece628-row-329",
+    "17856fece628-row-330",
+    "17856fece628-row-331",
+    "17856fece628-row-332",
+    "17856fece628-row-333",
+    "17856fece628-row-334",
+    "17856fece628-row-336",
+    "17856fece628-row-337",
+    "17856fece628-row-338",
+    "17856fece628-row-339",
+    "17856fece628-row-341",
+    "17856fece628-row-342",
+    "17856fece628-row-343",
+    "17856fece628-row-344",
+    "17856fece628-row-345",
+    "17856fece628-row-346",
+    "17856fece628-row-347",
+    "17856fece628-row-348",
+    "17856fece628-row-349",
+    "17856fece628-row-350",
+    "17856fece628-row-351",
+    "17856fece628-row-352",
+    "17856fece628-row-353",
+    "17856fece628-row-354",
+    "17856fece628-row-355",
+    "17856fece628-row-356",
+    "17856fece628-row-357",
+    "17856fece628-row-358",
+    "17856fece628-row-359",
+    "17856fece628-row-360",
+    "17856fece628-row-361",
+    "17856fece628-row-362",
+    "17856fece628-row-363",
+    "17856fece628-row-364",
+    "17856fece628-row-365",
+    "17856fece628-row-366",
+    "17856fece628-row-367",
+    "17856fece628-row-368",
+    "17856fece628-row-369",
+    "17856fece628-row-370",
+    "17856fece628-row-371",
+    "17856fece628-row-372",
+    "17856fece628-row-373",
+    "17856fece628-row-374",
+    "17856fece628-row-439",
+    "17856fece628-row-440",
+    "17856fece628-row-441",
+    "17856fece628-row-442",
+    "17856fece628-row-443",
+    "17856fece628-row-445",
+    "17856fece628-row-447",
+    "17856fece628-row-448",
+    "17856fece628-row-449",
+    "17856fece628-row-450",
+    "17856fece628-row-451",
+    "17856fece628-row-452",
+    "17856fece628-row-453",
+    "17856fece628-row-454",
+    "17856fece628-row-455",
+    "17856fece628-row-456",
+    "17856fece628-row-457",
+    "17856fece628-row-458",
+    "17856fece628-row-459",
+    "17856fece628-row-460",
+    "17856fece628-row-464",
+    "17856fece628-row-465",
+    "17856fece628-row-466",
+    "17856fece628-row-469",
+    "17856fece628-row-470",
+    "17856fece628-row-471",
+    "17856fece628-row-472",
+    "17856fece628-row-473",
+    "17856fece628-row-474",
+    "17856fece628-row-475",
+    "17856fece628-row-476",
+    "17856fece628-row-477",
+    "17856fece628-row-478",
+    "17856fece628-row-479",
+    "17856fece628-row-480",
+    "17856fece628-row-481",
+    "17856fece628-row-482",
+    "17856fece628-row-483",
+    "17856fece628-row-484",
+    "17856fece628-row-485",
+    "17856fece628-row-486",
+    "17856fece628-row-487",
+    "17856fece628-row-489",
+    "17856fece628-row-490",
+    "17856fece628-row-491",
+    "17856fece628-row-492",
+    "17856fece628-row-493",
+    "17856fece628-row-494",
+    "17856fece628-row-495",
+    "17856fece628-row-496",
+    "17856fece628-row-497",
+    "17856fece628-row-498",
+    "17856fece628-row-499",
+    "17856fece628-row-500",
+    "17856fece628-row-592",
+    "17856fece628-row-593",
+    "17856fece628-row-594",
+    "17856fece628-row-595",
+    "17856fece628-row-596",
+    "17856fece628-row-597",
+    "17856fece628-row-598",
+    "17856fece628-row-599",
+    "17856fece628-row-600",
+    "17856fece628-row-601",
+    "17856fece628-row-602",
+    "17856fece628-row-603",
+    "17856fece628-row-604",
+    "17856fece628-row-605",
+    "17856fece628-row-607",
+    "17856fece628-row-608",
+    "17856fece628-row-609",
+    "17856fece628-row-631",
+    "17856fece628-row-632",
+    "17856fece628-row-633",
+    "17856fece628-row-634",
+    "17856fece628-row-635",
+    "17856fece628-row-636",
+    "17856fece628-row-637",
+    "17856fece628-row-638",
+    "17856fece628-row-640",
+    "17856fece628-row-642",
+    "17856fece628-row-643",
+    "17856fece628-row-644",
+    "17856fece628-row-645",
+    "17856fece628-row-646",
+    "17856fece628-row-647",
+    "17856fece628-row-649",
+    "17856fece628-row-650",
+    "17856fece628-row-651",
+    "17856fece628-row-652",
+    "17856fece628-row-653",
+    "17856fece628-row-654",
+    "17856fece628-row-655",
+    "17856fece628-row-659",
+    "17856fece628-row-660",
+    "17856fece628-row-661",
+    "17856fece628-row-662",
+    "17856fece628-row-663",
+    "17856fece628-row-664",
+    "17856fece628-row-665",
+    "17856fece628-row-666",
+    "17856fece628-row-667",
+    "17856fece628-row-668",
+    "17856fece628-row-669",
+    "17856fece628-row-670",
+    "17856fece628-row-671",
+    "17856fece628-row-673",
+    "17856fece628-row-674",
+    "17856fece628-row-675",
+    "17856fece628-row-676",
+    "17856fece628-row-677",
+    "17856fece628-row-678",
+    "17856fece628-row-679",
+    "17856fece628-row-680",
+    "17856fece628-row-681",
+    "17856fece628-row-682",
+    "17856fece628-row-683",
+    "17856fece628-row-684",
+    "17856fece628-row-685",
+    "17856fece628-row-686",
+    "17856fece628-row-687",
+    "17856fece628-row-688",
+    "17856fece628-row-689",
+    "17856fece628-row-690",
+    "17856fece628-row-691",
+    "17856fece628-row-692",
+    "17856fece628-row-693",
+    "17856fece628-row-694",
+    "17856fece628-row-695",
+    "17856fece628-row-696",
+    "17856fece628-row-697",
+    "17856fece628-row-698",
+    "17856fece628-row-699",
+    "17856fece628-row-700",
+    "17856fece628-row-701",
+    "17856fece628-row-702",
+    "17856fece628-row-703",
+    "17856fece628-row-704",
+    "17856fece628-row-705",
+    "17856fece628-row-706",
+    "17856fece628-row-707",
+    "17856fece628-row-709",
+    "17856fece628-row-710",
+    "17856fece628-row-711",
+    "17856fece628-row-713",
+    "17856fece628-row-714",
+    "17856fece628-row-715",
+    "17856fece628-row-716",
+    "17856fece628-row-717",
+    "17856fece628-row-718",
+    "17856fece628-row-719",
+    "17856fece628-row-720",
+    "17856fece628-row-721",
+    "17856fece628-row-722",
+    "17856fece628-row-723",
+    "17856fece628-row-724",
+    "17856fece628-row-725",
+    "17856fece628-row-726",
+    "17856fece628-row-727",
+    "17856fece628-row-779",
+    "17856fece628-row-780",
+    "17856fece628-row-781",
+    "17856fece628-row-782",
+    "17856fece628-row-783",
+    "17856fece628-row-784",
+    "17856fece628-row-786",
+    "17856fece628-row-787",
+    "17856fece628-row-791",
+    "17856fece628-row-792",
+    "17856fece628-row-793",
+    "17856fece628-row-794",
+    "17856fece628-row-796",
+    "17856fece628-row-797",
+    "17856fece628-row-798",
+    "17856fece628-row-799",
+    "17856fece628-row-801",
+    "17856fece628-row-802",
+    "17856fece628-row-803",
+    "17856fece628-row-804",
+    "17856fece628-row-806",
+    "17856fece628-row-807",
+    "17856fece628-row-809",
+    "17856fece628-row-810",
+    "17856fece628-row-811",
+    "17856fece628-row-812",
+    "17856fece628-row-813",
+    "17856fece628-row-814",
+    "17856fece628-row-815",
+    "17856fece628-row-816",
+    "17856fece628-row-817",
+    "17856fece628-row-818",
+    "17856fece628-row-819",
+    "17856fece628-row-820",
+    "17856fece628-row-821",
+    "17856fece628-row-822",
+    "17856fece628-row-866",
+    "17856fece628-row-867",
+    "17856fece628-row-868",
+    "17856fece628-row-869",
+    "17856fece628-row-871",
+    "17856fece628-row-872",
+    "17856fece628-row-873",
+    "17856fece628-row-874",
+    "17856fece628-row-875",
+    "17856fece628-row-876",
+    "17856fece628-row-877",
+    "17856fece628-row-878",
+    "17856fece628-row-879",
+    "17856fece628-row-880",
+    "17856fece628-row-881",
+    "17856fece628-row-882",
+    "17856fece628-row-883",
+    "17856fece628-row-884",
+    "17856fece628-row-885",
+    "17856fece628-row-886",
+    "17856fece628-row-887",
+    "17856fece628-row-888",
+    "17856fece628-row-889",
+    "17856fece628-row-890",
+    "17856fece628-row-892",
+    "17856fece628-row-893",
+    "17856fece628-row-894",
+    "17856fece628-row-895",
+    "17856fece628-row-896",
+    "17856fece628-row-897",
+    "17856fece628-row-898",
+    "17856fece628-row-899",
+    "17856fece628-row-900",
+    "17856fece628-row-901",
+    "17856fece628-row-902",
+    "17856fece628-row-903",
+    "17856fece628-row-904",
+    "17856fece628-row-905",
+    "17856fece628-row-906",
+    "17856fece628-row-907",
+    "17856fece628-row-909",
+    "17856fece628-row-910",
+    "17856fece628-row-912",
+    "17856fece628-row-913",
+    "17856fece628-row-914",
+    "17856fece628-row-915",
+    "17856fece628-row-918",
+    "17856fece628-row-919",
+    "17856fece628-row-1013",
+    "17856fece628-row-1015",
+    "17856fece628-row-1016",
+    "17856fece628-row-1017",
+    "17856fece628-row-1018",
+    "17856fece628-row-1019",
+    "17856fece628-row-1020",
+    "17856fece628-row-1021",
+    "17856fece628-row-1022",
+    "17856fece628-row-1023",
+    "17856fece628-row-1024",
+    "17856fece628-row-1025",
+    "17856fece628-row-1026",
+    "17856fece628-row-1027",
+    "17856fece628-row-1028",
+    "17856fece628-row-1029",
+    "17856fece628-row-1030",
+    "17856fece628-row-1031",
+    "17856fece628-row-1033",
+    "17856fece628-row-1034",
+    "17856fece628-row-1035",
+    "17856fece628-row-1036",
+    "17856fece628-row-1037",
+    "17856fece628-row-1038",
+    "17856fece628-row-1039",
+    "17856fece628-row-1040",
+    "17856fece628-row-1041",
+    "17856fece628-row-1042",
+    "17856fece628-row-1043",
+    "17856fece628-row-1044",
+    "17856fece628-row-1045",
+    "17856fece628-row-1046",
+    "17856fece628-row-1047",
+    "17856fece628-row-1048",
+    "17856fece628-row-1049",
+    "17856fece628-row-1050",
+    "17856fece628-row-1051",
+    "17856fece628-row-1052",
+    "17856fece628-row-1093",
+    "17856fece628-row-1094",
+    "17856fece628-row-1095",
+    "17856fece628-row-1096",
+    "17856fece628-row-1099",
+    "17856fece628-row-1100",
+    "17856fece628-row-1102",
+    "17856fece628-row-1103",
+    "17856fece628-row-1105",
+    "17856fece628-row-1106",
+    "17856fece628-row-1109",
+    "17856fece628-row-1110",
+    "17856fece628-row-1111",
+    "17856fece628-row-1112",
+    "17856fece628-row-1113",
+    "17856fece628-row-1114",
+    "17856fece628-row-1115",
+    "17856fece628-row-1116",
+    "17856fece628-row-1117",
+    "17856fece628-row-1118",
+    "17856fece628-row-1120",
+    "17856fece628-row-1121",
+    "17856fece628-row-1122",
+    "17856fece628-row-1123",
+    "17856fece628-row-1124",
+    "17856fece628-row-1125",
+    "17856fece628-row-1126",
+    "17856fece628-row-1127",
+    "17856fece628-row-1128",
+    "17856fece628-row-1129",
+    "17856fece628-row-1130",
+    "17856fece628-row-1131",
+    "17856fece628-row-1181",
+    "17856fece628-row-1182",
+    "17856fece628-row-1183",
+    "17856fece628-row-1185",
+    "17856fece628-row-1186",
+    "17856fece628-row-1187",
+    "17856fece628-row-1188",
+    "17856fece628-row-1189",
+    "17856fece628-row-1190",
+    "17856fece628-row-1191",
+    "17856fece628-row-1192",
+    "17856fece628-row-1194",
+    "17856fece628-row-1195",
+    "17856fece628-row-1196",
+    "17856fece628-row-1197",
+    "17856fece628-row-1198",
+    "17856fece628-row-1199",
+    "17856fece628-row-1200",
+    "17856fece628-row-1201",
+    "17856fece628-row-1203",
+    "17856fece628-row-1204",
+    "17856fece628-row-1205",
+    "17856fece628-row-1206",
+    "17856fece628-row-1207",
+    "17856fece628-row-1208",
+    "17856fece628-row-1209",
+    "17856fece628-row-1210",
+    "17856fece628-row-1211",
+    "17856fece628-row-1212",
+    "17856fece628-row-1213",
+    "17856fece628-row-1214",
+    "17856fece628-row-1215",
+    "17856fece628-row-1216",
+    "17856fece628-row-1217",
+    "17856fece628-row-1218",
+    "17856fece628-row-1220",
+    "17856fece628-row-1221",
+    "17856fece628-row-1222",
+    "17856fece628-row-1223",
+    "17856fece628-row-1224",
+    "17856fece628-row-1225",
+    "17856fece628-row-1226",
+    "17856fece628-row-1250",
+    "17856fece628-row-1252",
+    "17856fece628-row-1253",
+    "17856fece628-row-1254",
+    "17856fece628-row-1256",
+    "17856fece628-row-1258",
+    "17856fece628-row-1259",
+    "17856fece628-row-1260",
+    "17856fece628-row-1261",
+    "17856fece628-row-1262",
+    "17856fece628-row-1263",
+    "17856fece628-row-1264",
+    "17856fece628-row-1265",
+    "17856fece628-row-1266",
+    "17856fece628-row-1267",
+    "17856fece628-row-1268",
+    "17856fece628-row-1269",
+    "17856fece628-row-1270",
+    "17856fece628-row-1272",
+    "17856fece628-row-1273",
+    "17856fece628-row-1301",
+    "17856fece628-row-1304",
+    "17856fece628-row-1305",
+    "17856fece628-row-1306",
+    "17856fece628-row-1307",
+    "17856fece628-row-1309",
+    "17856fece628-row-1311",
+    "17856fece628-row-1312",
+    "17856fece628-row-1318",
+    "17856fece628-row-1319",
+    "17856fece628-row-1320",
+    "17856fece628-row-1322",
+    "17856fece628-row-1323",
+    "17856fece628-row-1324",
+    "17856fece628-row-1325",
+    "17856fece628-row-1326",
+    "17856fece628-row-1327",
+    "17856fece628-row-1328",
+    "17856fece628-row-1332",
+    "17856fece628-row-1333",
+    "17856fece628-row-1334",
+    "17856fece628-row-1335",
+    "17856fece628-row-1339",
+    "17856fece628-row-1340",
+    "17856fece628-row-1341",
+    "17856fece628-row-1349",
+    "17856fece628-row-1350",
+    "17856fece628-row-1351",
+    "17856fece628-row-1352",
+    "17856fece628-row-1354",
+    "17856fece628-row-1355",
+    "17856fece628-row-1356",
+    "17856fece628-row-1357",
+    "17856fece628-row-1358",
+    "17856fece628-row-1359",
+    "17856fece628-row-1360",
+    "17856fece628-row-1361",
+    "17856fece628-row-1362",
+    "17856fece628-row-1364",
+    "17856fece628-row-1365",
+    "17856fece628-row-1367",
+    "17856fece628-row-1370",
+    "17856fece628-row-1371",
+    "17856fece628-row-1372",
+    "17856fece628-row-1373",
+    "17856fece628-row-1374",
+    "17856fece628-row-1376",
+    "17856fece628-row-1377",
+    "17856fece628-row-1378",
+    "17856fece628-row-1379",
+    "17856fece628-row-1380",
+    "17856fece628-row-1381",
+    "17856fece628-row-1382",
+    "17856fece628-row-1383",
+    "17856fece628-row-1384",
+    "17856fece628-row-1385",
+    "17856fece628-row-1386",
+    "17856fece628-row-1387",
+    "17856fece628-row-1388",
+    "17856fece628-row-1390",
+    "17856fece628-row-1392",
+    "17856fece628-row-1393",
+    "17856fece628-row-1404",
+    "17856fece628-row-1405",
+    "17856fece628-row-1406",
+    "17856fece628-row-1407",
+    "17856fece628-row-1408",
+    "17856fece628-row-1409",
+    "17856fece628-row-1410",
+    "17856fece628-row-1411",
+    "17856fece628-row-1412",
+    "17856fece628-row-1413",
+    "17856fece628-row-1414",
+    "17856fece628-row-1416",
+    "17856fece628-row-1417",
+    "17856fece628-row-1418",
+    "17856fece628-row-1419",
+    "17856fece628-row-1420",
+    "17856fece628-row-1430",
+    "17856fece628-row-1431",
+    "17856fece628-row-1432",
+    "17856fece628-row-1433",
+    "17856fece628-row-1434",
+    "17856fece628-row-1435",
+    "17856fece628-row-1436",
+    "17856fece628-row-1437",
+    "17856fece628-row-1446",
+    "17856fece628-row-1447",
+    "17856fece628-row-1448",
+    "17856fece628-row-1449",
+    "17856fece628-row-1451",
+    "17856fece628-row-1453",
+    "17856fece628-row-1455",
+    "17856fece628-row-1456",
+    "17856fece628-row-1457",
+    "17856fece628-row-1458",
+    "17856fece628-row-1460",
+    "17856fece628-row-1461",
+    "17856fece628-row-1462",
+    "17856fece628-row-1464",
+    "17856fece628-row-1465",
+    "17856fece628-row-1466",
+    "17856fece628-row-1467",
+    "17856fece628-row-1468",
+    "17856fece628-row-1469",
+    "17856fece628-row-1494",
+    "17856fece628-row-1495",
+    "17856fece628-row-1496",
+    "17856fece628-row-1497",
+    "17856fece628-row-1498",
+    "17856fece628-row-1500",
+    "17856fece628-row-1501",
+    "17856fece628-row-1502",
+    "17856fece628-row-1503",
+    "17856fece628-row-1504",
+    "17856fece628-row-1505",
+    "17856fece628-row-1506",
+    "17856fece628-row-1507",
+    "17856fece628-row-1508",
+    "17856fece628-row-1509",
+    "17856fece628-row-1510",
+    "17856fece628-row-1511",
+    "17856fece628-row-1514",
+    "17856fece628-row-1515",
+    "17856fece628-row-1516",
+    "17856fece628-row-1517",
+    "17856fece628-row-1518",
+    "17856fece628-row-1519",
+    "17856fece628-row-1531",
+    "17856fece628-row-1532",
+    "17856fece628-row-1534",
+    "17856fece628-row-1535",
+    "17856fece628-row-1536",
+    "17856fece628-row-1537",
+    "17856fece628-row-1538",
+    "17856fece628-row-1575",
+    "17856fece628-row-1576",
+    "17856fece628-row-1578",
+    "17856fece628-row-1579",
+    "17856fece628-row-1580",
+    "17856fece628-row-1581",
+    "17856fece628-row-1582",
+    "17856fece628-row-1583",
+    "17856fece628-row-1584",
+    "17856fece628-row-1585",
+    "17856fece628-row-1586",
+    "17856fece628-row-1587",
+    "17856fece628-row-1588",
+    "17856fece628-row-1589",
+    "17856fece628-row-1590",
+    "17856fece628-row-1591",
+    "17856fece628-row-1592",
+    "17856fece628-row-1596",
+    "17856fece628-row-1597",
+    "17856fece628-row-1599",
+    "17856fece628-row-1601",
+    "17856fece628-row-1602",
+    "17856fece628-row-1604",
+    "17856fece628-row-1606",
+    "17856fece628-row-1607",
+    "17856fece628-row-1608",
+    "17856fece628-row-1609",
+    "17856fece628-row-1610",
+    "17856fece628-row-1611",
+    "17856fece628-row-1612",
+    "17856fece628-row-1613",
+    "17856fece628-row-1614",
+    "17856fece628-row-1616",
+    "17856fece628-row-1617",
+    "17856fece628-row-1618",
+    "17856fece628-row-1619",
+    "17856fece628-row-1621",
+    "17856fece628-row-1622",
+    "17856fece628-row-1623",
+    "17856fece628-row-1624",
+    "17856fece628-row-1625",
+    "17856fece628-row-1626",
+    "17856fece628-row-1628",
+    "17856fece628-row-1629",
+    "17856fece628-row-1630",
+    "17856fece628-row-1631",
+    "17856fece628-row-1632",
+    "17856fece628-row-1633",
+    "17856fece628-row-1634",
+    "17856fece628-row-1693",
+    "17856fece628-row-1694",
+    "17856fece628-row-1695",
+    "17856fece628-row-1696",
+    "17856fece628-row-1697",
+    "17856fece628-row-1698",
+    "17856fece628-row-1699",
+    "17856fece628-row-1700",
+    "17856fece628-row-1702",
+    "17856fece628-row-1703",
+    "17856fece628-row-1704",
+    "17856fece628-row-1705",
+    "17856fece628-row-1706",
+    "17856fece628-row-1708",
+    "17856fece628-row-1709",
+    "17856fece628-row-1710",
+    "17856fece628-row-1711",
+    "17856fece628-row-1712",
+    "17856fece628-row-1714",
+    "17856fece628-row-1715",
+    "17856fece628-row-1716",
+    "17856fece628-row-1720",
+    "17856fece628-row-1721",
+    "17856fece628-row-1722",
+    "17856fece628-row-1723",
+    "17856fece628-row-1724",
+    "17856fece628-row-1725",
+    "17856fece628-row-1727",
+    "17856fece628-row-1728",
+    "17856fece628-row-1730",
+    "17856fece628-row-1731",
+    "17856fece628-row-1732",
+    "17856fece628-row-1734",
+    "17856fece628-row-1735",
+    "17856fece628-row-1736",
+    "17856fece628-row-1737",
+    "17856fece628-row-1738",
+    "17856fece628-row-1739",
+    "17856fece628-row-1741",
+    "17856fece628-row-1742",
+    "17856fece628-row-1744",
+    "17856fece628-row-1745",
+    "17856fece628-row-1747",
+    "17856fece628-row-1748",
+    "17856fece628-row-1749",
+    "17856fece628-row-1750",
+    "17856fece628-row-1751",
+    "17856fece628-row-1752",
+    "17856fece628-row-1753",
+    "17856fece628-row-1754",
+    "17856fece628-row-1755",
+    "17856fece628-row-1757",
+    "17856fece628-row-1758",
+    "17856fece628-row-1759",
+    "17856fece628-row-1760",
+    "17856fece628-row-1761",
+    "17856fece628-row-1762",
+    "17856fece628-row-1763",
+    "17856fece628-row-1764",
+    "17856fece628-row-1765",
+    "17856fece628-row-1766",
+    "17856fece628-row-1767",
+    "17856fece628-row-1768",
+    "17856fece628-row-1769",
+    "17856fece628-row-1770",
+    "17856fece628-row-1771",
+    "17856fece628-row-1772",
+    "17856fece628-row-1773",
+    "17856fece628-row-1774",
+    "17856fece628-row-1775",
+    "17856fece628-row-1776",
+    "17856fece628-row-1777",
+    "17856fece628-row-1778",
+    "17856fece628-row-1779",
+    "17856fece628-row-1780",
+    "17856fece628-row-1781",
+    "17856fece628-row-1782",
+    "17856fece628-row-1783",
+    "17856fece628-row-1784",
+    "17856fece628-row-1785",
+    "17856fece628-row-1786",
+    "17856fece628-row-1787",
+    "17856fece628-row-1788",
+    "17856fece628-row-1789",
+    "17856fece628-row-1790",
+    "17856fece628-row-1791",
+    "17856fece628-row-1792",
+    "17856fece628-row-1793",
+    "17856fece628-row-1794",
+    "17856fece628-row-1795",
+    "17856fece628-row-1796",
+    "17856fece628-row-1854",
+    "17856fece628-row-1855",
+    "17856fece628-row-1856",
+    "17856fece628-row-1857",
+    "17856fece628-row-1858",
+    "17856fece628-row-1859",
+    "17856fece628-row-1860",
+    "17856fece628-row-1861",
+    "17856fece628-row-1862",
+    "17856fece628-row-1864",
+    "17856fece628-row-1865",
+    "17856fece628-row-1866",
+    "17856fece628-row-1867",
+    "17856fece628-row-1868",
+    "17856fece628-row-1869",
+    "17856fece628-row-1871",
+    "17856fece628-row-1872",
+    "17856fece628-row-1875"
+  ],
+  "calibration_ids": [
+    "17856fece628-row-101",
+    "17856fece628-row-103",
+    "17856fece628-row-104",
+    "17856fece628-row-105",
+    "17856fece628-row-106",
+    "17856fece628-row-107",
+    "17856fece628-row-108",
+    "17856fece628-row-417",
+    "17856fece628-row-418",
+    "17856fece628-row-419",
+    "17856fece628-row-420",
+    "17856fece628-row-421",
+    "17856fece628-row-422",
+    "17856fece628-row-423",
+    "17856fece628-row-424",
+    "17856fece628-row-425",
+    "17856fece628-row-426",
+    "17856fece628-row-427",
+    "17856fece628-row-428",
+    "17856fece628-row-429",
+    "17856fece628-row-430",
+    "17856fece628-row-431",
+    "17856fece628-row-432",
+    "17856fece628-row-535",
+    "17856fece628-row-536",
+    "17856fece628-row-538",
+    "17856fece628-row-539",
+    "17856fece628-row-540",
+    "17856fece628-row-541",
+    "17856fece628-row-542",
+    "17856fece628-row-543",
+    "17856fece628-row-545",
+    "17856fece628-row-547",
+    "17856fece628-row-548",
+    "17856fece628-row-549",
+    "17856fece628-row-551",
+    "17856fece628-row-553",
+    "17856fece628-row-554",
+    "17856fece628-row-555",
+    "17856fece628-row-556",
+    "17856fece628-row-557",
+    "17856fece628-row-558",
+    "17856fece628-row-559",
+    "17856fece628-row-560",
+    "17856fece628-row-561",
+    "17856fece628-row-562",
+    "17856fece628-row-563",
+    "17856fece628-row-728",
+    "17856fece628-row-729",
+    "17856fece628-row-730",
+    "17856fece628-row-731",
+    "17856fece628-row-732",
+    "17856fece628-row-733",
+    "17856fece628-row-734",
+    "17856fece628-row-736",
+    "17856fece628-row-737",
+    "17856fece628-row-738",
+    "17856fece628-row-739",
+    "17856fece628-row-740",
+    "17856fece628-row-742",
+    "17856fece628-row-743",
+    "17856fece628-row-744",
+    "17856fece628-row-745",
+    "17856fece628-row-746",
+    "17856fece628-row-747",
+    "17856fece628-row-749",
+    "17856fece628-row-750",
+    "17856fece628-row-751",
+    "17856fece628-row-752",
+    "17856fece628-row-766",
+    "17856fece628-row-767",
+    "17856fece628-row-768",
+    "17856fece628-row-769",
+    "17856fece628-row-770",
+    "17856fece628-row-771",
+    "17856fece628-row-772",
+    "17856fece628-row-773",
+    "17856fece628-row-774",
+    "17856fece628-row-775",
+    "17856fece628-row-776",
+    "17856fece628-row-777",
+    "17856fece628-row-778",
+    "17856fece628-row-921",
+    "17856fece628-row-922",
+    "17856fece628-row-923",
+    "17856fece628-row-924",
+    "17856fece628-row-925",
+    "17856fece628-row-926",
+    "17856fece628-row-927",
+    "17856fece628-row-928",
+    "17856fece628-row-929",
+    "17856fece628-row-930",
+    "17856fece628-row-931",
+    "17856fece628-row-932",
+    "17856fece628-row-934",
+    "17856fece628-row-935",
+    "17856fece628-row-936",
+    "17856fece628-row-937",
+    "17856fece628-row-938",
+    "17856fece628-row-939",
+    "17856fece628-row-940",
+    "17856fece628-row-941",
+    "17856fece628-row-942",
+    "17856fece628-row-943",
+    "17856fece628-row-944",
+    "17856fece628-row-945",
+    "17856fece628-row-947",
+    "17856fece628-row-948",
+    "17856fece628-row-949",
+    "17856fece628-row-950",
+    "17856fece628-row-951",
+    "17856fece628-row-952",
+    "17856fece628-row-953",
+    "17856fece628-row-954",
+    "17856fece628-row-956",
+    "17856fece628-row-957",
+    "17856fece628-row-958",
+    "17856fece628-row-959",
+    "17856fece628-row-960",
+    "17856fece628-row-961",
+    "17856fece628-row-962",
+    "17856fece628-row-964",
+    "17856fece628-row-965",
+    "17856fece628-row-966",
+    "17856fece628-row-967",
+    "17856fece628-row-968",
+    "17856fece628-row-969",
+    "17856fece628-row-970",
+    "17856fece628-row-971",
+    "17856fece628-row-972",
+    "17856fece628-row-973",
+    "17856fece628-row-974",
+    "17856fece628-row-975",
+    "17856fece628-row-976",
+    "17856fece628-row-978",
+    "17856fece628-row-980",
+    "17856fece628-row-981",
+    "17856fece628-row-982",
+    "17856fece628-row-983",
+    "17856fece628-row-984",
+    "17856fece628-row-985",
+    "17856fece628-row-986",
+    "17856fece628-row-987",
+    "17856fece628-row-988",
+    "17856fece628-row-989",
+    "17856fece628-row-990",
+    "17856fece628-row-993",
+    "17856fece628-row-994",
+    "17856fece628-row-995",
+    "17856fece628-row-996",
+    "17856fece628-row-997",
+    "17856fece628-row-998",
+    "17856fece628-row-999",
+    "17856fece628-row-1000",
+    "17856fece628-row-1001",
+    "17856fece628-row-1002",
+    "17856fece628-row-1003",
+    "17856fece628-row-1004",
+    "17856fece628-row-1005",
+    "17856fece628-row-1006",
+    "17856fece628-row-1007",
+    "17856fece628-row-1008",
+    "17856fece628-row-1009",
+    "17856fece628-row-1010",
+    "17856fece628-row-1011",
+    "17856fece628-row-1012",
+    "17856fece628-row-1395",
+    "17856fece628-row-1396",
+    "17856fece628-row-1397",
+    "17856fece628-row-1399",
+    "17856fece628-row-1400",
+    "17856fece628-row-1401",
+    "17856fece628-row-1402",
+    "17856fece628-row-1560",
+    "17856fece628-row-1561",
+    "17856fece628-row-1562",
+    "17856fece628-row-1563",
+    "17856fece628-row-1564",
+    "17856fece628-row-1565",
+    "17856fece628-row-1566",
+    "17856fece628-row-1798",
+    "17856fece628-row-1799",
+    "17856fece628-row-1800",
+    "17856fece628-row-1801",
+    "17856fece628-row-1802",
+    "17856fece628-row-1803",
+    "17856fece628-row-1804",
+    "17856fece628-row-1805",
+    "17856fece628-row-1806",
+    "17856fece628-row-1807",
+    "17856fece628-row-1808",
+    "17856fece628-row-1809",
+    "17856fece628-row-1811",
+    "17856fece628-row-1812",
+    "17856fece628-row-1813",
+    "17856fece628-row-1814",
+    "17856fece628-row-1816",
+    "17856fece628-row-1818",
+    "17856fece628-row-1819",
+    "17856fece628-row-1820",
+    "17856fece628-row-1821",
+    "17856fece628-row-1822",
+    "17856fece628-row-1823",
+    "17856fece628-row-1824",
+    "17856fece628-row-1825",
+    "17856fece628-row-1826",
+    "17856fece628-row-1827",
+    "17856fece628-row-1828",
+    "17856fece628-row-1829",
+    "17856fece628-row-1830",
+    "17856fece628-row-1832",
+    "17856fece628-row-1833",
+    "17856fece628-row-1834",
+    "17856fece628-row-1835",
+    "17856fece628-row-1836",
+    "17856fece628-row-1837",
+    "17856fece628-row-1838",
+    "17856fece628-row-1840",
+    "17856fece628-row-1841",
+    "17856fece628-row-1842",
+    "17856fece628-row-1843",
+    "17856fece628-row-1844",
+    "17856fece628-row-1845",
+    "17856fece628-row-1846",
+    "17856fece628-row-1847",
+    "17856fece628-row-1848",
+    "17856fece628-row-1850",
+    "17856fece628-row-1851",
+    "17856fece628-row-1852",
+    "17856fece628-row-1853"
+  ],
+  "fit_train_numbers": [
+    "11013",
+    "11014",
+    "12001",
+    "12002",
+    "12020",
+    "12049",
+    "12137",
+    "12163",
+    "12201",
+    "12235",
+    "12236",
+    "12246",
+    "12259",
+    "12260",
+    "12261",
+    "12262",
+    "12295",
+    "12302",
+    "12305",
+    "12313",
+    "12367",
+    "12368",
+    "12423",
+    "12433",
+    "12510",
+    "12625",
+    "12631",
+    "12632",
+    "12674",
+    "12839",
+    "12840",
+    "12842",
+    "12903",
+    "12925",
+    "12953",
+    "12954",
+    "12958",
+    "15959",
+    "16128",
+    "16340",
+    "22302",
+    "22602",
+    "22651"
+  ],
+  "calibration_train_numbers": [
+    "12138",
+    "12164",
+    "12301",
+    "12509",
+    "12680",
+    "12951",
+    "12952",
+    "15960",
+    "17057",
+    "20666",
+    "22225"
+  ],
+  "features": [
+    "station_code",
+    "service_type",
+    "junction_in_station_name"
+  ],
+  "vocabulary": {
+    "station_code": [
+      "ABKA",
+      "ABR",
+      "AD",
+      "AFK",
+      "AGC",
+      "AGI",
+      "AHA",
+      "AII",
+      "AJJ",
+      "AK",
+      "AKP",
+      "ALLP",
+      "ALU",
+      "ANKL",
+      "ANV",
+      "ANVT",
+      "ARA",
+      "ASN",
+      "ASR",
+      "ATP",
+      "AUB",
+      "AWY",
+      "AZ",
+      "BAB",
+      "BALU",
+      "BAM",
+      "BAQ",
+      "BARH",
+      "BAU",
+      "BBS",
+      "BDC",
+      "BDMJ",
+      "BDTS",
+      "BEAS",
+      "BGP",
+      "BGZ",
+      "BH",
+      "BHC",
+      "BHP",
+      "BHS",
+      "BINA",
+      "BKN",
+      "BKP",
+      "BL",
+      "BLS",
+      "BNC",
+      "BNGN",
+      "BOE",
+      "BOJ",
+      "BPF",
+      "BPL",
+      "BPP",
+      "BPQ",
+      "BPRD",
+      "BRC",
+      "BRYA",
+      "BRZ",
+      "BSL",
+      "BSP",
+      "BTE",
+      "BTI",
+      "BUP",
+      "BVI",
+      "BWM",
+      "BWN",
+      "BWT",
+      "BXN",
+      "BXP",
+      "BXR",
+      "BYNR",
+      "BZA",
+      "BZU",
+      "CAN",
+      "CAP",
+      "CBE",
+      "CD",
+      "CDG",
+      "CGL",
+      "CGY",
+      "CHE",
+      "CLT",
+      "CLX",
+      "CNB",
+      "CNGR",
+      "CPK",
+      "CPP",
+      "CRP",
+      "CRY",
+      "CSMT",
+      "CSN",
+      "CTC",
+      "CTO",
+      "CUR",
+      "CVP",
+      "DAA",
+      "DBRG",
+      "DD",
+      "DDU",
+      "DEC",
+      "DG",
+      "DGLE",
+      "DGR",
+      "DHD",
+      "DHN",
+      "DHO",
+      "DJG",
+      "DKAE",
+      "DKZ",
+      "DMM",
+      "DMV",
+      "DNR",
+      "DPJ",
+      "DPU",
+      "DQG",
+      "DR",
+      "DRD",
+      "DRH",
+      "DUD",
+      "ED",
+      "EE",
+      "ERL",
+      "ERN",
+      "ERS",
+      "ET",
+      "FA",
+      "FDB",
+      "FDK",
+      "FKG",
+      "FKM",
+      "FLK",
+      "FUT",
+      "FZR",
+      "GAYA",
+      "GBD",
+      "GDA",
+      "GDR",
+      "GDYA",
+      "GGC",
+      "GGN",
+      "GHY",
+      "GNA",
+      "GOGH",
+      "GTL",
+      "GUR",
+      "GWL",
+      "GY",
+      "GYM",
+      "GZB",
+      "HAD",
+      "HAN",
+      "HCR",
+      "HD",
+      "HJI",
+      "HSRA",
+      "HTZ",
+      "HUP",
+      "HWH",
+      "HX",
+      "IJK",
+      "IPM",
+      "JAJ",
+      "JBP",
+      "JHL",
+      "JIND",
+      "JJKR",
+      "JL",
+      "JMP",
+      "JPE",
+      "JRC",
+      "JRLE",
+      "JSME",
+      "JTJ",
+      "JUC",
+      "KAMG",
+      "KAWR",
+      "KGP",
+      "KGQ",
+      "KIR",
+      "KIUL",
+      "KJH",
+      "KJM",
+      "KKDE",
+      "KKN",
+      "KLBG",
+      "KMT",
+      "KNE",
+      "KNW",
+      "KOJ",
+      "KOO",
+      "KOTA",
+      "KOU",
+      "KPD",
+      "KPN",
+      "KQN",
+      "KQR",
+      "KRR",
+      "KRY",
+      "KSN",
+      "KSRA",
+      "KSV",
+      "KTE",
+      "KTYM",
+      "KUH",
+      "KUN",
+      "KUR",
+      "KWAE",
+      "KWV",
+      "KYJ",
+      "KYN",
+      "KYQ",
+      "KZT",
+      "LAR",
+      "LDH",
+      "LHU",
+      "LKA",
+      "LKR",
+      "LMG",
+      "LNL",
+      "LTT",
+      "MALM",
+      "MAO",
+      "MAP",
+      "MAS",
+      "MAUR",
+      "MBM",
+      "MDP",
+      "MDU",
+      "MEJ",
+      "MGN",
+      "MKA",
+      "MLDT",
+      "MLMR",
+      "MLO",
+      "MMCT",
+      "MMR",
+      "MNE",
+      "MONR",
+      "MOZ",
+      "MPA",
+      "MPL",
+      "MRA",
+      "MS",
+      "MSH",
+      "MSZ",
+      "MTC",
+      "MTJ",
+      "MUT",
+      "MVLK",
+      "MXN",
+      "MYR",
+      "MZP",
+      "NAD",
+      "NAM",
+      "NBQ",
+      "NCB",
+      "NCJ",
+      "NDD",
+      "NDLS",
+      "NDPM",
+      "NFK",
+      "NGP",
+      "NHK",
+      "NILE",
+      "NJP",
+      "NJT",
+      "NLR",
+      "NLV",
+      "NMKL",
+      "NMX",
+      "NNA",
+      "NNN",
+      "NOQ",
+      "NRW",
+      "NTSK",
+      "NU",
+      "NWP",
+      "NYY",
+      "NZM",
+      "ODC",
+      "OGL",
+      "OTP",
+      "PAK",
+      "PBL",
+      "PCOI",
+      "PER",
+      "PGT",
+      "PGTN",
+      "PGW",
+      "PIL",
+      "PNBE",
+      "PNC",
+      "PNDM",
+      "PNME",
+      "PNP",
+      "PNQ",
+      "PNU",
+      "PNVL",
+      "POY",
+      "PPTA",
+      "PRYJ",
+      "PSA",
+      "PUNE",
+      "PUT",
+      "PVU",
+      "QLN",
+      "RASP",
+      "RC",
+      "RDM",
+      "RJP",
+      "RJY",
+      "RKM",
+      "RKMP",
+      "RMA",
+      "RN",
+      "RNC",
+      "RNG",
+      "RNY",
+      "ROK",
+      "RPH",
+      "RTM",
+      "RU",
+      "SA",
+      "SADP",
+      "SALE",
+      "SASN",
+      "SBC",
+      "SBE",
+      "SDAH",
+      "SDB",
+      "SDGH",
+      "SDLP",
+      "SDN",
+      "SEGM",
+      "SGG",
+      "SGZ",
+      "SHM",
+      "SKF",
+      "SKZR",
+      "SLGR",
+      "SLO",
+      "SLY",
+      "SM",
+      "SMVB",
+      "SMVJ",
+      "SNP",
+      "SNSI",
+      "SPT",
+      "SRC",
+      "SRE",
+      "SRGM",
+      "SRR",
+      "SRT",
+      "SRTL",
+      "SSB",
+      "SSPN",
+      "ST",
+      "STA",
+      "SUR",
+      "SWM",
+      "SZR",
+      "TATA",
+      "TBM",
+      "TCR",
+      "TDD",
+      "TEL",
+      "TEN",
+      "TIHU",
+      "TIR",
+      "TMV",
+      "TNA",
+      "TPJ",
+      "TPTY",
+      "TRL",
+      "TRT",
+      "TRVL",
+      "TU",
+      "TUNI",
+      "TUP",
+      "TVC",
+      "UD",
+      "UDT",
+      "UMB",
+      "VAK",
+      "VAPI",
+      "VARD",
+      "VGLJ",
+      "VLY",
+      "VM",
+      "VPT",
+      "VRI",
+      "VSKP",
+      "VZM",
+      "WADI",
+      "WL",
+      "YA",
+      "YG",
+      "YJUD",
+      "YNK"
+    ],
+    "service_type": [
+      "duronto",
+      "express",
+      "garib rath",
+      "intercity",
+      "mail",
+      "rajdhani",
+      "shatabdi",
+      "superfast",
+      "vande bharat"
+    ]
+  },
+  "coverage_target": 0.8,
+  "conformal_radius_minutes": 5.231275980058558,
+  "conformal_order_statistic": 185,
+  "parameters": {
+    "objective": "quantile",
+    "learning_rate": 0.04,
+    "num_leaves": 12,
+    "max_depth": 4,
+    "min_data_in_leaf": 15,
+    "min_data_per_group": 5,
+    "cat_smooth": 10,
+    "lambda_l2": 2,
+    "verbosity": -1,
+    "seed": 2026,
+    "deterministic": true,
+    "force_col_wise": true,
+    "num_threads": 1
+  },
+  "boosting_rounds": 150,
+  "test_metrics": {
+    "n_test": 276,
+    "test_trains": 18,
+    "mae_minutes": 24.5212881670546,
+    "covered_count": 194,
+    "coverage_percent": 70.28985507246377,
+    "mean_window_width_minutes": 50.41927158199785,
+    "train_median_baseline_mae_minutes": 23.67753623188406,
+    "measurement_unit": "held-out train/station average delay profiles, NOT individual arrivals"
+  },
+  "created_at": "2026-09-06T20:17:56.706373+00:00",
+  "limitations": [
+    "Aggregate averages cannot train or validate individual-run ETA accuracy or arrival coverage",
+    "No scheduled/actual arrival times, run dates, positions, weather or event sequences",
+    "Profiles within each train are correlated; pooled conformal calibration does not guarantee unseen-train coverage",
+    "No sample counts: each profile weighted equally, not by number of actual journeys",
+    "Unseen station/category values use missing-category handling; no target-based encoding",
+    "No verified MAS-SBC service in this export; demo scope is the supplied held-out dataset",
+    "Source URLs supplied in CSV, not independently fetched or authenticated"
+  ]
+}

@@ -1,0 +1,107 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Data
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+data/exports/*
+!data/exports/.gitkeep
+logs/*.log
+!logs/.gitkeep
+
+# Trained model artifacts (generated outside the source tree)
+artifacts/models/*
+!artifacts/models/.gitkeep
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Frontend
+node_modules/
+frontend/passenger-ui/dist/
+frontend/station-display/dist/
+frontend/controller-dashboard/dist/
+frontend/*/.next/
+frontend/*/build/
+frontend/*/coverage/
+frontend/*/.env.local
+frontend/*/.env.production.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local migration/archive material
+archive/
+
+# Local runtime binaries (for Windows development when Docker is unavailable)
+.runtime/
+
+# Local caches, credentials, databases, and background-process state
+.pnpm-store/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.cache/
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite3
+*.sqlite3-*
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+celerybeat-schedule*
+*.pid
+data/redis/
+logs/*
+!logs/.gitkeep
+backups/
+coverage/
+.coverage
+htmlcov/

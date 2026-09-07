@@ -1,0 +1,228 @@
+{
+  "version": "historical-lgbm-9147e9911498-67fd32e9",
+  "dataset": {
+    "file": "F:\\sah\\raileta\\indian_railway_delay_data_.csv",
+    "sha256": "9147e99114983d761e6589e47dfe4d8215bb6505866f32e135724cc8c72bc065",
+    "original_rows": 100,
+    "usable_rows": 96,
+    "excluded": [
+      {
+        "csv_line": 85,
+        "row_id": "Y4",
+        "train_number": "22832",
+        "reason": "Ambiguous date-formatted duration; not silently repaired",
+        "raw": {
+          "Train_id": "Y4",
+          "Train_name": "Yesvantpur–Howrah Express",
+          "Train_no": "22832",
+          "Source": "Yesvantpur Jn",
+          "Destitnation": "Howrah",
+          "Date": "01-01-2019 00:00",
+          "Distance(Km)": "1915",
+          "Sc_arr__time": "04:30:00",
+          "Act_arr_time": "04:50:00",
+          "Dealy_min": "20-01-1900 00:20",
+          "Season": "Winter",
+          "Run_frequency": "Daliy"
+        }
+      },
+      {
+        "csv_line": 94,
+        "row_id": "D3",
+        "train_number": "15906",
+        "reason": "Recorded delay conflicts with scheduled and actual arrival clocks",
+        "raw": {
+          "Train_id": "D3",
+          "Train_name": "Vivek Express",
+          "Train_no": "15906",
+          "Source": "Dibrugarh",
+          "Destitnation": "Kanyakumari",
+          "Date": "01-01-2018 00:00",
+          "Distance(Km)": "4198",
+          "Sc_arr__time": "19:25:00",
+          "Act_arr_time": "20:23:00",
+          "Dealy_min": "01:03:00",
+          "Season": "Winter",
+          "Run_frequency": "Weekly"
+        }
+      },
+      {
+        "csv_line": 96,
+        "row_id": "D5",
+        "train_number": "15906",
+        "reason": "Recorded delay conflicts with scheduled and actual arrival clocks",
+        "raw": {
+          "Train_id": "D5",
+          "Train_name": "Vivek Express",
+          "Train_no": "15906",
+          "Source": "Dibrugarh",
+          "Destitnation": "Kanyakumari",
+          "Date": "01-01-2020 00:00",
+          "Distance(Km)": "4198",
+          "Sc_arr__time": "19:25:00",
+          "Act_arr_time": "19:46:00",
+          "Dealy_min": "00:22:00",
+          "Season": "Winter",
+          "Run_frequency": "Weekly"
+        }
+      },
+      {
+        "csv_line": 100,
+        "row_id": "D9",
+        "train_number": "15906",
+        "reason": "Recorded delay conflicts with scheduled and actual arrival clocks",
+        "raw": {
+          "Train_id": "D9",
+          "Train_name": "Vivek Express",
+          "Train_no": "15906",
+          "Source": "Dibrugarh",
+          "Destitnation": "Kanyakumari",
+          "Date": "01-01-2024 00:00",
+          "Distance(Km)": "4198",
+          "Sc_arr__time": "01-01-1900 19:25",
+          "Act_arr_time": "19:47:00",
+          "Dealy_min": "00:23:00",
+          "Season": "Winter",
+          "Run_frequency": "Weekly"
+        }
+      }
+    ],
+    "provenance": "user_supplied_unverified",
+    "timestamp_assumption": "Date is treated as scheduled arrival date, day-first, Asia/Kolkata; original cells retained",
+    "granularity": "one terminal arrival per train/date; no intermediate or pre-arrival movement events"
+  },
+  "preprocessing_version": 2,
+  "model_sha256": "67fd32e98617295e1a7d187865dc4d4ed15b8862b4df39449446f7d967b36d8e",
+  "seed": 2026,
+  "ratios_by_train": {
+    "train": 0.6,
+    "test": 0.2,
+    "live_demo": 0.2
+  },
+  "train_groups": {
+    "live_demo": [
+      "12002",
+      "12633"
+    ],
+    "test": [
+      "12238",
+      "12301"
+    ],
+    "train": [
+      "15906",
+      "12377",
+      "15029",
+      "22832",
+      "12604",
+      "12229"
+    ]
+  },
+  "sizes": {
+    "live_demo": 20,
+    "test": 20,
+    "train": 56
+  },
+  "fit_size": 38,
+  "calibration_size": 18,
+  "fit_ids": [
+    "9147e9911498-row-92",
+    "9147e9911498-row-93",
+    "9147e9911498-row-95",
+    "9147e9911498-row-97",
+    "9147e9911498-row-42",
+    "9147e9911498-row-43",
+    "9147e9911498-row-44",
+    "9147e9911498-row-45",
+    "9147e9911498-row-46",
+    "9147e9911498-row-47",
+    "9147e9911498-row-48",
+    "9147e9911498-row-12",
+    "9147e9911498-row-13",
+    "9147e9911498-row-14",
+    "9147e9911498-row-15",
+    "9147e9911498-row-16",
+    "9147e9911498-row-17",
+    "9147e9911498-row-18",
+    "9147e9911498-row-82",
+    "9147e9911498-row-83",
+    "9147e9911498-row-84",
+    "9147e9911498-row-86",
+    "9147e9911498-row-87",
+    "9147e9911498-row-88",
+    "9147e9911498-row-32",
+    "9147e9911498-row-33",
+    "9147e9911498-row-34",
+    "9147e9911498-row-35",
+    "9147e9911498-row-36",
+    "9147e9911498-row-37",
+    "9147e9911498-row-38",
+    "9147e9911498-row-62",
+    "9147e9911498-row-63",
+    "9147e9911498-row-64",
+    "9147e9911498-row-65",
+    "9147e9911498-row-66",
+    "9147e9911498-row-67",
+    "9147e9911498-row-68"
+  ],
+  "calibration_ids": [
+    "9147e9911498-row-98",
+    "9147e9911498-row-99",
+    "9147e9911498-row-101",
+    "9147e9911498-row-49",
+    "9147e9911498-row-50",
+    "9147e9911498-row-51",
+    "9147e9911498-row-19",
+    "9147e9911498-row-20",
+    "9147e9911498-row-21",
+    "9147e9911498-row-89",
+    "9147e9911498-row-90",
+    "9147e9911498-row-91",
+    "9147e9911498-row-39",
+    "9147e9911498-row-40",
+    "9147e9911498-row-41",
+    "9147e9911498-row-69",
+    "9147e9911498-row-70",
+    "9147e9911498-row-71"
+  ],
+  "features": [
+    "distance_km",
+    "scheduled_hour",
+    "calendar_year",
+    "day_of_week",
+    "day_of_year",
+    "weekly_service"
+  ],
+  "coverage_target": 0.8,
+  "conformal_radius_minutes": 34.70733984222912,
+  "conformal_order_statistic": 16,
+  "parameters": {
+    "objective": "quantile",
+    "learning_rate": 0.05,
+    "num_leaves": 4,
+    "max_depth": 2,
+    "min_data_in_leaf": 5,
+    "lambda_l2": 1.0,
+    "verbosity": -1,
+    "seed": 2026,
+    "deterministic": true,
+    "force_col_wise": true,
+    "num_threads": 1
+  },
+  "boosting_rounds": 80,
+  "test_metrics": {
+    "n_test": 20,
+    "mae_minutes": 24.452831768095685,
+    "covered_count": 19,
+    "coverage_percent": 95.0,
+    "mean_window_width_minutes": 121.82083964967981,
+    "train_median_baseline_mae_minutes": 26.0
+  },
+  "created_at": "2026-09-06T20:17:28.872335+05:30",
+  "limitations": [
+    "Small sample: only 10 trains and winter observations",
+    "Provenance not independently verified",
+    "Calibration observations repeat trains; exchangeability and unseen-train coverage are not guaranteed",
+    "Retrospective terminal-arrival scoring, not event-driven en-route ETA forecasting",
+    "No weather/congestion/section data; SHAP explains model associations, not delay causes"
+  ]
+}

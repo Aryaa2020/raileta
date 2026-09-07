@@ -1,0 +1,4 @@
+# Preserve byte-for-byte hashes used by dataset/model provenance checks, on
+# Windows as well as Linux/macOS. Do not normalize these files' line endings.
+/etrain_delays.csv -text
+/data/models/** -text

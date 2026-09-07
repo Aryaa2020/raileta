@@ -1,0 +1,98 @@
+# Local-only SIH stack. One beat scheduler; workers wait for schema readiness.
+x-app-environment: &app-environment
+  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-}
+  POSTGRES_HOST: db
+  POSTGRES_DB: raileta
+  POSTGRES_USER: raileta
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-raileta}
+  CELERY_BROKER_URL: redis://redis:6379/0
+  CELERY_RESULT_BACKEND: redis://redis:6379/0
+  CELERY_TASK_ALWAYS_EAGER: "false"
+  TESTING: "false"
+  RAILETA_DATA_ADAPTER: ${RAILETA_DATA_ADAPTER:-historical_profiles}
+  RAILETA_HISTORICAL_MODEL_DIR: /app/data/models/etrain-profiles-v1
+  RAILETA_REPLAY_INTERVAL_SECONDS: ${RAILETA_REPLAY_INTERVAL_SECONDS:-15}
+  CRIS_REST_URL: ${CRIS_REST_URL:-}
+  RAILETA_ENABLE_PUBLIC_SCRAPING: "false"
+  RAILETA_TRAIN_NUMBERS: ${RAILETA_TRAIN_NUMBERS:-12007,12639,12607,22625,12609}
+  RAILETA_COLLECTOR_INTERVAL_SECONDS: ${RAILETA_COLLECTOR_INTERVAL_SECONDS:-15}
+  OPEN_METEO_ENABLED: ${OPEN_METEO_ENABLED:-false}
+  OPEN_METEO_URL: https://api.open-meteo.com/v1/forecast
+  RAILETA_WEATHER_INTERVAL_SECONDS: "900"
+  RAILETA_STORE_RAW_PAYLOADS: "true"
+  RAILETA_RAW_DATA_DIR: /app/data/raw
+
+x-app: &app
+  build: .
+  environment: *app-environment
+  restart: unless-stopped
+  volumes:
+    - raileta_rawdata:/app/data/raw
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+    redis:
+      condition: service_healthy
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: raileta
+      POSTGRES_USER: raileta
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-raileta}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - raileta_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U raileta -d raileta"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - raileta_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  migrate:
+    build: .
+    environment: *app-environment
+    command: python manage.py migrate --noinput
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    <<: *app
+    command: python -m uvicorn django_service.asgi:application --host 0.0.0.0 --port 8000
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  worker:
+    <<: *app
+    command: celery -A django_service worker --loglevel=INFO
+
+  beat:
+    <<: *app
+    command: celery -A django_service beat --loglevel=INFO --schedule=/app/data/beat/schedule --pidfile=/tmp/celerybeat.pid
+    volumes:
+      - raileta_beatdata:/app/data/beat
+
+volumes:
+  raileta_pgdata:
+  raileta_rawdata:
+  raileta_redisdata:
+  raileta_beatdata:

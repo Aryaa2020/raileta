@@ -1,0 +1,419 @@
+{
+  "version": "historical-lgbm-9147e9911498",
+  "dataset": {
+    "file": "F:\\sah\\raileta\\indian_railway_delay_data_.csv",
+    "sha256": "9147e99114983d761e6589e47dfe4d8215bb6505866f32e135724cc8c72bc065",
+    "original_rows": 100,
+    "usable_rows": 86,
+    "excluded": [
+      {
+        "csv_line": 42,
+        "row_id": "G1",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G1",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2016 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:20:00",
+          "Dealy_min": "00:20:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 43,
+        "row_id": "G2",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G2",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2017 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "09:00:00",
+          "Dealy_min": "01:00:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 44,
+        "row_id": "G3",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G3",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2018 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:05:00",
+          "Dealy_min": "00:05:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 45,
+        "row_id": "G4",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G4",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2019 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:10:00",
+          "Dealy_min": "00:10:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 46,
+        "row_id": "G5",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G5",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2020 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:20:00",
+          "Dealy_min": "00:20:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 47,
+        "row_id": "G6",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G6",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2021 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:23:00",
+          "Dealy_min": "00:23:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 48,
+        "row_id": "G7",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G7",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2022 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:11:00",
+          "Dealy_min": "00:11:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 49,
+        "row_id": "G8",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G8",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2023 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:00:00",
+          "Dealy_min": "00:00:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 50,
+        "row_id": "G9",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G9",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2024 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "09:40:00",
+          "Dealy_min": "01:40:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 51,
+        "row_id": "G10",
+        "train_number": "12377",
+        "reason": "Unknown service frequency",
+        "raw": {
+          "Train_id": "G10",
+          "Train_name": "Garib Rath Express",
+          "Train_no": "12377",
+          "Source": " Kolkata",
+          "Destitnation": " New Delhi",
+          "Date": "01-01-2025 00:00",
+          "Distance(Km)": "1318",
+          "Sc_arr__time": "08:00:00",
+          "Act_arr_time": "08:25:00",
+          "Dealy_min": "00:25:00",
+          "Season": "Winter",
+          "Run_frequency": " Tri-Weekly"
+        }
+      },
+      {
+        "csv_line": 85,
+        "row_id": "Y4",
+        "train_number": "22832",
+        "reason": "Ambiguous date-formatted duration; not silently repaired",
+        "raw": {
+          "Train_id": "Y4",
+          "Train_name": "Yesvantpur–Howrah Express",
+          "Train_no": "22832",
+          "Source": "Yesvantpur Jn",
+          "Destitnation": "Howrah",
+          "Date": "01-01-2019 00:00",
+          "Distance(Km)": "1915",
+          "Sc_arr__time": "04:30:00",
+          "Act_arr_time": "04:50:00",
+          "Dealy_min": "20-01-1900 00:20",
+          "Season": "Winter",
+          "Run_frequency": "Daliy"
+        }
+      },
+      {
+        "csv_line": 94,
+        "row_id": "D3",
+        "train_number": "15906",
+        "reason": "Recorded delay conflicts with scheduled and actual arrival clocks",
+        "raw": {
+          "Train_id": "D3",
+          "Train_name": "Vivek Express",
+          "Train_no": "15906",
+          "Source": "Dibrugarh",
+          "Destitnation": "Kanyakumari",
+          "Date": "01-01-2018 00:00",
+          "Distance(Km)": "4198",
+          "Sc_arr__time": "19:25:00",
+          "Act_arr_time": "20:23:00",
+          "Dealy_min": "01:03:00",
+          "Season": "Winter",
+          "Run_frequency": "Weekly"
+        }
+      },
+      {
+        "csv_line": 96,
+        "row_id": "D5",
+        "train_number": "15906",
+        "reason": "Recorded delay conflicts with scheduled and actual arrival clocks",
+        "raw": {
+          "Train_id": "D5",
+          "Train_name": "Vivek Express",
+          "Train_no": "15906",
+          "Source": "Dibrugarh",
+          "Destitnation": "Kanyakumari",
+          "Date": "01-01-2020 00:00",
+          "Distance(Km)": "4198",
+          "Sc_arr__time": "19:25:00",
+          "Act_arr_time": "19:46:00",
+          "Dealy_min": "00:22:00",
+          "Season": "Winter",
+          "Run_frequency": "Weekly"
+        }
+      },
+      {
+        "csv_line": 100,
+        "row_id": "D9",
+        "train_number": "15906",
+        "reason": "Recorded delay conflicts with scheduled and actual arrival clocks",
+        "raw": {
+          "Train_id": "D9",
+          "Train_name": "Vivek Express",
+          "Train_no": "15906",
+          "Source": "Dibrugarh",
+          "Destitnation": "Kanyakumari",
+          "Date": "01-01-2024 00:00",
+          "Distance(Km)": "4198",
+          "Sc_arr__time": "01-01-1900 19:25",
+          "Act_arr_time": "19:47:00",
+          "Dealy_min": "00:23:00",
+          "Season": "Winter",
+          "Run_frequency": "Weekly"
+        }
+      }
+    ],
+    "provenance": "user_supplied_unverified",
+    "timestamp_assumption": "Date is treated as scheduled arrival date, day-first, Asia/Kolkata; original cells retained",
+    "granularity": "one terminal arrival per train/date; no intermediate or pre-arrival movement events"
+  },
+  "seed": 2026,
+  "ratios_by_train": {
+    "train": 0.6,
+    "test": 0.2,
+    "live_demo": 0.2
+  },
+  "train_groups": {
+    "live_demo": [
+      "15906",
+      "12301"
+    ],
+    "test": [
+      "12238",
+      "22832"
+    ],
+    "train": [
+      "12002",
+      "15029",
+      "12604",
+      "12633",
+      "12229"
+    ]
+  },
+  "sizes": {
+    "live_demo": 17,
+    "test": 19,
+    "train": 50
+  },
+  "fit_size": 35,
+  "calibration_size": 15,
+  "fit_ids": [
+    "9147e9911498-row-52",
+    "9147e9911498-row-53",
+    "9147e9911498-row-54",
+    "9147e9911498-row-55",
+    "9147e9911498-row-56",
+    "9147e9911498-row-57",
+    "9147e9911498-row-58",
+    "9147e9911498-row-12",
+    "9147e9911498-row-13",
+    "9147e9911498-row-14",
+    "9147e9911498-row-15",
+    "9147e9911498-row-16",
+    "9147e9911498-row-17",
+    "9147e9911498-row-18",
+    "9147e9911498-row-32",
+    "9147e9911498-row-33",
+    "9147e9911498-row-34",
+    "9147e9911498-row-35",
+    "9147e9911498-row-36",
+    "9147e9911498-row-37",
+    "9147e9911498-row-38",
+    "9147e9911498-row-72",
+    "9147e9911498-row-73",
+    "9147e9911498-row-74",
+    "9147e9911498-row-75",
+    "9147e9911498-row-76",
+    "9147e9911498-row-77",
+    "9147e9911498-row-78",
+    "9147e9911498-row-62",
+    "9147e9911498-row-63",
+    "9147e9911498-row-64",
+    "9147e9911498-row-65",
+    "9147e9911498-row-66",
+    "9147e9911498-row-67",
+    "9147e9911498-row-68"
+  ],
+  "calibration_ids": [
+    "9147e9911498-row-59",
+    "9147e9911498-row-60",
+    "9147e9911498-row-61",
+    "9147e9911498-row-19",
+    "9147e9911498-row-20",
+    "9147e9911498-row-21",
+    "9147e9911498-row-39",
+    "9147e9911498-row-40",
+    "9147e9911498-row-41",
+    "9147e9911498-row-79",
+    "9147e9911498-row-80",
+    "9147e9911498-row-81",
+    "9147e9911498-row-69",
+    "9147e9911498-row-70",
+    "9147e9911498-row-71"
+  ],
+  "features": [
+    "distance_km",
+    "scheduled_hour",
+    "calendar_year",
+    "day_of_week",
+    "day_of_year",
+    "weekly_service"
+  ],
+  "coverage_target": 0.8,
+  "conformal_radius_minutes": 0.0,
+  "conformal_order_statistic": 13,
+  "parameters": {
+    "objective": "quantile",
+    "learning_rate": 0.05,
+    "num_leaves": 4,
+    "max_depth": 2,
+    "min_data_in_leaf": 5,
+    "lambda_l2": 1.0,
+    "verbosity": -1,
+    "seed": 2026,
+    "deterministic": true,
+    "force_col_wise": true,
+    "num_threads": 1
+  },
+  "boosting_rounds": 80,
+  "test_metrics": {
+    "n_test": 19,
+    "mae_minutes": 40.61183424553737,
+    "covered_count": 13,
+    "coverage_percent": 68.42105263157895,
+    "mean_window_width_minutes": 91.58373059311775,
+    "train_median_baseline_mae_minutes": 40.94736842105263
+  },
+  "created_at": "2026-09-06T20:13:19.848757+05:30",
+  "limitations": [
+    "Small sample: only 10 trains and winter observations",
+    "Provenance not independently verified",
+    "Calibration observations repeat trains; exchangeability and unseen-train coverage are not guaranteed",
+    "Retrospective terminal-arrival scoring, not event-driven en-route ETA forecasting",
+    "No weather/congestion/section data; SHAP explains model associations, not delay causes"
+  ]
+}
