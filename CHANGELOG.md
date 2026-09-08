@@ -5,6 +5,9 @@ Git commits preserve exact file history; milestone tags identify saved releases.
 
 ## Unreleased
 
+- Added a server-side login rotation helper accepting credentials through stdin.
+  Rotated the shared dashboard login; verified all dashboards/API accept the new
+  login and reject the previous one. Credentials are not stored in source control.
 - Added single-VM Azure deployment for passenger, controller and station UIs,
   same-origin API, Caddy HTTPS and shared team authentication. Database and Redis
   ports remain private; persistent volumes and separate worker/beat services are
