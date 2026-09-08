@@ -19,3 +19,5 @@ data/*
 data/models/*
 !data/models/etrain-profiles-v1/
 celerybeat-schedule*
+team-access.txt
+backups/

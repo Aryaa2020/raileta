@@ -1,0 +1,36 @@
+{$SITE_ADDRESS} {
+    encode zstd gzip
+    basic_auth {
+        {$TEAM_USERNAME} {$TEAM_PASSWORD_HASH}
+    }
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Referrer-Policy no-referrer
+        -Server
+    }
+    handle /api/* {
+        reverse_proxy api:8000 {
+            # Authentication was checked at the edge. Do not ask DRF to
+            # authenticate this shared team login as a Django database user.
+            header_up -Authorization
+        }
+    }
+    redir /controller /controller/ 308
+    redir /station /station/ 308
+    handle_path /controller/* {
+        root * /srv/controller
+        try_files {path} /index.html
+        file_server
+    }
+    handle_path /station/* {
+        root * /srv/station
+        try_files {path} /index.html
+        file_server
+    }
+    handle {
+        root * /srv/passenger
+        try_files {path} /index.html
+        file_server
+    }
+}

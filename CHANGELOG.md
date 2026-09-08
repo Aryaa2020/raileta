@@ -5,7 +5,17 @@ Git commits preserve exact file history; milestone tags identify saved releases.
 
 ## Unreleased
 
-- Add future changes here before the next checkpoint.
+- Added single-VM Azure deployment for passenger, controller and station UIs,
+  same-origin API, Caddy HTTPS and shared team authentication. Database and Redis
+  ports remain private; persistent volumes and separate worker/beat services are
+  configured. Credentials are generated server-side and excluded from Git/builds.
+- Added deployment instructions, hostname configuration and authenticated public
+  browser smoke test. No model, data claims or dashboard styling changed.
+- Azure verification (2026-09-08): 37 Django tests passed; all three public HTTPS
+  dashboards, authenticated ETA API, desktop/mobile scroll transitions passed.
+  Unauthenticated requests return 401; Redis and Celery ping respond, and replay
+  jobs persist a new historical profile every 15 seconds. Valid TLS certificate
+  obtained for raileta.indiasouthcentral.cloudapp.azure.com.
 
 ## 0.1.0-demo — 2026-09-07
 

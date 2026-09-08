@@ -105,3 +105,4 @@ backups/
 coverage/
 .coverage
 htmlcov/
+team-access.txt

@@ -1,0 +1,29 @@
+FROM node:22-alpine AS passenger
+WORKDIR /build
+COPY frontend/passenger-ui/package.json ./
+RUN npm install --package-lock=false --no-audit --no-fund
+COPY frontend/passenger-ui/ ./
+ENV VITE_API_URL=/api/v1
+RUN npm run build -- --base=/
+
+FROM node:22-alpine AS controller
+WORKDIR /build
+COPY frontend/controller-dashboard/package.json ./
+RUN npm install --package-lock=false --no-audit --no-fund
+COPY frontend/controller-dashboard/ ./
+ENV VITE_API_URL=/api/v1
+RUN npm run build -- --base=/controller/
+
+FROM node:22-alpine AS station
+WORKDIR /build
+COPY frontend/station-display/package.json ./
+RUN npm install --package-lock=false --no-audit --no-fund
+COPY frontend/station-display/ ./
+ENV VITE_API_URL=/api/v1
+RUN npm run build -- --base=/station/
+
+FROM caddy:2-alpine
+COPY --from=passenger /build/dist /srv/passenger
+COPY --from=controller /build/dist /srv/controller
+COPY --from=station /build/dist /srv/station
+COPY deploy/Caddyfile /etc/caddy/Caddyfile

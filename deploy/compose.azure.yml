@@ -1,0 +1,108 @@
+name: raileta
+x-environment: &environment
+  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set persistent secret}
+  DJANGO_DEBUG: "false"
+  DJANGO_ALLOWED_HOSTS: ${SITE_ADDRESS:?Set host},localhost,127.0.0.1,api
+  POSTGRES_HOST: db
+  POSTGRES_DB: raileta
+  POSTGRES_USER: raileta
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set database password}
+  CELERY_BROKER_URL: redis://redis:6379/0
+  CELERY_RESULT_BACKEND: redis://redis:6379/0
+  TESTING: "false"
+  RAILETA_DATA_ADAPTER: historical_profiles
+  RAILETA_HISTORICAL_MODEL_DIR: data/models/etrain-profiles-v1
+  RAILETA_REPLAY_INTERVAL_SECONDS: "15"
+  RAILETA_COLLECTOR_INTERVAL_SECONDS: "15"
+  OPEN_METEO_ENABLED: "false"
+  RAILETA_ENABLE_PUBLIC_SCRAPING: "false"
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+x-app: &app
+  image: raileta-backend:azure
+  build:
+    context: ..
+    dockerfile: Dockerfile
+  environment: *environment
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options: {max-size: "10m", max-file: "3"}
+  depends_on:
+    migrate: {condition: service_completed_successfully}
+    redis: {condition: service_healthy}
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: raileta
+      POSTGRES_USER: raileta
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set database password}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U raileta -d raileta"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes: [redisdata:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  migrate:
+    <<: *app
+    command: python manage.py migrate --noinput
+    restart: "no"
+    depends_on:
+      db: {condition: service_healthy}
+  api:
+    <<: *app
+    command: python -m uvicorn django_service.asgi:application --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips=*
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=20)"]
+      interval: 30s
+      timeout: 25s
+      start_period: 90s
+      retries: 5
+  worker:
+    <<: *app
+    command: celery -A django_service worker --loglevel=INFO --concurrency=1 --prefetch-multiplier=1
+  beat:
+    <<: *app
+    command: celery -A django_service beat --loglevel=INFO --schedule=/app/data/beat/schedule --pidfile=/tmp/celerybeat.pid
+    volumes: [beatdata:/app/data/beat]
+  web:
+    image: raileta-web:azure
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.web
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?Set host}
+      TEAM_USERNAME: ${TEAM_USERNAME:?Set team username}
+      TEAM_PASSWORD_HASH: ${TEAM_PASSWORD_HASH:?Set team password hash}
+    volumes: [caddydata:/data, caddyconfig:/config]
+    depends_on:
+      api: {condition: service_healthy}
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+volumes:
+  pgdata:
+  redisdata:
+  beatdata:
+  caddydata:
+  caddyconfig:
