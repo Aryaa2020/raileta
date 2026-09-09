@@ -5,6 +5,23 @@ Git commits preserve exact file history; milestone tags identify saved releases.
 
 ## Unreleased
 
+## 0.2.2-demo — 2026-09-09
+
+- Bundled Ubuntu fonts across the shared theme. Opening a train scrolls to the
+  unified arrival/route panel beneath navigation; reduced motion is respected,
+  and automatic refreshes preserve the reader's scroll position.
+
+- Passenger search now accepts train names, partial numbers, station names/codes,
+  city aliases such as Bangalore/BLR, and directed routes such as MAS to SBC.
+  Search is limited to the available demo roster and its actual stopping patterns.
+- Passenger reports lead with the selected stop's arrival time, an arrival window
+  and a plain-language schedule comparison. Added a purple vertical stop timeline,
+  last-reported train marker and progress. Actual, missing and stale estimates stay
+  distinct; IST calendar dates make overnight arrivals clear. Detailed tables and
+  forecast history remain available below the passenger summary.
+- Fixed the public deployment smoke test's obsolete credential read and its
+  mobile navigation lookup; updated it for the new passenger report.
+
 ## 0.2.1-demo — 2026-09-09
 
 - Removed the shared username/password gate from the public Azure demo. The

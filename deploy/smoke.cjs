@@ -4,11 +4,6 @@ const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright'
 (async () => {
   const base = process.env.RAILETA_TEST_URL;
   assert.ok(base?.startsWith('https://'), 'Use the public HTTPS URL');
-  const secrets = fs.readFileSync(process.env.RAILETA_ACCESS_FILE, 'utf8');
-  const httpCredentials = {
-    username: secrets.match(/^Username: (.+)$/m)[1].trim(),
-    password: secrets.match(/^Password: (.+)$/m)[1].trim(),
-  };
   const browser = await chromium.launch({ headless: true, channel: 'msedge' });
   try {
     const context = await browser.newContext({ reducedMotion: 'reduce' });
@@ -43,9 +38,24 @@ const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright'
     for (const viewport of [{ width: 1366, height: 768 }, { width: 390, height: 844 }]) {
       await page.setViewportSize(viewport);
       await page.goto(base + '/');
-      const operations = page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Operations', exact: true });
+      const operations = page.locator('#primary-nav a').filter({ hasText: 'Operations' });
       assert.equal(await operations.getAttribute('href'), '/controller/');
-      await page.locator('.roster-train').filter({ hasText: '12027' }).click();
+      const search = page.getByRole('textbox', { name: 'Search trains' });
+      await search.fill('Chennai to Bangalore');
+      await page.getByRole('region', { name: 'Matching trains' }).getByRole('button').nth(3).waitFor();
+      await search.fill('Shatabdi');
+      await page.getByRole('button', { name: 'Find trains', exact: true }).click();
+      await page.locator('.passenger-journey').waitFor();
+      await page.waitForFunction(() => {
+        const panel = document.querySelector('.pj-layout');
+        const nav = document.querySelector('.site-nav');
+        return panel === document.activeElement && Math.abs(panel.getBoundingClientRect().top - nav.getBoundingClientRect().bottom - 20) < 3;
+      });
+      assert.ok(await page.evaluate(() => document.fonts.check('400 16px Ubuntu') && getComputedStyle(document.querySelector('.pj-arrival-time')).fontFamily.startsWith('Ubuntu')), 'Bundled Ubuntu font loads');
+      assert.equal(await page.locator('.pj-route li').count(), 5);
+      await page.getByRole('combobox', { name: 'Your arrival station' }).selectOption('1');
+      assert.equal(await page.locator('.pj-route .is-selected .pj-stop-copy strong').innerText(), 'Katpadi Junction');
+      await page.getByText('Full timetable & forecast history', { exact: true }).click();
       await page.locator('.report-region .jt-detail').waitFor();
       assert.ok((await page.locator('.report-region .jt-detail').innerText()).includes('SIMULATION ONLY'));
       assert.equal(await page.locator('.report-region .jt-detail > .jt-table-scroll tbody tr').count(), 5);

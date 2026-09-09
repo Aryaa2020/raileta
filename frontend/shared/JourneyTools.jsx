@@ -47,7 +47,7 @@ function Mode({ mode, onChange }) {
   return <label>Data source<select aria-label="Journey data source" value={mode} onChange={event => onChange(event.target.value)}><option value="live">Sourced journeys</option><option value="simulation">Simulation only</option></select></label>;
 }
 
-export function JourneyWorkspace({ trainNumber = '', initialMode = 'live', initialDate }) {
+export function JourneyWorkspace({ trainNumber = '', initialMode = 'live', initialDate, renderDetail }) {
   const [mode, setMode] = useState(initialMode);
   useEffect(() => { setMode(initialMode); }, [initialMode]);
   const [date, setDate] = useState(initialDate || today);
@@ -67,7 +67,7 @@ export function JourneyWorkspace({ trainNumber = '', initialMode = 'live', initi
     {list.data && !list.data.journeys.length && <p className="jt-empty">No dated journeys available for this selection. Try another date or choose Simulation only to view an explicitly synthetic demo.</p>}
     {!!list.data?.journeys.length && <label className="jt-run-select">Journey<select aria-label="Choose dated journey" value={selected} onChange={e => setSelected(e.target.value)}><option value="">Choose a dated run</option>{list.data.journeys.map(run => <option key={run.id} value={run.id}>{run.train_number} · {run.train_name} · {run.start_date} · {run.status}{run.is_stale ? ' · old report' : ''}</option>)}</select></label>}
     {selected && <LoadState request={detail} />}
-    {detail.data && <JourneyDetail key={detail.data.id} journey={detail.data} />}
+    {detail.data && (renderDetail ? renderDetail(detail.data) : <JourneyDetail key={detail.data.id} journey={detail.data} />)}
   </div>;
 }
 

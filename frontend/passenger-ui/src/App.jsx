@@ -6,12 +6,14 @@ import RevealText from '../../shared/RevealText';
 import TrackJourney from './components/TrackJourney';
 import HeroTrack from './components/HeroTrack';
 import TrainSearch from './components/TrainSearch';
+import PassengerJourney from './components/PassengerJourney';
+import { routeLabel } from '../../shared/trainSearch.mjs';
 import StationCard from './components/StationCard';
 import DelayChip from './components/DelayChip';
 import RouteNavigator from './components/RouteNavigator';
 import HistoricalReplayDetail from './components/HistoricalReplayDetail';
 import JourneyProgress from './components/JourneyProgress';
-import { JourneyWorkspace, JourneyDetail } from '../../shared/JourneyTools';
+import { JourneyWorkspace } from '../../shared/JourneyTools';
 import { getCorridorStatus, getTrainETA } from './services/api';
 
 export default function App() {
@@ -23,15 +25,38 @@ export default function App() {
   const [rosterError, setRosterError] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const searchVersion = useRef(0);
+  const reportRegion = useRef(null);
+  const pendingScroll = useRef(0);
   const historical = trainData?.data_mode === 'historical_replay' || corridorData?.data_mode === 'historical_replay';
 
-  const handleSearch = async (trainNumber) => {
+  const handleSearch = async (trainNumber, { scroll = true } = {}) => {
     const version = ++searchVersion.current;
+    pendingScroll.current = scroll ? version : 0;
     setLoading(true); setError(null); setTrainData(null);
     try { const data = await getTrainETA(trainNumber); if (version === searchVersion.current) setTrainData(data); }
     catch (err) { if (version === searchVersion.current) setError(err.response?.data?.detail || 'We could not find this train. Check the number and try again.'); }
     finally { if (version === searchVersion.current) setLoading(false); }
   };
+  useEffect(() => {
+    if (loading || !trainData || !pendingScroll.current) return;
+    const version = pendingScroll.current;
+    let cancelled = false;
+    let frame;
+    // Wait for the result and its font metrics before positioning below the nav.
+    document.fonts.ready.then(() => {
+      if (cancelled) return;
+      frame = requestAnimationFrame(() => {
+        if (cancelled || version !== searchVersion.current || pendingScroll.current !== version) return;
+        const target = reportRegion.current?.querySelector('.pj-layout') || reportRegion.current;
+        if (!target) return;
+        pendingScroll.current = 0;
+        target.focus({ preventScroll: true });
+        const navBottom = document.querySelector('.site-nav')?.getBoundingClientRect().bottom || 0;
+        window.scrollTo({ top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - navBottom - 20), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+      });
+    });
+    return () => { cancelled = true; cancelAnimationFrame(frame); };
+  }, [trainData, loading]);
   useEffect(() => {
     let active = true; let pending = false;
     const load = async () => {
@@ -68,23 +93,23 @@ export default function App() {
       <div className="hero-stage">
         <HeroTrack />
       <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-copy"><p className="hero-kicker"><span /> A new perspective on rail</p><RevealText as="h1" id="hero-title" text={'Move beyond delays.\nSee the bigger picture.'} /><p className="hero-description">A little less guessing. A lot more clarity. Explore your train’s delay, understand the prediction, and see the data behind every number.</p><div className="hero-actions"><KiroButton className="primary-button" href="#train-search"><TrainFront /><span>Explore trains</span><ArrowUpRight /></KiroButton></div><p className="hero-footnote">Built for Indian Railways. Open about the data.</p></div>
-        <aside className="hero-notes" aria-label="About this demo"><p className="eyebrow"><span className="square-dot" /> A little more context</p><div><span>01 / FIND</span><strong>Start with a train.</strong><p>Search a number. Open its report.</p></div><div><span>02 / UNDERSTAND</span><strong>Look beyond the delay.</strong><p>Recorded averages, predictions, and the difference.</p></div><div><span>03 / TRUST</span><strong>See what we know.</strong><p>Sources and limitations, always in view.</p></div></aside>
+        <div className="hero-copy"><p className="hero-kicker"><span /> A new perspective on rail</p><RevealText as="h1" id="hero-title" text={'Move beyond delays.\nSee the bigger picture.'} /><p className="hero-description">A little less guessing. A lot more clarity. Find your train, choose your stop, and see when you’re expected to arrive.</p><div className="hero-actions"><KiroButton className="primary-button" href="#train-search"><TrainFront /><span>Explore trains</span><ArrowUpRight /></KiroButton></div><p className="hero-footnote">Built for Indian Railways. Open about the data.</p></div>
+        <aside className="hero-notes" aria-label="About this demo"><p className="eyebrow"><span className="square-dot" /> A little more context</p><div><span>01 / FIND</span><strong>Start with a train.</strong><p>Search by name, number or route.</p></div><div><span>02 / UNDERSTAND</span><strong>Look beyond the delay.</strong><p>Your expected arrival, with every stop along the way.</p></div><div><span>03 / TRUST</span><strong>See what we know.</strong><p>Sources and limitations, always in view.</p></div></aside>
       </section>
       </div>
 
       <section className="explorer-frame" id="train-search" aria-labelledby="explorer-title">
         <div className="frame-heading"><div><p>THE TRAIN EXPLORER</p><h2 id="explorer-title">Your train. The full picture.</h2></div><span className="frame-decoration" aria-hidden="true"><span /><RailMark /><span /></span></div>
         <div className="explorer-window"><div className="window-bar"><span className="window-dots" aria-hidden="true"><i /><i /><i /></span><span className="window-title"><RailMark /> RailETA <span>/</span> train explorer</span><span className="window-mode"><i />{corridorData?.data_mode === 'corridor_simulation' ? 'Simulation · trained LightGBM' : corridorData ? historical ? 'Historical profiles' : 'Prototype events' : 'Connecting to data'}</span></div>
-          <div className="explorer-body"><div className="explorer-intro"><div><p className="eyebrow">{historical ? 'Find a delay profile' : 'Find your train'}</p><h3>Where does your journey begin?</h3></div><KiroButton variant="outline" className="utility-button refresh-reports" type="button" disabled={loading || rosterLoading} aria-label={trainData ? 'Refresh report' : 'Refresh train list'} onClick={() => { if (trainData) handleSearch(trainData.train_number); else { setRosterLoading(true); setRefreshKey(value => value + 1); } }}><RefreshCw className={loading || rosterLoading ? 'animate-spin' : ''} /><span>Refresh</span></KiroButton></div>
-            <TrainSearch trains={trains} onSearch={handleSearch} loading={loading} historical={historical} />
-            <details className="jt-operational"><summary>Choose a journey date · station timeline & forecast history</summary><JourneyWorkspace trainNumber={trainData?.train_number || ''} initialMode={corridorData?.data_mode === 'corridor_simulation' ? 'simulation' : 'live'} initialDate={corridorData?.data_mode === 'corridor_simulation' ? corridorData.scenario_date : undefined} /></details>
+          <div className="explorer-body"><div className="explorer-intro"><div><p className="eyebrow">{historical ? 'Find a delay profile' : 'Find your train'}</p><h3>Where does your journey begin?</h3></div><KiroButton variant="outline" className="utility-button refresh-reports" type="button" disabled={loading || rosterLoading} aria-label={trainData ? 'Refresh report' : 'Refresh train list'} onClick={() => { if (trainData) handleSearch(trainData.train_number, { scroll: false }); else { setRosterLoading(true); setRefreshKey(value => value + 1); } }}><RefreshCw className={loading || rosterLoading ? 'animate-spin' : ''} /><span>Refresh</span></KiroButton></div>
+            <TrainSearch trains={trains} onSearch={handleSearch} loading={loading} rosterLoading={rosterLoading} />
+            <details className="jt-operational"><summary>Choose a journey date · station timeline & forecast history</summary><JourneyWorkspace renderDetail={journey => <PassengerJourney key={journey.id} journey={journey} />} trainNumber={trainData?.train_number || ''} initialMode={corridorData?.data_mode === 'corridor_simulation' ? 'simulation' : 'live'} initialDate={corridorData?.data_mode === 'corridor_simulation' ? corridorData.scenario_date : undefined} /></details>
             {rosterError && <div role="alert" className="inline-alert"><AlertCircle /><p>{rosterError}</p><button type="button" onClick={() => setRefreshKey(value => value + 1)}>Retry <RefreshCw /></button></div>}
-            <div className="report-region" aria-label="Train reports" aria-busy={loading}>
+            <div ref={reportRegion} tabIndex={-1} className="report-region" aria-label="Train reports" aria-busy={loading}>
               {(trainData || error || loading) && <button className="back-button" type="button" onClick={clearSelection}><ArrowLeft /> Back to trains</button>}
               {error && <div role="alert" className="inline-alert error"><AlertCircle /><p>{error}</p></div>}
               {loading && <div className="report-loading" role="status"><RefreshCw className="animate-spin" /><p>Finding the full picture…</p><span>Reading the latest available train record.</span></div>}
-              {trainData && !loading && (trainData.journey ? <JourneyDetail journey={trainData.journey} /> : trainData.data_mode === 'historical_replay' ? <HistoricalReplayDetail train={trainData} /> : <EventReport train={trainData} />)}
+              {trainData && !loading && (trainData.journey ? <PassengerJourney key={trainData.journey.id} journey={trainData.journey} /> : trainData.data_mode === 'historical_replay' ? <HistoricalReplayDetail train={trainData} /> : <EventReport train={trainData} />)}
               {!trainData && !loading && !error && <TrainRoster historical={historical} trains={trains} loading={rosterLoading} onSearch={handleSearch} />}
             </div>
             <div className="data-caption"><span className="square-dot" /><p>{corridorData?.data_mode === 'corridor_simulation' ? corridorData.note : historical ? 'Historical profile replay · held-out trains · provenance unverified. Station averages, not live journeys or arrival times.' : 'Prototype station events. Check each report for its source, freshness, and model status.'}</p><span className="caption-mark">RAILETA / 01</span></div>
@@ -93,8 +118,8 @@ export default function App() {
       </section>
 
       <section className="how-section" id="how-it-works" aria-labelledby="how-title"><p className="eyebrow">Less noise. More understanding.</p><RevealText id="how-title" text={'Built for the way\nyou read a journey.'} /><div className="feature-grid">
-        <article><div className="feature-top"><TrainFront /><span>01</span></div><h3>Start with your train.</h3><p>Enter a train number or pick a profile. Get the available information in one focused, readable report.</p></article>
-        <article><div className="feature-top"><BarChart3 /><span>02</span></div><h3>Look past the number.</h3><p>Compare recorded delays with model predictions. See which inputs influenced the result, and by how much.</p></article>
+        <article><div className="feature-top"><TrainFront /><span>01</span></div><h3>Start with your train.</h3><p>Search by name, number, city or station. Choose a matching train to open your journey.</p></article>
+        <article><div className="feature-top"><BarChart3 /><span>02</span></div><h3>Look past the number.</h3><p>Choose your stop to see the expected arrival time, its arrival window, and the journey’s reported progress.</p></article>
         <article><div className="feature-top"><Layers /><span>03</span></div><h3>Know what’s underneath.</h3><p>Source context, uncertainty, and evaluation results stay with the data. A prediction should be something you can inspect.</p></article>
       </div></section>
       <section className="data-section" id="data-notes"><div><p className="eyebrow">Context is part of the picture</p><RevealText text={'Real clarity.\nHonest limits.'} /><p>{historical ? 'This demo explores recorded station-delay averages from the supplied dataset. The model is evaluated on trains it did not see during training.' : corridorData?.data_mode === 'corridor_simulation' ? 'This demo follows published Chennai–Bengaluru train routes using five years of generated journeys. LightGBM learns arrival estimates from these synthetic events, with separate calibration and test dates.' : 'This prototype explores station-event reports and mock arrival forecasts. Production forecasting depends on validated models and authorized railway feeds.'}</p></div><div className="data-notes"><div><span>01</span><p><strong>{historical ? 'Historical, not live' : 'Source comes first'}</strong>{historical ? 'Profiles describe averages. They cannot locate a train or tell you when it will arrive today.' : 'Each report identifies its source and whether the last event is stale.'}</p></div><div><span>02</span><p><strong>Predictions with context</strong>Model contributions describe associations. They are not proof of what caused a delay.</p></div><div><span>03</span><p><strong>Limitations stay visible</strong>{historical ? 'Dataset provenance is unverified. Actual test coverage and error are shown in each profile.' : corridorData?.data_mode === 'corridor_simulation' ? 'Synthetic test coverage is not proof of real-world accuracy. The harder disruption scenario shows why official operational validation is still needed.' : 'Mock arrival windows have not yet been validated against real train outcomes.'}</p></div></div></section>
@@ -110,8 +135,8 @@ function TrainRoster({ trains, historical, loading, onSearch }) {
   if (sort === 'delay') sorted.sort((a, b) => (Number.isFinite(b.delay_minutes) ? b.delay_minutes : -Infinity) - (Number.isFinite(a.delay_minutes) ? a.delay_minutes : -Infinity));
   if (sort === 'number') sorted.sort((a, b) => String(a.train_number).localeCompare(String(b.train_number), undefined, { numeric: true }));
   const visible = expanded ? sorted : sorted.slice(0, 6);
-  return <section className="train-roster"><div className="roster-heading"><div><h4>{historical ? 'Held-out train profiles' : 'Available trains'}</h4><p>{historical ? 'Recorded average delays' : 'Latest reported delays'} · minutes</p></div><label className="roster-sort"><span>Sort by</span><select aria-label="Sort trains" value={sort} onChange={event => setSort(event.target.value)}><option value="default">Default order</option><option value="delay">Highest delay</option><option value="number">Train number</option></select></label></div>
-    {loading ? <p className="empty-roster" role="status">Loading available trains…</p> : !trains.length ? <p className="empty-roster">No train records available yet. You can still search by train number.</p> : <div className="roster-grid">{visible.map(train => <button className="roster-train" type="button" key={train.train_number} onClick={() => onSearch(train.train_number)}><span className="train-number">{train.train_number}</span><span className="train-copy"><strong>{train.train_name}</strong><small>{historical ? 'Profile station' : 'Last reported'} <span>{train.current_station || '—'}</span></small></span><span className="train-delay">{Number.isFinite(train.delay_minutes) ? Math.round(train.delay_minutes) : '—'}<small>min</small></span><ArrowUpRight /></button>)}</div>}
+  return <section className="train-roster"><div className="roster-heading"><div><h4>{historical ? 'Held-out train profiles' : 'Available trains'}</h4><p>{historical ? 'Recorded average delays · minutes' : 'Choose a train to see when it arrives.'}</p></div><label className="roster-sort"><span>Sort by</span><select aria-label="Sort trains" value={sort} onChange={event => setSort(event.target.value)}><option value="default">Default order</option><option value="delay">Highest delay</option><option value="number">Train number</option></select></label></div>
+    {loading ? <p className="empty-roster" role="status">Loading available trains…</p> : !trains.length ? <p className="empty-roster">No train records available yet. You can still search by train number.</p> : <div className="roster-grid">{visible.map(train => <button className="roster-train" type="button" key={train.train_number} onClick={() => onSearch(train.train_number)}><span className="train-number">{train.train_number}</span><span className="train-copy"><strong>{train.train_name}</strong><small>{train.stops?.length ? routeLabel(train) : <>{historical ? 'Profile station' : 'Last reported'} <span>{train.current_station || '—'}</span></>}</small></span>{historical ? <span className="train-delay">{Number.isFinite(train.delay_minutes) ? Math.round(train.delay_minutes) : '—'}<small>min</small></span> : <span className="train-open-label">View arrival</span>}<ArrowUpRight /></button>)}</div>}
     {!loading && trains.length > 6 && <div className="roster-footer"><span>Showing {visible.length} of {trains.length} trains</span><KiroButton variant="outline" className="utility-button" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}>{expanded ? 'Show fewer trains' : 'Show all ' + trains.length + ' trains'}<span aria-hidden="true">{expanded ? '−' : '+'}</span></KiroButton></div>}
   </section>;
 }

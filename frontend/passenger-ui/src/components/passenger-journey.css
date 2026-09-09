@@ -1,0 +1,32 @@
+.passenger-journey { margin: 24px 0; color: var(--rail-white); }
+.train-open-label { font-size: 11px; color: var(--rail-lavender); }.train-copy small { line-height: 1.6; }
+.pj-source { padding: 12px 16px; border: 1px solid #49345d; border-radius: 10px; background: #251c30; color: var(--rail-lavender); font-size: 12px; line-height: 1.6; }
+.pj-source span { display: block; color: var(--rail-muted); }
+.passenger-journey header { margin: 28px 0; }
+.pj-train-number { display: flex; align-items: center; gap: 8px; color: var(--rail-lavender); font-size: 13px; }
+.pj-train-number svg { width: 18px; }
+.passenger-journey h2 { margin: 10px 0; font-size: clamp(22px, 3vw, 32px); line-height: 1.2; }
+.passenger-journey header p { color: var(--rail-muted); font-size: 12px; }
+.pj-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 0; align-items: stretch; border: 1px solid #4d395f; border-radius: 18px; background: #1c1623; overflow: hidden; }
+.pj-arrival { min-width: 0; padding: 28px; }
+.pj-arrival > label { display: block; margin-bottom: 10px; font-size: 14px; }
+.pj-arrival select { width: 100%; min-width: 0; padding: 12px 9px; border: 1px solid #72578c; border-radius: 8px; background: #131016; color: var(--rail-white); font: inherit; font-size: 14px; }
+.pj-arrival-result { padding-top: 30px; }
+.pj-arrival-result > p { font-size: 13px; line-height: 1.7; color: var(--rail-muted); }
+.pj-arrival-time { display: block; margin: 6px 0; font-size: clamp(30px, 4.4vw, 54px); letter-spacing: -.045em; font-weight: 500; line-height: 1.2; color: var(--rail-lavender); overflow-wrap: anywhere; }
+.pj-arrival-result > span { display: block; font-size: 13px; line-height: 1.7; }
+.pj-arrival-result .pj-window { margin: 18px 0; padding: 10px 12px; border-left: 2px solid var(--rail-lavender); color: #e0c8fb; }
+.pj-scheduled { margin-top: 18px; }.pj-scheduled span { display: block; color: #edc991; }
+.pj-arrival-result .pj-estimate-note { margin-top: 12px; font-size: 11px; }
+.pj-stale { margin-top: 20px; padding: 12px; border: 1px solid #725939; border-radius: 8px; color: #edc991; font-size: 12px; line-height: 1.65; }
+.pj-progress { grid-column: 1 / -1; display: grid; gap: 10px; margin: 0; padding: 22px 28px; border-top: 1px solid #3d3048; }.pj-progress label { font-size: 13px; }.pj-progress progress { width: 100%; height: 7px; accent-color: #bf94f5; }.pj-progress span { color: var(--rail-muted); font-size: 11px; line-height: 1.6; }
+.pj-route { min-width: 0; padding: 28px 20px; border-left: 1px solid #3d3048; }.pj-route-heading { padding: 0 8px 20px; }.pj-route h3 { font-size: 18px; }.pj-route-heading p { margin-top: 6px; color: var(--rail-muted); font-size: 12px; }
+.pj-route ol { padding: 0; margin: 0; list-style: none; }.pj-route li { position: relative; }.pj-route li:not(:last-child)::before { content: ''; position: absolute; width: 3px; left: 23px; top: 26px; bottom: -26px; background: #42344f; }.pj-route li.is-reported:not(.is-last-report)::before { background: #a87ad4; }
+.pj-route li button { position: relative; display: flex; gap: 16px; width: 100%; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 10px; color: inherit; padding: 14px 8px; }.pj-route li button:hover { background: #211a29; }.pj-route .is-selected button { background: #2b2037; border-color: #6e4c92; }.pj-stop-marker { position: relative; z-index: 1; flex-shrink: 0; width: 28px; height: 28px; display: grid; place-items: center; background: #1c1623; border-radius: 8px; color: #bea0df; }.pj-stop-marker svg { width: 18px; height: 18px; }.pj-stop-marker i { width: 7px; height: 7px; border: 1px solid #a393b7; border-radius: 50%; }.is-last-report .pj-stop-marker { background: #c49afa; color: #17101f; box-shadow: 0 0 0 4px #1c1623; }.is-selected .pj-stop-marker { color: #e5caff; background: #553471; }.is-last-report.is-selected .pj-stop-marker { background: #c49afa; color: #17101f; }
+.pj-stop-copy { display: grid; gap: 5px; min-width: 0; line-height: 1.5; }.pj-stop-copy small { font-size: 10px; color: #c39be9; }.pj-stop-copy strong { font-size: 14px; font-weight: 500; }.pj-stop-copy > span { font-size: 11px; color: var(--rail-muted); }
+.pj-more { margin-top: 24px; padding: 18px; border: 1px solid var(--rail-border); border-radius: 12px; }.pj-more > summary { cursor: pointer; font-size: 13px; color: var(--rail-lavender); }
+.train-search-results { margin-top: 16px; padding: 14px; border: 1px solid #5d436e; border-radius: 12px; background: #16111c; }.train-search-results > p { font-size: 12px; color: var(--rail-muted); line-height: 1.6; }.train-search-results button { display: flex; justify-content: space-between; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 16px 8px; border: 0; border-bottom: 1px solid var(--rail-border); background: transparent; color: var(--rail-white); }.train-search-results button:last-child { border-bottom: 0; }.train-search-results button:hover { background: #2b2037; }.train-search-results button > span { min-width: 0; }.train-search-results strong { display: block; font-size: 14px; font-weight: 500; }.train-search-results small { display: block; margin-top: 6px; color: var(--rail-muted); font-size: 11px; line-height: 1.6; }.train-search-results svg { width: 18px; flex-shrink: 0; }
+.pj-route button:focus-visible, .pj-arrival select:focus-visible, .train-search-results button:focus-visible { outline: 2px solid #d0a5ff; outline-offset: 3px; }
+.pj-progress progress { appearance: none; border: 0; border-radius: 6px; overflow: hidden; background: #46394f; }.pj-progress progress::-webkit-progress-bar { background: #46394f; }.pj-progress progress::-webkit-progress-value { background: #bf94f5; }.pj-progress progress::-moz-progress-bar { background: #bf94f5; }
+@media(max-width: 900px) { .pj-layout { grid-template-columns: minmax(0, 1fr); }.pj-route { border-left: 0; border-top: 1px solid #3d3048; } }
+@media(max-width: 440px) { .pj-arrival { padding: 22px 16px; }.pj-route { padding: 22px 8px; }.pj-progress { padding: 20px 16px; }.pj-more { padding: 12px; }.pj-source { padding: 10px; }.pj-arrival-time { font-size: 36px; } }

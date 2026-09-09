@@ -19,6 +19,7 @@ const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright'
       await page.setViewportSize({width,height:1000});
       await page.goto('http://127.0.0.1:3000/');
       await page.locator('.roster-train').filter({hasText:'12027'}).click();
+      await page.getByText('Full timetable & forecast history', {exact:true}).click();
       await page.locator('.report-region .jt-detail').waitFor();
       assert.ok((await page.locator('.report-region .jt-detail').innerText()).includes('SIMULATION ONLY'));
       assert.equal(await page.locator('.report-region .jt-detail > .jt-table-scroll tbody tr').count(),5);

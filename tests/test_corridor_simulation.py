@@ -65,6 +65,9 @@ class ReplayTests(TestCase):
         self.assertEqual(feature_row(self.journey,event,target,[]),features_at(self.run,0,3))
         counts=(JourneyEvent.objects.count(),ForecastIssue.objects.count())
         self.assertEqual(self.client.get('/api/v1/eta/12027').json()['data_mode'],'corridor_simulation')
+        roster=self.client.get('/api/v1/corridor/MAS-SBC').json()['trains']
+        self.assertEqual([s['station_code'] for s in roster[0]['stops']],['MAS','KPD','JTJ','BNC','SBC'])
+        self.assertIn('Chennai',roster[0]['stops'][0]['station_name'])
         self.assertEqual(counts,(JourneyEvent.objects.count(),ForecastIssue.objects.count()))
         self.assertEqual(self.client.get('/api/v1/journeys?mode=live').json()['journeys'],[])
 

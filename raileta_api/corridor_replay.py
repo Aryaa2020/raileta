@@ -101,7 +101,8 @@ def corridor(name='MAS-SBC'):
     if name.upper()=='MAS-SBC':
         for run in latest_runs():
             detail=journey_json(run,detail=True)
-            rows.append(dict(train_number=run.train_number,train_name=run.train_name,train_class='Simulation',current_station=detail['current_station'],next_station=(detail['next_stop'] or {}).get('station_code'),delay_minutes=detail['current_delay_minutes'],is_stale=detail['is_stale'],status=detail['status'],source=SOURCE,journey_id=str(run.pk)))
+            stops=[dict(station_code=s['station_code'],station_name=s['station_name']) for s in detail['stops']]
+            rows.append(dict(train_number=run.train_number,train_name=run.train_name,stops=stops,train_class='Simulation',current_station=detail['current_station'],next_station=(detail['next_stop'] or {}).get('station_code'),delay_minutes=detail['current_delay_minutes'],is_stale=detail['is_stale'],status=detail['status'],source=SOURCE,journey_id=str(run.pk)))
     return dict(corridor_name=name,total_trains=len(rows),trains=rows,congestion_hotspots=[],timestamp=clock(),scenario_date=clock().astimezone(IST).date(),data_mode='corridor_simulation',note='SIMULATION ONLY · Published train numbers/stops, generated movements and delays. Scenario clock is not today’s service.',weather_observations=[])
 
 
