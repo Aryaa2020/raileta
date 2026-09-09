@@ -1,0 +1,70 @@
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright');
+
+(async () => {
+  const browser = await chromium.launch({ channel: 'msedge', headless: true });
+  const checks = [], errors = [];
+  try {
+    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+    await context.route('**/*', route => ['localhost','127.0.0.1'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
+    const page = await context.newPage();
+    page.on('pageerror', e => errors.push(e.message));
+    const runs = (await (await page.request.get('http://127.0.0.1:8000/api/v1/journeys?mode=simulation')).json()).journeys;
+    assert.ok(runs.length >= 2, 'Run manage.py simulate_journeys first');
+    const old = runs.find(r => r.status === 'completed');
+    assert.ok(old);
+    const fit = async () => assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No horizontal page overflow');
+    for (const width of [1440,390,320]) {
+      await page.setViewportSize({ width, height: 1000 });
+      await page.goto('http://127.0.0.1:3002/');
+      const tools = page.locator('.jt-operational');
+      await tools.locator('summary').first().click();
+      await tools.getByText('No dated journeys available for this selection.', { exact: false }).waitFor();
+      await tools.getByRole('combobox', { name: 'Journey data source' }).selectOption('simulation');
+      await tools.getByRole('checkbox', { name: 'Include previous runs' }).check();
+      await tools.getByRole('combobox', { name: 'Choose dated journey' }).selectOption(old.id);
+      await tools.getByRole('heading', { name: old.train_name }).waitFor();
+      assert.equal(await tools.locator('.jt-detail > .jt-table-scroll tbody tr').count(), 4);
+      await fit();
+      await tools.getByRole('button', { name: 'Forecast changes', exact: true }).click();
+      await tools.getByRole('combobox', { name: 'Forecast history station' }).selectOption('1');
+      await tools.getByRole('img', { name: 'Forecast evolution and supplied arrival windows' }).waitFor();
+      await tools.getByText('Actual arrival:', { exact: false }).waitFor();
+      if (width === 1440) await tools.screenshot({ path: path.resolve('logs/dated-controller-history.png') });
+      await fit();
+      await tools.getByRole('button', { name: 'Section conditions', exact: true }).click();
+      await tools.getByRole('combobox', { name: 'Journey data source' }).selectOption('simulation');
+      await tools.getByRole('img', { name: 'Corridor section conditions map' }).waitFor();
+      assert.ok(await tools.locator('polyline[stroke="#edc991"]').count());
+      await fit();
+      await tools.getByRole('button', { name: 'Accuracy monitoring', exact: true }).click();
+      await tools.getByText('Synthetic outcomes only;', { exact: false }).waitFor();
+      assert.ok(await tools.locator('tbody tr').count());
+      await fit();
+      checks.push(`Controller ${width}px: dated runs, complete timeline, forecast evolution/actuals, section highlights, measured synthetic accuracy`);
+    }
+    await page.goto('http://127.0.0.1:3000/');
+    const consumer = page.locator('.jt-operational');
+    await consumer.locator('summary').first().click();
+    await consumer.getByRole('combobox', { name: 'Journey data source' }).selectOption('simulation');
+    await consumer.getByRole('checkbox', { name: 'Include previous runs' }).check();
+    await consumer.getByRole('combobox', { name: 'Choose dated journey' }).selectOption(old.id);
+    await consumer.getByRole('heading', { name: old.train_name }).waitFor();
+    await fit();
+    checks.push('Passenger: dated service selection and timeline on 320px');
+    await page.goto('http://127.0.0.1:3001/');
+    await page.getByRole('button', { name: 'Expected arrivals', exact: true }).click();
+    await page.getByRole('combobox', { name: 'Journey data source' }).selectOption('simulation');
+    await page.getByRole('combobox', { name: 'Arrival station' }).selectOption('KPD');
+    await page.getByRole('combobox', { name: 'Arrival time window' }).selectOption('24');
+    await page.locator('.jt-arrivals tbody tr').first().waitFor();
+    assert.ok((await page.locator('.jt-arrivals').innerText()).includes('Not supplied'));
+    await fit();
+    await page.getByRole('button', { name: 'Departures', exact: true }).click();
+    await page.getByRole('region', { name: 'Station departure board' }).waitFor();
+    checks.push('Station: arrivals mode/window selection, no invented platforms, return to departures');
+    assert.deepEqual(errors, []);
+    console.log(JSON.stringify({ passed:true, checks }, null, 2));
+  } finally { await browser.close(); }
+})().catch(error => { console.error(error); process.exitCode=1; });

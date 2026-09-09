@@ -1,52 +1,43 @@
 import React from 'react';
-import DelayChip from './DelayChip';
-import StationCard from './StationCard';
+import { ChevronDown, Clock3 } from 'lucide-react';
+import JourneyProgress from './JourneyProgress';
 
-const dateTime = (value) => value && Number.isFinite(Date.parse(value))
-  ? new Date(value).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })
-  : '—';
-const decimal = (value) => Number.isFinite(value) ? value.toFixed(1) : '—';
+const dateTime = value => value && Number.isFinite(Date.parse(value))
+  ? new Date(value).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) : 'Unavailable';
+const decimal = value => Number.isFinite(value) ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 1 }).format(value) : '—';
+const readableName = value => value && value === value.toUpperCase()
+  ? value.toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase()) : value;
+const factorName = reason => ({ service_type: 'Type of train', station_name_context: 'Type of station', station_profile: 'The station' }[reason.category] || reason.description);
 
 export default function HistoricalReplayDetail({ train }) {
   const replay = train.historical_replay || {};
   const metrics = replay.test_metrics || {};
-  if (train.dataset_kind === 'aggregate_profiles') return <div className="mt-8 space-y-5 animate-enter">
-    <section className="glass-panel p-5 sm:p-7">
-      <p className="eyebrow mb-3">Held-out historical delay profile</p>
-      <h2 className="text-2xl font-semibold text-white">{train.train_name}</h2>
-      <p className="mt-2 text-sm text-slate-400">{train.train_number} · {replay.station_name} ({replay.station_code})</p>
-      <p className="mt-4 text-sm text-violet-200" role="status">Replaying recorded aggregate profiles · model has not seen these trains</p>
-      <p className="mt-2 text-xs leading-relaxed text-slate-400">This is a train–station average from the supplied etrain export, not an individual journey or a live train feed. Source authenticity is unverified. No arrival times or moving positions can be inferred.</p>
-      <dl className="mt-6 grid gap-5 sm:grid-cols-3">
-        <div><dt className="text-xs text-slate-500">Recorded average delay</dt><dd className="mt-2 text-3xl text-amber-100">{decimal(replay.recorded_average_delay_minutes)} <span className="text-sm">min</span></dd></div>
-        <div><dt className="text-xs text-slate-500">Model-predicted average delay</dt><dd className="mt-2 text-3xl text-violet-100">{decimal(replay.predicted_average_delay_minutes)} <span className="text-sm">min</span></dd></div>
-        <div><dt className="text-xs text-slate-500">Absolute error for this profile</dt><dd className="mt-2 text-3xl text-white">{decimal(replay.absolute_error_minutes)} <span className="text-sm">min</span></dd></div>
+  const aggregate = train.dataset_kind === 'aggregate_profiles';
+  const recorded = aggregate ? replay.recorded_average_delay_minutes : replay.actual_delay_minutes;
+  const predicted = aggregate ? replay.predicted_average_delay_minutes : replay.predicted_delay_minutes;
+  const difference = replay.absolute_error_minutes;
+  const station = readableName(replay.station_name || replay.destination_name);
+
+  return <div className="simple-report animate-enter">
+    <section className="simple-train-summary solid-panel">
+      <header className="simple-report-heading"><div><p className="eyebrow">Your train, at a glance</p><h2>{train.train_name}</h2><p className="simple-train-meta">Train {train.train_number}{station ? ` · ${station}` : ''}{replay.station_code ? ` (${replay.station_code})` : ''}</p></div><span className="past-data-badge"><Clock3 /> Past records</span></header>
+      <p className="simple-report-intro">{aggregate ? 'Here’s how RailETA’s estimate compares with this train’s past average delay.' : 'Here’s how RailETA’s estimate compares with a recorded journey.'}</p>
+      <dl className="simple-delay-metrics">
+        <div><dt>{aggregate ? 'Past average delay' : 'Recorded delay'}</dt><dd>{decimal(recorded)} <span>min</span></dd><p>{aggregate ? 'Average lateness in the records' : 'Lateness in this past journey'}</p></div>
+        <div><dt>RailETA estimate</dt><dd>{decimal(predicted)} <span>min</span></dd><p>{aggregate ? 'The model’s estimate of that average' : 'The model’s estimate for that journey'}</p></div>
+        <div><dt>Difference</dt><dd>{decimal(difference)} <span>min</span></dd><p>{Number.isFinite(predicted) && Number.isFinite(recorded) ? predicted > recorded ? 'The estimate was higher' : predicted < recorded ? 'The estimate was lower' : 'The estimate matched the record' : 'Not enough data to compare'}</p></div>
       </dl>
-      <p className="mt-6 text-sm text-slate-200">TRAIN-calibrated interval for the average: {decimal(replay.lower_minutes)}–{decimal(replay.upper_minutes)} min</p>
-      <p className="mt-2 text-xs text-slate-400">80% target for profile averages—not an arrival window. TEST coverage: {decimal(metrics.coverage_percent)}%.</p>
-      <p className="mt-5 border-t border-white/10 pt-4 text-xs leading-relaxed text-slate-400">Separate TEST: MAE {decimal(metrics.mae_minutes)} min · {metrics.n_test} profiles · {metrics.test_trains} unseen trains. TRAIN-median baseline: {decimal(metrics.train_median_baseline_mae_minutes)} min MAE.</p>
+      <p className="past-data-note">Past data, not a live update or a prediction for today. Source not independently verified.</p>
+      <JourneyProgress train={train} />
     </section>
-    <section className="glass-panel p-5 sm:p-6"><h3 className="font-semibold text-white">Top model contributions · SHAP</h3><p className="mt-2 text-xs text-slate-400">Signed effects relative to the model baseline of {decimal(replay.shap_base_minutes)} min. Associations, not proven delay causes.</p><div className="mt-4 grid gap-2 sm:grid-cols-2">{(train.overall_delay_reasons || []).slice(0,3).map((reason,index)=><DelayChip key={index} reason={reason}/>)}</div></section>
-    <p className="px-2 text-xs leading-relaxed text-slate-500">Page collected: {dateTime(replay.scraped_at)} IST · Replayed: {dateTime(replay.replayed_at)} IST. Collection time is not arrival time. One profile every {replay.record_interval_seconds}s; original train timing is unavailable.</p>
-    <p className="px-2 text-xs text-slate-500">Model {train.model_version} · Record {replay.record_id}</p>
-  </div>;
-  return <div className="mt-8 space-y-5 animate-enter">
-    <section className="glass-panel p-5 sm:p-7">
-      <p className="eyebrow mb-3">Historical arrival record</p>
-      <h2 className="text-2xl font-semibold text-white">{train.train_name}</h2>
-      <p className="mt-2 text-sm text-slate-400">Train {train.train_number} · {replay.source_name} → {replay.destination_name}</p>
-      <p className="mt-4 text-sm text-violet-200" role="status">Historical dataset replay · held-out trains · provenance unverified</p>
-      <p className="mt-2 text-xs leading-relaxed text-slate-400">The model has not seen these trains or runs during fitting or calibration. This is a retrospective prediction using pre-arrival fields, not a live train feed. Source authenticity has not been independently verified.</p>
-      <dl className="mt-6 grid gap-5 sm:grid-cols-2">
-        <div><dt className="text-xs text-slate-500">Recorded actual arrival · IST</dt><dd className="mt-1 text-lg text-amber-100">{dateTime(replay.original_actual_arrival)}</dd><dd className="text-sm text-slate-400">{decimal(replay.actual_delay_minutes)} min recorded delay</dd></div>
-        <div><dt className="text-xs text-slate-500">Model prediction error for this run</dt><dd className="mt-1 text-lg text-violet-100">{decimal(replay.absolute_error_minutes)} min absolute error</dd><dd className="text-sm text-slate-400">{decimal(replay.predicted_delay_minutes)} min predicted delay</dd></div>
-        <div><dt className="text-xs text-slate-500">Original scheduled arrival · IST</dt><dd className="mt-1 text-sm text-slate-200">{dateTime(replay.original_scheduled_arrival)}</dd></div>
-        <div><dt className="text-xs text-slate-500">Replayed at · IST</dt><dd className="mt-1 text-sm text-slate-200">{dateTime(replay.replayed_at)}</dd></div>
-      </dl>
-      <p className="mt-5 border-t border-white/10 pt-4 text-xs leading-relaxed text-slate-400">Separate TEST set: MAE {decimal(metrics.mae_minutes)} min · empirical window coverage {decimal(metrics.coverage_percent)}% · {metrics.n_test ?? '—'} runs. The 80% target is not a guarantee for an individual run.</p>
-    </section>
-    <section><h3 className="mb-4 px-1 text-xl font-semibold text-white">Retrospective destination prediction</h3><div className="space-y-3">{(train.upcoming_stations || []).map((station) => <StationCard key={station.station_code} station={station} />)}</div></section>
-    <section className="glass-panel p-5 sm:p-6"><h3 className="font-semibold text-white">Top model contributions · SHAP</h3><p className="mt-1 text-xs text-slate-400">Signed effects on predicted delay, relative to the model baseline—not proven causes of this delay.</p><div className="mt-4 grid gap-2 sm:grid-cols-2">{(train.overall_delay_reasons || []).slice(0, 3).map((reason, index) => <DelayChip key={index} reason={reason} />)}</div></section>
-    <p className="px-2 text-center text-xs text-slate-500">Arrival-only dataset: no intermediate station positions, GPS, or departure events. Model {train.model_version} · record {replay.record_id}</p>
+
+    <details className="report-details solid-panel"><summary><span>How this estimate was calculated</span><ChevronDown /></summary>
+      <div className="report-details-body">
+        <section><h3>What the model considered</h3><p>These inputs influenced the estimate. They do not tell us what actually caused the delay.</p><div className="simple-factor-list">{(train.overall_delay_reasons || []).slice(0, 3).map((reason, index) => <div key={index}><span>{factorName(reason)}</span><strong>{Number.isFinite(reason.minutes) ? `${decimal(Math.abs(reason.minutes))} min ${reason.minutes < 0 ? 'lower' : reason.minutes > 0 ? 'higher' : 'change'}` : 'Unavailable'}</strong></div>)}</div><p className="detail-small">Technical method: SHAP. Baseline estimate: {decimal(replay.shap_base_minutes)} min.</p></section>
+        <section><h3>How reliable is it?</h3><p>Across {metrics.n_test ?? 'the tested'} {aggregate ? 'station averages' : 'past journeys'}, the estimates differed from the records by {decimal(metrics.mae_minutes)} minutes on average.</p><p>The model’s range covered {decimal(metrics.coverage_percent)}% of test records. The target was 80%; this is not a guarantee for an individual journey.</p>{aggregate && <p>Range for this average: {decimal(replay.lower_minutes)}–{decimal(replay.upper_minutes)} min. This is not an arrival-time window.</p>}<p className="detail-small">Test set: {metrics.test_trains ?? '—'} trains excluded from training. Simple baseline error: {decimal(metrics.train_median_baseline_mae_minutes)} min. The range was calibrated on training data.</p></section>
+        {!aggregate && <section><h3>Times in the original record</h3><p>Scheduled: {dateTime(replay.original_scheduled_arrival)} IST</p><p>Arrived: {dateTime(replay.original_actual_arrival)} IST</p><p>Estimated arrival: {dateTime(train.upcoming_stations?.[0]?.predicted_arrival)} IST</p><p>Estimated range: {dateTime(train.upcoming_stations?.[0]?.confidence_lower)}–{dateTime(train.upcoming_stations?.[0]?.confidence_upper)} IST</p></section>}
+        <section><h3>About the data</h3><p>{aggregate ? 'The supplied etrain export contains train–station averages, not individual journeys. Its source has not been independently verified.' : 'This is an old arrival record, not a live train feed. Its source has not been independently verified.'} The model was tested on trains it had not seen during training.</p><p className="detail-small">Collected: {dateTime(replay.scraped_at)} IST · Replayed: {dateTime(replay.replayed_at)} IST. These are data timestamps, not the train’s current location.{replay.record_interval_seconds ? ` A record is replayed every ${replay.record_interval_seconds} seconds.` : ''}</p><p className="detail-small">Model: {train.model_version || 'Unavailable'} · Record: {replay.record_id || 'Unavailable'}</p></section>
+      </div>
+    </details>
   </div>;
 }

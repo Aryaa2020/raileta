@@ -106,3 +106,4 @@ coverage/
 .coverage
 htmlcov/
 team-access.txt
+tmp/

@@ -2,26 +2,26 @@
 
 Team members: start with [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md) for cloning,
 configuration, version checkpoints, and collaboration. See
-[CHANGELOG.md](CHANGELOG.md) for saved milestones. The current offline demo setup
-in [HISTORICAL_PROFILE_RESULTS.md](HISTORICAL_PROFILE_RESULTS.md) takes precedence
-over the legacy integration examples below.
+[CHANGELOG.md](CHANGELOG.md) for saved milestones. The current setup in
+[docs/corridor-simulation.md](docs/corridor-simulation.md) takes precedence over
+older aggregate-profile and integration examples below.
 
-**Current demo (7 September 2026):** offline held-out aggregate-delay profiles
-from `etrain_delays.csv`, scored with trained LightGBM and SHAP. These are
-station averages, not live runs or arrival forecasts. TEST MAE: **24.52 min**;
-coverage: **70.29%** (80% target not met). See
-[the reproducible experiment and demo instructions](HISTORICAL_PROFILE_RESULTS.md).
-The original event-driven product architecture below remains a future integration
-path, not a description of this dataset's capabilities.
+**Current demo (9 September 2026):** explicitly synthetic dated Chennai–Bengaluru
+journeys, using published train numbers/stops and a five-year generated corpus.
+7,043 journeys, 4.61 million position pings and 331,061 forecast examples train
+LightGBM q10/q50/q90 with conformal calibration and SHAP. Held-out **synthetic**
+MAE: **4.69 min** versus a 6.00-minute baseline; coverage: **80.14%**.
+A harder synthetic scenario achieves only **72.23%** coverage. These are not
+real-world accuracy claims. The active UI shows a separate scenario clock.
+The old aggregate dataset/model is retained for rollback but is no longer active.
 
 Submission-aligned event-driven ETA forecasting for Indian Railways coaching trains.
 
 RailETA combines structured station movement events, timetable slack, congestion,
 precedence risk, caution orders, and seasonal context to produce a point ETA, an
-80% calibrated arrival window, and plain-language reason codes. The local demo
-now uses the aggregate-profile replay described above; the legacy CRIS-shaped
-simulator and an authorised CRIS REST adapter can still be selected
-without changing downstream layers.
+calibrated arrival window targeting 80% coverage, and plain-language reason codes.
+The local demo uses the synthetic dated replay described above; legacy adapters
+remain available. Official feeds, WTT and real dated labels are still needed.
 
 The backend is integration-ready rather than pretending to have CRIS access: the
 live railway feeds and historical labelled runs are the remaining inputs needed
@@ -35,7 +35,7 @@ team.
 - Station display: IPIS-style departure board for station staff.
 - Controller dashboard: corridor view, event-derived progress, source freshness, and prediction factors.
 
-The existing dark purple liquid-glass visual system is intentionally retained. UI changes are limited to submission-aligned labels and data-quality indicators.
+The three interfaces share a solid black, plum, violet, and lavender visual system inspired by the saved Kiro reference. The passenger page provides immediately accessible train search, an embedded profile explorer, and data-context sections; operations and the station board share the same navigation and palette. The passenger header uses subtle backdrop blur; operational surfaces remain solid and the controller has no decorative animation. There is no scroll-locked introduction. Each frontend accepts optional `VITE_PASSENGER_URL`, `VITE_CONTROLLER_URL`, and `VITE_STATION_URL` settings for cross-app links; local defaults use ports 3000, 3002, and 3001 respectively.
 
 ## Architecture
 
@@ -122,12 +122,33 @@ cd frontend/controller-dashboard; pnpm install; pnpm run dev
 
 The Windows helpers are also available: `start_backend.ps1`, `start_passenger_ui.ps1`, `start_station_display.ps1`, `start_controller_dashboard.ps1`, and `START_ALL.ps1`.
 
+The UI browser checks use the backend on port 8000 and the three Vite apps on
+ports 3000, 3002, and 3001. With Playwright installed (or its module path supplied
+as `RAILETA_PLAYWRIGHT_PATH`), run `node frontend/tests/profile-browser-smoke.cjs`,
+`node frontend/tests/other-dashboard-regressions.cjs`, and
+`node frontend/tests/redesign-regressions.cjs`. The redesign suite replaces the
+old cover-animation/scroll-lock tests with desktop/mobile layout, navigation,
+search, error recovery, late-response, and opaque-surface checks. Screenshots
+are written to the ignored `logs/` directory.
+
+Run `node frontend/tests/interaction-motion-regressions.cjs` for the circular
+button-fill/color-inversion animation, staggered heading reveal, reduced-motion
+behavior, search shortcut, sorting, show-all, refresh, and track navigation.
+
 ## Forecasting contract
 
 - q10, q50, and q90 quantiles are post-processed to prevent crossing.
-- The displayed arrival window is calibrated to 80% coverage.
+- 80% is a target, not an established arrival-window coverage claim. Aggregate-profile calibration concerns averages only. Dated journey windows remain unavailable until a journey-specific model is validated, and measured coverage/sample counts are shown separately.
 - Top-three delay factors use controlled reason codes for congestion, weather, precedence, and carried delay.
 - Progress is based on the last accepted station event; no GPS navigation is implied in the UI.
+
+## Dated journey tools
+
+Dated timelines, forecast evolution, station arrivals, read-only section conditions,
+and operational accuracy panels are available in expandable tools without changing
+the aggregate-profile experiment. See [setup, API contracts, simulation and model gates](docs/dated-journeys.md).
+Run `python manage.py simulate_journeys` to add explicitly synthetic dated runs;
+select **Simulation only** in the new panels. No sourced journey model is active by default.
 
 ## Production path
 

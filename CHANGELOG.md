@@ -5,6 +5,33 @@ Git commits preserve exact file history; milestone tags identify saved releases.
 
 ## Unreleased
 
+## 0.2.0-demo — 2026-09-09
+
+- Rebuilt all three dashboards with a shared black/purple theme, simplified
+  journey reports, accessible stop progress and responsive navigation. Passenger
+  typography and full-width railway track reveal respect reduced motion;
+  the operations dashboard stays functional and animation-free.
+- Added dated journeys, ordered overnight timetables, forecast history, station
+  arrivals, read-only section conditions, destination outlook and accuracy views.
+- Replaced the active aggregate-profile demo with explicitly labelled Chennai–
+  Bengaluru simulation: real service numbers/stopping patterns, generated events.
+  Five-year corpus: 7,043 journeys, 331,061 training/evaluation samples and
+  4,764,228 feed records. Large generated corpora remain local and reproducible;
+  the generator, reference snapshot and trained model bundle are versioned.
+- LightGBM q10/q50/q90, conformal calibration, TreeSHAP and stale-data safeguards
+  retained. Synthetic held-out MAE 4.69 min, measured coverage 80.14%; harder
+  synthetic stress coverage 72.23%. These are not real-world accuracy claims.
+- Added immutable model registration for clean-server deployment, hash checks,
+  simulation-only activation, shared-component Docker builds and same-origin
+  dashboard links. Existing server credentials and database history are retained.
+- Release checks: all 60 Django tests and all three production UI builds passed,
+  including model registration, corruption rejection and live/simulation isolation.
+  Staged source passed credential-pattern/local-secret checks, and model bytes
+  match the immutable artifacts. Azure rollout is a separate
+  operation; this entry does not assert that the VM has already been updated.
+
+### Earlier deployment work included in this release
+
 - Added a server-side login rotation helper accepting credentials through stdin.
   Rotated the shared dashboard login; verified all dashboards/API accept the new
   login and reject the previous one. Credentials are not stored in source control.

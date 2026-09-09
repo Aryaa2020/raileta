@@ -15,15 +15,15 @@ function projectRoute(geometry) {
   return { points: coordinates.map(project), project };
 }
 
-const RouteNavigator = ({ stations = [], currentStation, routeGeometry, onAction }) => {
+const RouteNavigator = ({ stations = [], currentStation, routeGeometry }) => {
   const projected = useMemo(() => projectRoute(routeGeometry), [routeGeometry]);
   const upcoming = stations.slice(0, 4);
   const observedStops = (routeGeometry?.stops || []).filter((stop) => stop.stop !== false && Number.isFinite(stop.lat) && Number.isFinite(stop.lng));
   const currentStop = (routeGeometry?.stops || []).find((stop) => stop.station_code === currentStation);
   const trainPoint = currentStop && projected && Number.isFinite(currentStop.lat) && Number.isFinite(currentStop.lng) ? projected.project([currentStop.lng, currentStop.lat]) : null;
   const polyline = projected?.points.map(([x, y]) => `${x},${y}`).join(' ');
-  return <section className="route-navigator glass-panel">
-    <div className="route-toolbar"><div><p className="route-kicker"><Navigation className="h-3.5 w-3.5" /> Corridor schematic</p><h3>Observed route ahead</h3></div><button className="map-control" type="button" title="Route centred" onClick={onAction}><Crosshair className="h-4 w-4" /></button></div>
+  return <section className="route-navigator solid-panel">
+    <div className="route-toolbar"><div><p className="route-kicker"><Navigation className="h-3.5 w-3.5" /> Corridor schematic</p><h3>Observed route ahead</h3></div><span className="map-control" title="Station-coordinate schematic"><Crosshair className="h-4 w-4" /></span></div>
     <div className="map-canvas">
       <div className="map-grid" /><div className="map-label map-label-one">MAS<br /><strong>CHENNAI</strong></div><div className="map-label map-label-two">SBC<br /><strong>BENGALURU</strong></div>
       {projected ? <svg className="route-line" viewBox={`0 0 ${VIEW.width} ${VIEW.height}`} aria-label="Station-coordinate schematic, not railway track geometry"><defs><linearGradient id="routeGradient" x1="0" x2="1"><stop stopColor="#d6aeff" /><stop offset=".5" stopColor="#a65dff" /><stop offset="1" stopColor="#6944cf" /></linearGradient></defs><polyline points={polyline} fill="none" stroke="rgba(205,173,255,.15)" strokeWidth="14" strokeLinejoin="round" strokeLinecap="round" /><polyline points={polyline} fill="none" stroke="url(#routeGradient)" strokeWidth="4" strokeLinejoin="round" strokeLinecap="round" />{observedStops.map((stop) => { const point = projected.project([stop.lng, stop.lat]); return <circle key={`${stop.station_code}-${stop.sequence || point.join('-')}`} cx={point[0]} cy={point[1]} r="4" fill="#241b31" stroke="#d6b8ff" strokeWidth="2" />; })}{trainPoint && <g transform={`translate(${trainPoint[0]} ${trainPoint[1]})`}><circle r="18" fill="rgba(167,139,250,.16)" /><circle r="12" fill="#8b5cf6" stroke="#1b1720" strokeWidth="3" /><foreignObject x="-8" y="-8" width="16" height="16"><TrainFront className="map-train-icon" /></foreignObject></g>}</svg> : <div className="map-unavailable">Observed route geometry is unavailable from the latest source snapshot.</div>}

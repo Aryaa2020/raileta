@@ -35,7 +35,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         json: { ...profiles[number], train_name: profiles[number].train_name + (refreshed ? ' refreshed' : '') },
       }).catch(() => {}); // Selection changes deliberately cancel the old request.
     });
-    await page.goto('http://127.0.0.1:4174/');
+    await page.goto('http://127.0.0.1:3002/');
     await page.locator('.overview-train').filter({ hasText: first.train_number }).click();
     await page.getByRole('heading', { name: `Loading train ${first.train_number}` }).waitFor();
     await page.getByText('Selected train refresh failed. Its last report may be stale.', { exact: true }).waitFor();
@@ -53,7 +53,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     failDetail = false;
     await page.getByRole('button', { name: 'Retry selected train', exact: true }).click();
-    await page.getByText('Profile absolute error', { exact: true }).waitFor();
+    await page.locator('.ops-report-metrics').getByText('Difference', { exact: true }).waitFor();
     assert.equal(await page.getByRole('alert').count(), 0);
     checks.push('detail retry recovers and clears its own error');
     refreshed = true;
@@ -79,7 +79,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     await page.getByText('No train records are available yet. Use refresh to check again.', { exact: true }).waitFor();
     checks.push('mobile controller fits viewport; empty roster explains next step');
 
-    await page.goto('http://127.0.0.1:4175/');
+    await page.goto('http://127.0.0.1:3001/');
     await page.getByText('DEPARTURE DATA NOT AVAILABLE', { exact: true }).waitFor();
     let stationRefreshes = 0;
     page.on('request', request => { if (request.url().includes('/stations/')) ++stationRefreshes; });

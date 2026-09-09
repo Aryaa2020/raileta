@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from .journey_models import (Journey, JourneyStop, JourneyEvent, RailSection, SectionCondition, ForecastIssue, ModelRelease, SimulationSession)
 
 
 class TrainEvent(models.Model):

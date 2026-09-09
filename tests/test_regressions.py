@@ -31,6 +31,7 @@ from raileta_api.tasks import _ingest_data_sources
     OPEN_METEO_ENABLED=False,
     IMD_WEATHER_URL="",
     RAILETA_DATA_ADAPTER="simulated",
+    RAILETA_TRAIN_NUMBERS=('12007','12639','12607','22625','12609'),
     RAILETA_STORE_RAW_PAYLOADS=False,
 )
 class RegressionTests(TestCase):

@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
-import { Activity, CloudSun, RefreshCw, Route, TrainFront } from 'lucide-react';
+import { CloudSun, TrainFront } from 'lucide-react';
+import Navigation from '../../shared/Navigation';
+import { OperationalTools } from '../../shared/JourneyTools';
 import CorridorMap from './components/CorridorMap';
 import TrainDetailPanel from './components/TrainDetailPanel';
 import { getCorridorStatus, getTrainETA } from './services/api';
@@ -16,7 +18,12 @@ function App() {
   const [detailRefresh, setDetailRefresh] = useState(0);
   const [selectedNumber, setSelectedNumber] = useState(null);
   const corridorRequest = useRef(null);
+  const focusPanel = useRef(null);
   const historical = corridorData?.data_mode === 'historical_replay';
+
+  useEffect(() => {
+    if (selectedTrain?.train_number && window.innerWidth < 1100) focusPanel.current?.scrollIntoView({ behavior: 'instant', block: 'start' });
+  }, [selectedTrain?.train_number]);
 
   const fetchCorridorData = useCallback(async () => {
     // Do not cancel a slow but valid response every time the polling timer
@@ -97,20 +104,25 @@ function App() {
   }), [corridorData]);
 
   return <div className="ops-app min-h-screen">
-    <div className="ops-orb ops-orb-one" /><div className="ops-orb ops-orb-two" />
-    <header className="ops-header"><div className="ops-header-inner"><div className="ops-brand"><span className="ops-brand-mark"><TrainFront /></span><div><p>RailETA</p><span>Operations desk</span></div></div><div className="ops-header-status"><span className="live-indicator"><i /> {historical ? 'Historical replay' : 'Event feed'}</span><span className="hidden text-xs text-slate-500 lg:block">{historical ? 'Replay refreshed' : 'Updated'} {lastUpdate ? lastUpdate.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', ...(historical ? { dateStyle: 'medium', timeStyle: 'short' } : { hour: '2-digit', minute: '2-digit' }) }) : 'awaiting source data'}</span><button className="ops-icon-button" onClick={handleRefresh} disabled={refreshing || detailLoading} aria-busy={refreshing || detailLoading} title="Refresh corridor and selected train"><RefreshCw className={refreshing || detailLoading ? 'animate-spin' : ''} /></button></div></div></header>
-    <main className="ops-main">
-      {error && <p role="alert" className="ops-panel p-4 text-amber-200">{error}</p>}
-      <section className="ops-intro"><div><div className="ops-eyebrow"><Activity /> {historical ? 'Historical evaluation' : 'Corridor watch'}</div><h1>{historical ? 'Train predictions, made ' : 'Train movement, made '}<span>legible.</span></h1><p>{historical ? 'Inspect held-out station-delay averages and trained-model predictions. These are aggregate profiles, not train movements or the MAS–SBC pilot corridor.' : 'Use station departure and arrival events to monitor the corridor. Select a train for its estimated route progress and next-stop ETA.'}</p></div><div className="ops-disclaimer"><Route /><span><strong>{historical ? 'Held-out historical trains' : 'Station-event estimate'}</strong>{historical ? 'Dataset provenance unverified' : 'Source freshness is shown per forecast'}</span></div></section>
-      {loading ? <div className="ops-loading"><RefreshCw className="animate-spin" /><span>Loading corridor signals</span></div> : <div className="space-y-5">
-        <section className="ops-stats"><Stat label={historical ? 'Replayed trains' : 'In corridor'} value={corridorData?.total_trains || 0} accent="violet" /><Stat label={historical ? 'Average under 10 min' : 'On schedule'} value={stats.onTime} accent="emerald" /><Stat label={historical ? 'Average 10–29 min' : 'Needs attention'} value={stats.attention} accent="amber" /><Stat label={historical ? 'Average 30+ min' : 'Late'} value={stats.late} accent="rose" /></section>
+    <Navigation active="controller" sourceLabel={corridorData?.data_mode === 'corridor_simulation' ? 'Simulation only' : undefined} historical={corridorData ? historical : null} onRefresh={handleRefresh} refreshing={refreshing || detailLoading} />
+    <main className="ops-main" id="main-content">
+      <header className="ops-intro"><div><p className="ops-eyebrow">Controller dashboard</p><h1>Train overview</h1><p>{historical ? 'Compare recorded delays and model estimates across your trains.' : 'Review reported delays, station updates, and upcoming arrivals.'}</p></div><div className="ops-update"><span className="ops-mode">{corridorData?.data_mode === 'corridor_simulation' ? 'SIMULATION · generated journeys' : historical ? 'Historical records · not live' : corridorData ? 'Prototype station feed' : 'Connecting to data'}</span><p>{lastUpdate && Number.isFinite(lastUpdate.getTime()) ? (corridorData?.data_mode === 'corridor_simulation' ? 'Scenario time ' : 'Source updated ') + lastUpdate.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) + ' IST' : 'Awaiting source data'}</p><small>Auto-refresh every {historical ? '5' : '30'} seconds</small></div></header>
+      {error && <p role="alert" className="ops-panel ops-alert">{error}</p>}
+      {loading ? <div className="ops-loading" role="status"><span>Loading train records…</span></div> : <div className="ops-workspace">
+        <section className="ops-stats" aria-label="Train delay summary"><Stat label="All trains" value={corridorData ? corridorData.trains?.length ?? 0 : '—'} accent="violet" /><Stat label="Under 10 min" value={corridorData ? stats.onTime : '—'} accent="emerald" /><Stat label="10–29 min" value={corridorData ? stats.attention : '—'} accent="amber" /><Stat label="30+ min" value={corridorData ? stats.late : '—'} accent="rose" /></section>
+        <p className="ops-data-note">{corridorData?.data_mode === 'corridor_simulation' ? corridorData.note : historical ? 'Delay bands show past station averages, not today’s delays. Source not independently verified.' : 'Delay bands use the latest received station reports. Missing delay values are excluded from bands.'}</p>
+        <div className="ops-board">
+          <CorridorMap corridorData={corridorData} onTrainClick={handleTrainClick} selectedTrainNumber={selectedNumber} />
+          <aside className="ops-detail-column" aria-label="Selected train details">
+            {detailError && <div role="alert" className="ops-panel ops-alert"><p>{detailError}</p><button type="button" className="ops-action" disabled={detailLoading} onClick={() => setDetailRefresh(value => value + 1)}>Retry selected train</button></div>}
+            {selectedTrain ? <div ref={focusPanel} className="ops-focus-anchor"><TrainDetailPanel train={selectedTrain} onClose={() => { setSelectedNumber(null); setSelectedTrain(null); setDetailError(null); setDetailLoading(false); }} /></div> : <section className="ops-empty-selection" aria-live="polite"><TrainFront /><div><h2>{selectedNumber ? (detailLoading ? `Loading train ${selectedNumber}` : `Train ${selectedNumber} is unavailable`) : 'Select a train'}</h2><p>{selectedNumber ? 'Its report will appear here when available.' : 'Choose a row to view delays, estimates, and source details.'}</p></div></section>}
+          </aside>
+        </div>
+        <OperationalTools initialMode={corridorData?.data_mode === 'corridor_simulation' ? 'simulation' : 'live'} initialDate={corridorData?.data_mode === 'corridor_simulation' ? corridorData.scenario_date : undefined} />
         {!historical && <WeatherStrip observations={corridorData?.weather_observations || []} />}
-        <CorridorMap corridorData={corridorData} onTrainClick={handleTrainClick} selectedTrainNumber={selectedNumber} />
-        {detailError && <div role="alert" className="ops-panel flex flex-wrap items-center justify-between gap-3 p-4 text-sm text-amber-200"><p>{detailError}</p><button type="button" className="rounded-lg border border-amber-200/30 px-3 py-2 disabled:opacity-50" disabled={detailLoading} onClick={() => setDetailRefresh((value) => value + 1)}>Retry selected train</button></div>}
-        {selectedTrain ? <TrainDetailPanel train={selectedTrain} onClose={() => { setSelectedNumber(null); setSelectedTrain(null); setDetailError(null); setDetailLoading(false); }} /> : <section className="ops-empty-selection" aria-live="polite"><span className="ops-empty-icon">{detailLoading ? <RefreshCw className="animate-spin" /> : <TrainFront />}</span><div><p className="ops-eyebrow">Train focus</p><h2>{selectedNumber ? (detailLoading ? `Loading train ${selectedNumber}` : `Train ${selectedNumber} is unavailable`) : `Select a train to inspect its ${historical ? 'held-out prediction' : 'route view'}`}</h2><p>{selectedNumber ? 'The selected train will appear here when its report is available.' : historical ? 'Compare recorded and predicted station averages, inspect signed SHAP contributions, and review frozen TEST metrics.' : 'The overview remains focused on every train until you need an ETA, station-event progress, or delay factors.'}</p></div></section>}
       </div>}
     </main>
-    <footer className="ops-footer">RailETA Operations Desk <span>·</span> {historical ? 'Historical dataset replay · held-out trains · provenance unverified' : 'Estimated progress is derived from reported station events'}</footer>
+    <footer className="ops-footer">RailETA Operations <span>·</span> {historical ? 'Past records only · no live train positions or arrival forecasts' : 'Prototype forecasts · check source freshness before use'}</footer>
   </div>;
 }
 
@@ -119,6 +131,6 @@ function WeatherStrip({ observations }) {
   const visible = observations.filter((item) => ['MAS', 'KPD', 'JTJ', 'SBC'].includes(item.station_code));
   if (!visible.length) return null;
   const latest = visible.map((item) => item.event_time).filter(Boolean).sort().at(-1);
-  return <section className="ops-panel p-4"><div className="mb-3 flex items-center justify-between gap-3"><span className="ops-eyebrow"><CloudSun /> Corridor weather context</span><small className="text-right text-[10px] text-slate-500">Open-Meteo current model · station coordinates{latest ? ` · ${new Date(latest).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : ''}</small></div><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{visible.map((item) => { const data = item.data || {}; return <div className="rounded-xl border border-white/[0.07] bg-black/10 p-3" key={item.station_code}><strong className="block text-xs text-slate-200">{item.station_code}</strong><span className="mt-1 block text-lg font-semibold text-violet-100">{data.temperature_c == null ? '—' : `${Math.round(data.temperature_c)}°C`}</span><small className="block text-[10px] text-slate-500">{data.visibility_m == null ? 'Visibility —' : `Visibility ${(data.visibility_m / 1000).toFixed(1)} km`}</small></div>; })}</div></section>;
+  return <section className="ops-panel p-4"><div className="mb-3 flex items-center justify-between gap-3"><span className="ops-eyebrow"><CloudSun /> Corridor weather context</span><small className="text-right text-[10px] text-slate-500">Open-Meteo current model · station coordinates{latest ? ` · ${new Date(latest).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : ''}</small></div><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{visible.map((item) => { const data = item.data || {}; return <div className="rounded-xl border border-[#332d3c] bg-[#211c28] p-3" key={item.station_code}><strong className="block text-xs text-slate-200">{item.station_code}</strong><span className="mt-1 block text-lg font-semibold text-violet-100">{data.temperature_c == null ? '—' : `${Math.round(data.temperature_c)}°C`}</span><small className="block text-[10px] text-slate-500">{data.visibility_m == null ? 'Visibility —' : `Visibility ${(data.visibility_m / 1000).toFixed(1)} km`}</small></div>; })}</div></section>;
 }
 export default App;

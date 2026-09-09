@@ -1,0 +1,21 @@
+.jt-operational,.jt-workspace,.jt-arrivals,.jt-detail { min-width:0; color:var(--rail-white); overflow-wrap:anywhere; }
+.jt-progress { display:grid; gap:10px; margin:20px 0; font-size:12px; color:var(--rail-muted); }
+.jt-progress progress { width:100%; height:8px; accent-color:var(--rail-lavender); border:0; border-radius:4px; overflow:hidden; background:#392d46; }
+.jt-progress progress::-webkit-progress-bar { background:#392d46; }
+.jt-progress progress::-webkit-progress-value { background:var(--rail-lavender); }
+.jt-progress progress::-moz-progress-bar { background:var(--rail-lavender); }
+.jt-operational,.jt-arrivals { margin:20px 0; padding:20px; border:1px solid var(--rail-border); border-radius:10px; background:var(--rail-panel); }
+.jt-operational>summary,.jt-detail summary,.jt-history summary { cursor:pointer; font-size:14px; color:var(--rail-lavender); padding:5px 0; }
+.jt-operational>summary:focus-visible,.jt-history summary:focus-visible,.jt-detail summary:focus-visible { outline:2px solid var(--rail-lavender); outline-offset:5px; }
+.jt-controls { display:flex; flex-wrap:wrap; gap:15px; align-items:flex-end; margin:20px 0 12px; }
+.jt-controls label,.jt-run-select { display:grid; gap:8px; min-width:0; color:var(--rail-muted); font-size:12px; }
+.jt-controls input,.jt-controls select,.jt-run-select select { min-width:0; max-width:100%; min-height:38px; padding:8px 10px; border:1px solid #544360; border-radius:6px; color:var(--rail-white); background:#211c28; font-size:13px; }
+.jt-controls label input { width:180px; }.jt-controls .jt-checkbox { display:flex; align-items:center; min-height:38px; }.jt-controls .jt-checkbox input { width:16px; min-height:16px; }
+.jt-controls button,.jt-tabs button,.jt-note button { padding:9px 13px; min-height:38px; border:1px solid #665078; border-radius:6px; color:var(--rail-lavender); background:#2a2033; font-size:12px; }
+.jt-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0; }.jt-tabs [aria-pressed=true] { color:#fff; background:var(--rail-violet); border-color:var(--rail-violet); }
+.jt-note,.jt-warning,.jt-empty { font-size:12px; line-height:1.8; color:var(--rail-muted); margin:14px 0; }.jt-warning { color:#edc991; border-left:3px solid #edc991; padding-left:12px; }.jt-empty { padding:20px; background:#211c28; border-radius:8px; }
+.jt-run-select { margin:20px 0; }.jt-detail { margin-top:22px; border-top:1px solid var(--rail-border); padding-top:22px; }.jt-detail h3,.jt-arrivals h2 { margin:0 0 10px; font-size:22px; }.jt-detail header p { color:var(--rail-muted); font-size:13px; }
+.jt-outlook { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; padding:20px 0; border-block:1px solid var(--rail-border); margin:20px 0; }.jt-outlook dt { color:var(--rail-muted); font-size:12px; }.jt-outlook dd { margin:10px 0 0; font-size:21px; color:var(--rail-lavender); }.jt-outlook small { display:block; margin-top:8px; color:var(--rail-muted); font-size:12px; }
+.jt-table-scroll { max-width:100%; overflow-x:auto; scrollbar-width:thin; }.jt-table-scroll table { width:100%; border-collapse:collapse; font-size:12px; text-align:left; }.jt-table-scroll caption { text-align:left; padding:12px 0; color:var(--rail-muted); }.jt-table-scroll td,.jt-table-scroll th { padding:14px 12px; border-bottom:1px solid var(--rail-border); min-width:130px; font-weight:400; vertical-align:top; }.jt-table-scroll thead { color:var(--rail-lavender); background:#211c28; }.jt-table-scroll small { display:block; font-size:11px; line-height:1.7; color:var(--rail-muted); margin-top:6px; overflow-wrap:anywhere; }
+.jt-history>svg,.jt-condition-map { display:block; width:100%; max-height:300px; margin:20px 0; border:1px solid var(--rail-border); border-radius:8px; background:#100d15; }.jt-history text,.jt-condition-map text { fill:var(--rail-muted); font-size:11px; }
+@media(max-width:760px) { .jt-operational,.jt-arrivals { padding:16px; }.jt-controls { gap:12px; }.jt-controls label { flex:1 1 150px; }.jt-controls label input { width:100%; }.jt-outlook { grid-template-columns:1fr; gap:18px; }.jt-outlook dd { font-size:20px; } }

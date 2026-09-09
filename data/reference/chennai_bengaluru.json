@@ -1,0 +1,30 @@
+{
+  "snapshot_date": "2026-09-09",
+  "scope": "Chennai Central to KSR Bengaluru, one direction; published passenger stopping timetable, not WTT",
+  "provenance": "Public timetable snapshot. Frozen across synthetic years; not a reconstruction of historical timetable changes. No public average-delay columns used as labels.",
+  "sources": ["https://www.confirmtkt.com/train-schedule/12607", "https://www.confirmtkt.com/train-schedule/12639", "https://www.confirmtkt.com/train-schedule/12657", "https://www.confirmtkt.com/train-schedule/12027", "https://indianrail.gov.in/shatabdi_trn_list.html"],
+  "assumptions": "Track count, line speed, recovery allowance, precedence, occupancy and all movement/weather/condition observations are simulation assumptions, not sourced WTT or CRIS records. GPS coordinates are schematic interpolation between approximate station anchors, not surveyed track geometry.",
+  "stations": {
+    "MAS": ["MGR Chennai Central", 0, 80.275, 13.083],
+    "PER": ["Perambur", 6, 80.245, 13.107],
+    "AJJ": ["Arakkonam Junction", 69, 79.670, 13.077],
+    "SHU": ["Sholinghur", 90, 79.421, 13.043],
+    "WJR": ["Walajah Road Junction", 105, 79.366, 12.960],
+    "KPD": ["Katpadi Junction", 130, 79.138, 12.972],
+    "AB": ["Ambur", 182, 78.716, 12.790],
+    "VN": ["Vaniyambadi", 198, 78.620, 12.683],
+    "JTJ": ["Jolarpettai Junction", 214, 78.568, 12.569],
+    "KPN": ["Kuppam", 257, 78.342, 12.745],
+    "BWT": ["Bangarapet Junction", 292, 78.178, 12.991],
+    "KJM": ["Krishnarajapuram", 348, 77.704, 13.000],
+    "BNCE": ["Bengaluru East", 355, 77.616, 13.000],
+    "BNC": ["Bengaluru Cantonment", 358, 77.598, 12.994],
+    "SBC": ["KSR Bengaluru", 362, 77.566, 12.978]
+  },
+  "trains": [
+    {"number": "12027", "name": "Chennai–Bengaluru Shatabdi Express", "priority_assumption": 1, "weekdays": [0,2,3,4,5,6], "stops": [["MAS",null,"17:30"],["KPD","18:58","19:00"],["JTJ","20:08","20:10"],["BNC","22:04","22:05"],["SBC","22:25",null]]},
+    {"number": "12607", "name": "Lalbagh Superfast Express", "priority_assumption": 2, "weekdays": [0,1,2,3,4,5,6], "stops": [["MAS",null,"15:30"],["PER","15:43","15:45"],["AJJ","16:28","16:30"],["SHU","16:46","16:48"],["WJR","17:03","17:05"],["KPD","17:28","17:30"],["AB","18:08","18:10"],["JTJ","18:53","18:55"],["KPN","19:30","19:31"],["BWT","19:58","19:59"],["KJM","20:44","20:45"],["BNC","21:04","21:05"],["SBC","21:55",null]]},
+    {"number": "12639", "name": "Brindavan Superfast Express", "priority_assumption": 2, "weekdays": [0,1,2,3,4,5,6], "stops": [["MAS",null,"07:40"],["AJJ","08:33","08:35"],["SHU","08:48","08:50"],["WJR","09:06","09:08"],["KPD","09:33","09:35"],["AB","10:10","10:12"],["VN","10:25","10:27"],["JTJ","10:53","10:55"],["KPN","11:32","11:33"],["BWT","12:04","12:05"],["KJM","12:48","12:50"],["BNC","13:09","13:10"],["SBC","14:00",null]]},
+    {"number": "12657", "name": "Chennai–Bengaluru Superfast Mail", "priority_assumption": 2, "weekdays": [0,1,2,3,4,5,6], "stops": [["MAS",null,"22:50"],["AJJ","23:43","23:45"],["KPD","00:33","00:35"],["JTJ","01:53","01:55"],["BWT","02:53","02:55"],["BNCE","03:47","03:48"],["BNC","03:56","03:57"],["SBC","04:35",null]]}
+  ]
+}

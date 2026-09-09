@@ -10,7 +10,8 @@ x-environment: &environment
   CELERY_BROKER_URL: redis://redis:6379/0
   CELERY_RESULT_BACKEND: redis://redis:6379/0
   TESTING: "false"
-  RAILETA_DATA_ADAPTER: historical_profiles
+  RAILETA_DATA_ADAPTER: corridor_simulation
+  CELERY_TASK_DEFAULT_QUEUE: raileta-synthetic
   RAILETA_HISTORICAL_MODEL_DIR: data/models/etrain-profiles-v1
   RAILETA_REPLAY_INTERVAL_SECONDS: "15"
   RAILETA_COLLECTOR_INTERVAL_SECONDS: "15"

@@ -25,12 +25,14 @@ Copy-Item .env.example .env
 
 Put the generated key in your local `.env` as `DJANGO_SECRET_KEY`. Do not paste
 it into an issue, documentation, chat, or commit. Keep the offline
-`RAILETA_DATA_ADAPTER=historical_profiles` defaults. Each teammate uses their own
-local database. The tracked CSV and frozen model files reproduce the profile
-demo; the original laptop's database is not required.
+`RAILETA_DATA_ADAPTER=corridor_simulation` defaults. Each teammate uses their own
+local database. The tracked reference, generator and trained synthetic model
+reproduce the new demo; the original laptop's database is not required.
 
-Follow **Run locally** in [HISTORICAL_PROFILE_RESULTS.md](HISTORICAL_PROFILE_RESULTS.md)
-for migrations, replay, worker/beat, and model details. Follow the frontend
+Follow [README.md](README.md) and [docs/corridor-simulation.md](docs/corridor-simulation.md)
+for migrations, replay, worker/beat, and model details. On a clean database run
+`python manage.py journey_model register --model-version mas-sbc-synthetic-v1 --mode simulation`
+before activating the bundled model. Follow the frontend
 README files to install dependencies and run the three dashboards. Docker Compose
 is included, but has not been runtime-verified on the original laptop. Configure
 one persistent `DJANGO_SECRET_KEY` for all Django/Celery services.

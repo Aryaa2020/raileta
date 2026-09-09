@@ -1,5 +1,23 @@
-import React, { useState } from 'react';
-import { ArrowRight, Search, Sparkles } from 'lucide-react';
-const defaultTrains = [];
-const TrainSearch = ({ onSearch, onAction, loading, trains = [] }) => { const [trainNumber, setTrainNumber] = useState(''); const quickTrains = (trains.length ? trains : defaultTrains).slice(0, 3).map((train) => ({ number: train.number || train.train_number, name: train.name || train.train_name })); const submit = (e) => { e.preventDefault(); if (trainNumber.trim()) { onAction?.(); onSearch(trainNumber.trim()); } }; return <section className="search-panel glass-panel p-2 sm:p-3"><form onSubmit={submit} className="flex flex-col gap-2 sm:flex-row"><label className="relative flex flex-1 items-center"><Search className="pointer-events-none absolute left-4 h-5 w-5 text-slate-500" /><input value={trainNumber} onChange={(e) => setTrainNumber(e.target.value)} placeholder="Enter a train number" inputMode="numeric" aria-label="Train number" className="w-full rounded-xl border border-transparent bg-black/20 py-4 pl-12 pr-4 text-base text-white outline-none placeholder:text-slate-500 focus:border-violet-300/40 focus:bg-black/30" /></label><button type="submit" disabled={loading || !trainNumber.trim()} className="track-button">{loading ? 'Finding train…' : <>Track train <ArrowRight className="h-4 w-4" /></>}</button></form><div className="flex flex-wrap items-center gap-2 px-3 pb-2 pt-3 text-xs"><span className="mr-1 flex items-center gap-1.5 text-slate-500"><Sparkles className="h-3.5 w-3.5 text-violet-300" /> Try an example</span>{quickTrains.map((train) => <button key={train.number} type="button" onClick={() => { setTrainNumber(train.number); onAction?.(); onSearch(train.number); }} className="quick-train">{train.number}<span>{train.name}</span></button>)}</div></section>; };
-export default TrainSearch;
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Search, X } from 'lucide-react';
+import KiroButton from '../../../shared/KiroButton';
+
+export default function TrainSearch({ onSearch, loading, historical }) {
+  const [trainNumber, setTrainNumber] = useState('');
+  const input = useRef(null);
+  useEffect(() => {
+    const focus = () => { input.current?.focus({ preventScroll: true }); input.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' }); };
+    const shortcut = event => {
+      if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey || event.target.closest('input,textarea,select,[contenteditable="true"]')) return;
+      event.preventDefault(); focus();
+    };
+    window.addEventListener('keydown', shortcut);
+    window.addEventListener('raileta:focus-search', focus);
+    return () => { window.removeEventListener('keydown', shortcut); window.removeEventListener('raileta:focus-search', focus); };
+  }, []);
+  const submit = event => { event.preventDefault(); if (trainNumber.trim()) onSearch(trainNumber.trim()); };
+  return <section className="search-panel"><form onSubmit={submit}>
+    <div className="train-input"><Search aria-hidden="true" /><input ref={input} value={trainNumber} onChange={event => setTrainNumber(event.target.value)} placeholder="Enter a train number" inputMode="numeric" aria-label="Train number" autoComplete="off" />{trainNumber && <button className="clear-search" type="button" aria-label="Clear train number" onClick={() => { setTrainNumber(''); input.current?.focus(); }}><X /></button>}</div>
+    <KiroButton type="submit" className="primary-button" disabled={loading || !trainNumber.trim()}><span>{loading ? 'Finding train…' : historical ? 'Explore train' : 'Track train'}</span><ArrowRight /></KiroButton>
+  </form><p className="search-hint">Search by number, or choose a train below.<span><kbd>/</kbd> to search</span></p></section>;
+}

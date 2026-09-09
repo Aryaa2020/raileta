@@ -1,15 +1,17 @@
 import React from 'react';
 import { AlertTriangle, Gauge, Sparkles, TrainFront, X } from 'lucide-react';
 import HistoricalReplayPanel from './HistoricalReplayPanel';
+import { JourneyDetail } from '../../../shared/JourneyTools';
 
 
 const time = (value) => value && Number.isFinite(Date.parse(value)) ? new Intl.DateTimeFormat('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }).format(new Date(value)) : '—';
 
 const TrainDetailPanel = ({ train, onClose }) => {
+  if (train.journey) return <section className="ops-panel ops-journey-panel"><button type="button" className="ops-action" onClick={onClose}>Close train view</button><JourneyDetail journey={train.journey} /></section>;
   if (train.data_mode === 'historical_replay') return <HistoricalReplayPanel train={train} onClose={onClose} />;
-  const { train_number, train_name, train_class, current_status, upcoming_stations = [], overall_delay_reasons = [], data_freshness, fallback_source, calibration_level } = train;
-  const corridor = (train.route_stops || []).map((stop) => stop.station_code);
-  const currentIndex = corridor.indexOf(current_status.last_reported_station);
+  const { train_number, train_name, train_class, current_status = {}, upcoming_stations = [], overall_delay_reasons = [], data_freshness, fallback_source, calibration_level } = train;
+  const corridor = (train.route_stops || []).filter(stop => stop.stop !== false && stop.station_code).map(stop => stop.station_code);
+  const currentIndex = corridor.filter(code => code === current_status.last_reported_station).length === 1 ? corridor.indexOf(current_status.last_reported_station) : -1;
   const progress = currentIndex >= 0 && corridor.length > 1 ? Math.round((currentIndex / (corridor.length - 1)) * 100) : null;
   const nextStation = upcoming_stations[0];
   return <section className="ops-panel train-focus-panel"><div className="focus-header"><div><p className="ops-eyebrow"><Sparkles /> Train focus</p><h2>{train_name}</h2><span>Train {train_number} <b>·</b> {train_class}</span></div><button className="ops-icon-button" onClick={onClose} title="Close train view"><X /></button></div>

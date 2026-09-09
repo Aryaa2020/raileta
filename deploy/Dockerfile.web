@@ -1,29 +1,35 @@
 FROM node:22-alpine AS passenger
-WORKDIR /build
+WORKDIR /build/frontend/passenger-ui
 COPY frontend/passenger-ui/package.json ./
 RUN npm install --package-lock=false --no-audit --no-fund
 COPY frontend/passenger-ui/ ./
+COPY frontend/shared/ /build/frontend/shared/
 ENV VITE_API_URL=/api/v1
+ENV VITE_PASSENGER_URL=/ VITE_CONTROLLER_URL=/controller/ VITE_STATION_URL=/station/
 RUN npm run build -- --base=/
 
 FROM node:22-alpine AS controller
-WORKDIR /build
+WORKDIR /build/frontend/controller-dashboard
 COPY frontend/controller-dashboard/package.json ./
 RUN npm install --package-lock=false --no-audit --no-fund
 COPY frontend/controller-dashboard/ ./
+COPY frontend/shared/ /build/frontend/shared/
 ENV VITE_API_URL=/api/v1
+ENV VITE_PASSENGER_URL=/ VITE_CONTROLLER_URL=/controller/ VITE_STATION_URL=/station/
 RUN npm run build -- --base=/controller/
 
 FROM node:22-alpine AS station
-WORKDIR /build
+WORKDIR /build/frontend/station-display
 COPY frontend/station-display/package.json ./
 RUN npm install --package-lock=false --no-audit --no-fund
 COPY frontend/station-display/ ./
+COPY frontend/shared/ /build/frontend/shared/
 ENV VITE_API_URL=/api/v1
+ENV VITE_PASSENGER_URL=/ VITE_CONTROLLER_URL=/controller/ VITE_STATION_URL=/station/
 RUN npm run build -- --base=/station/
 
 FROM caddy:2-alpine
-COPY --from=passenger /build/dist /srv/passenger
-COPY --from=controller /build/dist /srv/controller
-COPY --from=station /build/dist /srv/station
+COPY --from=passenger /build/frontend/passenger-ui/dist /srv/passenger
+COPY --from=controller /build/frontend/controller-dashboard/dist /srv/controller
+COPY --from=station /build/frontend/station-display/dist /srv/station
 COPY deploy/Caddyfile /etc/caddy/Caddyfile

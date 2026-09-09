@@ -1,204 +1,128 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Activity, AlertCircle, ArrowUpRight, CloudSun, Clock3, RefreshCw, Route, ShieldCheck, Train, Wifi } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { AlertCircle, ArrowUpRight, ArrowLeft, BarChart3, Layers, RefreshCw, TrainFront, Activity } from 'lucide-react';
+import Navigation, { RailMark, surfaceUrl } from '../../shared/Navigation';
+import KiroButton from '../../shared/KiroButton';
+import RevealText from '../../shared/RevealText';
+import TrackJourney from './components/TrackJourney';
+import HeroTrack from './components/HeroTrack';
 import TrainSearch from './components/TrainSearch';
 import StationCard from './components/StationCard';
 import DelayChip from './components/DelayChip';
 import RouteNavigator from './components/RouteNavigator';
 import HistoricalReplayDetail from './components/HistoricalReplayDetail';
+import JourneyProgress from './components/JourneyProgress';
+import { JourneyWorkspace, JourneyDetail } from '../../shared/JourneyTools';
 import { getCorridorStatus, getTrainETA } from './services/api';
 
-function App() {
-  const [progress, setProgress] = useState(0);
-  const sceneRef = useRef(null);
-  const dashboardLockedRef = useRef(false);
-  const searchAnchorRef = useRef(null);
-  const lockAnchorTop = useRef(null);
+export default function App() {
   const [trainData, setTrainData] = useState(null);
   const [corridorData, setCorridorData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [rosterLoading, setRosterLoading] = useState(true);
   const [error, setError] = useState(null);
   const [rosterError, setRosterError] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const searchVersion = useRef(0);
-  const [dashboardLocked, setDashboardLocked] = useState(false);
   const historical = trainData?.data_mode === 'historical_replay' || corridorData?.data_mode === 'historical_replay';
-  const phase = dashboardLocked ? 'dashboard' : progress <= 0.001 ? 'cover' : progress >= 0.999 ? 'dashboard' : 'transition';
-  const dashboardReveal = dashboardLocked ? 1 : Math.min(1, Math.max(0, (progress - 0.5) / 0.5));
-  const dashboardEase = dashboardReveal * dashboardReveal * (3 - (2 * dashboardReveal));
-
-  useEffect(() => {
-    let frame = null;
-    let atDashboard = false;
-    const update = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = null;
-        const scene = sceneRef.current;
-        if (!scene) return;
-        if (dashboardLockedRef.current) return;
-        const distance = Math.max(1, scene.offsetHeight - scene.firstElementChild.clientHeight);
-        const next = Math.min(1, Math.max(0, -scene.getBoundingClientRect().top / distance));
-        atDashboard = next >= 0.999;
-        // Never discard the exact endpoints as a sub-pixel change.
-        setProgress((current) => next === 0 || next === 1 || Math.abs(current-next) >= .001 ? next : current);
-      });
-    };
-    const resize = () => {
-      const scene = sceneRef.current;
-      // A taller window must not put an already-reached search back into the
-      // faded/inert part of the introduction. Native scrolling is unchanged.
-      if (atDashboard && scene && !dashboardLockedRef.current) {
-        const distance = scene.offsetHeight - scene.firstElementChild.clientHeight;
-        window.scrollTo({ top: window.scrollY + scene.getBoundingClientRect().top + distance, behavior: 'instant' });
-      }
-      update();
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', resize);
-    return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', resize);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!dashboardLocked || lockAnchorTop.current === null || !searchAnchorRef.current) return;
-    const nextAnchorTop = window.scrollY + searchAnchorRef.current.getBoundingClientRect().top;
-    window.scrollTo({ top: Math.max(0, nextAnchorTop-lockAnchorTop.current), behavior: 'instant' });
-    lockAnchorTop.current = null;
-  }, [dashboardLocked]);
-
-  const lockDashboard = () => {
-    if (dashboardLockedRef.current) return;
-    lockAnchorTop.current = searchAnchorRef.current?.getBoundingClientRect().top ?? 0;
-    dashboardLockedRef.current = true;
-    setDashboardLocked(true);
-  };
-
-  const returnHome = () => {
-    if (dashboardLockedRef.current) return;
-    setTrainData(null);
-    setError(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const handleSearch = async (trainNumber) => {
-    lockDashboard();
     const version = ++searchVersion.current;
-    setLoading(true); setError(null);
-    setTrainData(null);
+    setLoading(true); setError(null); setTrainData(null);
     try { const data = await getTrainETA(trainNumber); if (version === searchVersion.current) setTrainData(data); }
-    catch (err) { if (version === searchVersion.current) { setError(err.response?.data?.detail || 'We could not find movement information for that train. Please check the number and try again.'); setTrainData(null); } }
+    catch (err) { if (version === searchVersion.current) setError(err.response?.data?.detail || 'We could not find this train. Check the number and try again.'); }
     finally { if (version === searchVersion.current) setLoading(false); }
   };
-
   useEffect(() => {
-    let active = true;
-    let pending = false;
-    const loadCorridor = async () => {
+    let active = true; let pending = false;
+    const load = async () => {
       if (pending) return;
       pending = true;
-      try {
-        const data = await getCorridorStatus('MAS-SBC');
-        if (active) { setCorridorData(data); setRosterError(null); }
-      } catch (err) {
-        if (active) setRosterError('Train list could not be refreshed. Previously received entries may be out of date. Retrying automatically.');
-      } finally { pending = false; }
+      try { const data = await getCorridorStatus('MAS-SBC'); if (active) { setCorridorData(data); setRosterError(null); } }
+      catch { if (active) setRosterError('Train data is temporarily unavailable. Any previous records may be out of date.'); }
+      finally { pending = false; if (active) setRosterLoading(false); }
     };
-    loadCorridor();
-    const interval = setInterval(loadCorridor, historical ? 5000 : 30000);
+    load(); const interval = setInterval(load, historical ? 5000 : 30000);
     return () => { active = false; clearInterval(interval); };
-  }, [historical]);
-
-  // Refresh the selected record without overlapping requests or overwriting a
-  // newer search. Profile replay is read-only; this does not retrain the model.
+  }, [historical, refreshKey]);
   useEffect(() => {
-    const trainNumber = trainData?.train_number;
-    if (!trainNumber) return undefined;
-    let active = true;
-    let pending = false;
-    const refreshSelectedTrain = async () => {
+    if (!trainData?.train_number) return;
+    let active = true; let pending = false;
+    const refresh = async () => {
       if (pending) return;
       pending = true;
       const version = searchVersion.current;
-      try {
-        const data = await getTrainETA(trainNumber);
-        if (active && version === searchVersion.current) { setTrainData(data); setError(null); }
-      } catch (err) {
-        console.error('Unable to refresh selected train:', err);
-        if (active && version === searchVersion.current) setError('Refresh failed. Showing the last received train report.');
-      } finally { pending = false; }
+      try { const data = await getTrainETA(trainData.train_number); if (active && version === searchVersion.current) { setTrainData(data); setError(null); } }
+      catch { if (active && version === searchVersion.current) setError('Refresh failed. Showing the last received train report.'); }
+      finally { pending = false; }
     };
-    const interval = setInterval(refreshSelectedTrain, historical ? 5000 : 30000);
+    const interval = setInterval(refresh, historical ? 5000 : 30000);
     return () => { active = false; clearInterval(interval); };
   }, [trainData?.train_number, historical]);
+  const clearSelection = () => { ++searchVersion.current; setTrainData(null); setError(null); setLoading(false); };
+  const goHome = () => { clearSelection(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const trains = corridorData?.trains || [];
 
-  return <div className="app-shell min-h-screen text-slate-100">
-    <div className="rail-backdrop" aria-hidden="true">
-      <div className="ambient-orb ambient-orb-one" /><div className="ambient-orb ambient-orb-two" />
-      <div className="rail-grid" />
-      <svg className="rail-network" viewBox="0 0 1200 900" preserveAspectRatio="none">
-        <path className="rail-track rail-track-glow" d="M-80 720 C130 620 170 770 350 665 S610 470 790 585 S990 690 1280 470" />
-        <path className="rail-track" d="M-80 720 C130 620 170 770 350 665 S610 470 790 585 S990 690 1280 470" />
-        <path className="rail-track rail-track-secondary" d="M90 -40 C240 120 260 275 430 330 S730 250 900 365 S1050 600 1210 780" />
-        <path className="rail-track rail-track-secondary" d="M-40 185 C180 240 265 120 470 150 S780 250 1215 105" />
-        <circle className="rail-node" cx="350" cy="665" r="4" /><circle className="rail-node" cx="790" cy="585" r="4" /><circle className="rail-node" cx="900" cy="365" r="3" /><circle className="rail-node" cx="470" cy="150" r="3" />
-      </svg>
-    </div>
-    <header className="passenger-header relative z-20 mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8">
-      <button className="flex items-center gap-3 text-left" onClick={returnHome} disabled={dashboardLocked} aria-label="Return to RailETA home"><span className="brand-mark"><Train className="h-5 w-5" /></span><span><span className="block text-lg font-semibold tracking-tight text-white">RailETA</span><span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Arrival intelligence</span></span></button>
-      <div className="hidden items-center gap-5 text-sm text-slate-400 sm:flex"><span className="flex items-center gap-2"><span className="live-dot" /> {historical ? 'Historical replay' : 'Prototype feed'}</span><span className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs text-slate-300">India Rail</span></div>
-    </header>
+  return <div className="app-shell">
+    <Navigation sourceLabel={corridorData?.data_mode === 'corridor_simulation' ? 'Simulation only' : undefined} historical={corridorData ? historical : null} onHome={goHome} />
+    <main id="main-content">
+      <div className="hero-stage">
+        <HeroTrack />
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy"><p className="hero-kicker"><span /> A new perspective on rail</p><RevealText as="h1" id="hero-title" text={'Move beyond delays.\nSee the bigger picture.'} /><p className="hero-description">A little less guessing. A lot more clarity. Explore your train’s delay, understand the prediction, and see the data behind every number.</p><div className="hero-actions"><KiroButton className="primary-button" href="#train-search"><TrainFront /><span>Explore trains</span><ArrowUpRight /></KiroButton></div><p className="hero-footnote">Built for Indian Railways. Open about the data.</p></div>
+        <aside className="hero-notes" aria-label="About this demo"><p className="eyebrow"><span className="square-dot" /> A little more context</p><div><span>01 / FIND</span><strong>Start with a train.</strong><p>Search a number. Open its report.</p></div><div><span>02 / UNDERSTAND</span><strong>Look beyond the delay.</strong><p>Recorded averages, predictions, and the difference.</p></div><div><span>03 / TRUST</span><strong>See what we know.</strong><p>Sources and limitations, always in view.</p></div></aside>
+      </section>
+      </div>
 
-    <main id="top" style={{ '--transition-progress': dashboardLocked ? 1 : progress, '--dashboard-progress': dashboardEase }} className={`journey-stage journey-stage-${phase} ${dashboardLocked ? 'dashboard-locked' : ''} relative z-10 mx-auto max-w-7xl px-5 pb-14 sm:px-8`}>
-      <section ref={sceneRef} className="scroll-scene" aria-label="RailETA introduction">
-        <div className="scene-viewport">
-          <section className="cover-layer" aria-hidden={phase !== 'cover'}>
-        <div className="cover-inner">
-          <div className="cover-orbit cover-orbit-one" /><div className="cover-orbit cover-orbit-two" />
-          <div className="cover-kicker"><span className="live-dot" /> A calmer way to travel</div>
-          <div className="cover-train-mark"><Train /></div>
-          <div className="cover-route" aria-hidden="true"><span className="cover-route-line" /><span className="cover-route-point" style={{ left: `${3 + progress * 94}%` }}><span /></span><span className="cover-route-end" /></div>
-          <h1>{historical ? 'Understand your' : 'Know when your'}<br /><span>{historical ? 'train’s delay.' : 'journey arrives.'}</span></h1>
-          <p>{historical ? 'Explore held-out station-delay averages and the model’s predictions.' : 'One clear view of your train’s expected arrival.'}</p>
-          <div className="cover-meta"><span><Activity /> {historical ? 'Historical dataset replay' : 'Event-led updates'}</span><i /><span><ShieldCheck /> {historical ? 'Held-out trains · provenance unverified' : 'Check source and model status'}</span></div>
-        </div>
-          </section>
-        </div>
+      <section className="explorer-frame" id="train-search" aria-labelledby="explorer-title">
+        <div className="frame-heading"><div><p>THE TRAIN EXPLORER</p><h2 id="explorer-title">Your train. The full picture.</h2></div><span className="frame-decoration" aria-hidden="true"><span /><RailMark /><span /></span></div>
+        <div className="explorer-window"><div className="window-bar"><span className="window-dots" aria-hidden="true"><i /><i /><i /></span><span className="window-title"><RailMark /> RailETA <span>/</span> train explorer</span><span className="window-mode"><i />{corridorData?.data_mode === 'corridor_simulation' ? 'Simulation · trained LightGBM' : corridorData ? historical ? 'Historical profiles' : 'Prototype events' : 'Connecting to data'}</span></div>
+          <div className="explorer-body"><div className="explorer-intro"><div><p className="eyebrow">{historical ? 'Find a delay profile' : 'Find your train'}</p><h3>Where does your journey begin?</h3></div><KiroButton variant="outline" className="utility-button refresh-reports" type="button" disabled={loading || rosterLoading} aria-label={trainData ? 'Refresh report' : 'Refresh train list'} onClick={() => { if (trainData) handleSearch(trainData.train_number); else { setRosterLoading(true); setRefreshKey(value => value + 1); } }}><RefreshCw className={loading || rosterLoading ? 'animate-spin' : ''} /><span>Refresh</span></KiroButton></div>
+            <TrainSearch trains={trains} onSearch={handleSearch} loading={loading} historical={historical} />
+            <details className="jt-operational"><summary>Choose a journey date · station timeline & forecast history</summary><JourneyWorkspace trainNumber={trainData?.train_number || ''} initialMode={corridorData?.data_mode === 'corridor_simulation' ? 'simulation' : 'live'} initialDate={corridorData?.data_mode === 'corridor_simulation' ? corridorData.scenario_date : undefined} /></details>
+            {rosterError && <div role="alert" className="inline-alert"><AlertCircle /><p>{rosterError}</p><button type="button" onClick={() => setRefreshKey(value => value + 1)}>Retry <RefreshCw /></button></div>}
+            <div className="report-region" aria-label="Train reports" aria-busy={loading}>
+              {(trainData || error || loading) && <button className="back-button" type="button" onClick={clearSelection}><ArrowLeft /> Back to trains</button>}
+              {error && <div role="alert" className="inline-alert error"><AlertCircle /><p>{error}</p></div>}
+              {loading && <div className="report-loading" role="status"><RefreshCw className="animate-spin" /><p>Finding the full picture…</p><span>Reading the latest available train record.</span></div>}
+              {trainData && !loading && (trainData.journey ? <JourneyDetail journey={trainData.journey} /> : trainData.data_mode === 'historical_replay' ? <HistoricalReplayDetail train={trainData} /> : <EventReport train={trainData} />)}
+              {!trainData && !loading && !error && <TrainRoster historical={historical} trains={trains} loading={rosterLoading} onSearch={handleSearch} />}
+            </div>
+            <div className="data-caption"><span className="square-dot" /><p>{corridorData?.data_mode === 'corridor_simulation' ? corridorData.note : historical ? 'Historical profile replay · held-out trains · provenance unverified. Station averages, not live journeys or arrival times.' : 'Prototype station events. Check each report for its source, freshness, and model status.'}</p><span className="caption-mark">RAILETA / 01</span></div>
+          </div>
+        </div><div className="frame-footer"><span>{trains.length} trains in the current dataset</span><span>Read the profile. Understand the context.</span></div>
       </section>
 
-      <div className="dashboard-layer" inert={phase !== 'dashboard' ? '' : undefined} aria-hidden={phase !== 'dashboard'}>
-        <div id="train-search" ref={searchAnchorRef} className="mx-auto max-w-4xl pt-10 lg:pt-16"><TrainSearch trains={corridorData?.trains || []} onSearch={handleSearch} onAction={lockDashboard} loading={loading} />
-          <div className="dashboard-content" role="region" aria-label="Train reports" tabIndex={0}>
-          {rosterError && <p role="alert" className="mt-4 px-2 text-sm text-amber-200">{rosterError}</p>}
-          {(trainData || error) && !loading && <button type="button" className="quick-train mt-5" onClick={() => { ++searchVersion.current; setTrainData(null); setError(null); }}>Back to trains</button>}
-          {historical && <p className="mt-4 px-2 text-xs leading-relaxed text-violet-200" role="status">Historical profile replay · held-out trains · provenance unverified. These are average-delay profiles, not individual runs or the MAS–SBC pilot corridor.</p>}
-          {trainData?.data_mode === 'historical_replay' && !loading && <HistoricalReplayDetail train={trainData} />}
-          {error && <div className="mt-5 flex gap-3 rounded-2xl border border-rose-400/20 bg-rose-400/10 p-4 text-sm text-rose-100"><AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose-300" /><p>{error}</p></div>}
-          {loading && <div className="flex min-h-64 flex-col items-center justify-center text-center"><div className="loading-ring"><RefreshCw className="h-5 w-5 animate-spin text-violet-300" /></div><p className="mt-4 text-sm text-slate-400">{historical ? 'Scoring the latest held-out historical record' : 'Reading the latest movement and corridor conditions'}</p></div>}
-            {trainData && trainData.data_mode !== 'historical_replay' && !loading && <div className="mt-8 space-y-5 animate-enter"><section className="glass-panel overflow-hidden"><div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between sm:p-7"><div><div className="eyebrow mb-3"><Wifi className="h-3.5 w-3.5" /> Station-event status</div><h2 className="text-2xl font-semibold tracking-tight text-white">{trainData.train_name}</h2><p className="mt-1 text-sm text-slate-400">Train {trainData.train_number} <span className="mx-2 text-slate-700">/</span> {trainData.train_class}</p></div><div className="rounded-2xl border border-amber-300/15 bg-amber-300/[0.09] px-5 py-3 sm:text-right"><p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-200/70">Current delay</p><p className="mt-1 text-3xl font-semibold tracking-tight text-amber-200">{trainData.current_status.current_delay_minutes == null ? '—' : Math.round(trainData.current_status.current_delay_minutes)}<span className="ml-1 text-sm font-medium">{trainData.current_status.current_delay_minutes == null ? 'awaiting report' : 'min'}</span></p></div></div><div className="flex flex-col gap-3 border-t border-white/10 bg-black/10 px-5 py-4 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-7"><div className="flex items-center gap-3 text-slate-400"><span className="route-icon rounded-full p-2"><Route className="h-4 w-4" /></span><span>Last reported station <strong className="font-medium text-slate-200">{trainData.current_status.last_reported_station}</strong></span></div><span className="text-slate-500">Next <span className="text-slate-300">{trainData.current_status.next_station}</span></span></div></section><p className="px-2 text-xs text-amber-200" role="status">{trainData.data_mode === 'simulated' ? 'Simulated CRIS events' : trainData.fallback_source} · Mock ETAs and reason codes · {trainData.is_stale ? 'Stale input; last position held' : 'Recent source event'}</p><WeatherContext observations={trainData.weather_observations || []} /><RouteNavigator stations={trainData.upcoming_stations} routeGeometry={trainData.route_geometry} currentStation={trainData.current_status.last_reported_station} onAction={lockDashboard} />
-            {trainData.overall_delay_reasons?.length > 0 && <section className="glass-panel p-5 sm:p-6"><div className="mb-4 flex items-center justify-between"><div><h3 className="font-semibold text-white">What is affecting this journey</h3><p className="mt-1 text-xs text-slate-500">Factors currently included in the prediction</p></div><ArrowUpRight className="h-5 w-5 text-slate-600" /></div><div className="grid gap-2 sm:grid-cols-2">{trainData.overall_delay_reasons.map((reason, idx) => <DelayChip key={idx} reason={reason} />)}</div></section>}
-            <section><div className="mb-4 flex items-end justify-between px-1"><div><div className="eyebrow mb-2">Journey ahead</div><h3 className="text-xl font-semibold tracking-tight text-white">Upcoming arrivals</h3></div><span className="hidden items-center gap-1.5 text-xs text-slate-500 sm:flex"><Clock3 className="h-3.5 w-3.5" /> India Standard Time</span></div><div className="space-y-3">{trainData.upcoming_stations.map((station, idx) => <StationCard key={station.station_code} station={station} isNext={idx === 0} />)}</div></section><p className="px-1 text-center text-xs text-slate-600">Last updated {trainData.last_updated ? new Date(trainData.last_updated).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : 'awaiting data'} <span className="mx-1">·</span> Mock prediction window · calibration not yet validated</p></div>}
-          {!trainData && !loading && !error && <DelayedTrains historical={historical} trains={corridorData?.trains || []} coverage={corridorData?.coverage} onSearch={handleSearch} onAction={lockDashboard} />}
-          </div>
-        </div>
-      </div>
-    </main><footer className="relative z-10 border-t border-white/[0.07] px-5 py-6 text-center text-xs text-slate-600">RailETA <span className="mx-2">·</span> Event-driven ETA forecasting for Indian Railways</footer>
+      <section className="how-section" id="how-it-works" aria-labelledby="how-title"><p className="eyebrow">Less noise. More understanding.</p><RevealText id="how-title" text={'Built for the way\nyou read a journey.'} /><div className="feature-grid">
+        <article><div className="feature-top"><TrainFront /><span>01</span></div><h3>Start with your train.</h3><p>Enter a train number or pick a profile. Get the available information in one focused, readable report.</p></article>
+        <article><div className="feature-top"><BarChart3 /><span>02</span></div><h3>Look past the number.</h3><p>Compare recorded delays with model predictions. See which inputs influenced the result, and by how much.</p></article>
+        <article><div className="feature-top"><Layers /><span>03</span></div><h3>Know what’s underneath.</h3><p>Source context, uncertainty, and evaluation results stay with the data. A prediction should be something you can inspect.</p></article>
+      </div></section>
+      <section className="data-section" id="data-notes"><div><p className="eyebrow">Context is part of the picture</p><RevealText text={'Real clarity.\nHonest limits.'} /><p>{historical ? 'This demo explores recorded station-delay averages from the supplied dataset. The model is evaluated on trains it did not see during training.' : corridorData?.data_mode === 'corridor_simulation' ? 'This demo follows published Chennai–Bengaluru train routes using five years of generated journeys. LightGBM learns arrival estimates from these synthetic events, with separate calibration and test dates.' : 'This prototype explores station-event reports and mock arrival forecasts. Production forecasting depends on validated models and authorized railway feeds.'}</p></div><div className="data-notes"><div><span>01</span><p><strong>{historical ? 'Historical, not live' : 'Source comes first'}</strong>{historical ? 'Profiles describe averages. They cannot locate a train or tell you when it will arrive today.' : 'Each report identifies its source and whether the last event is stale.'}</p></div><div><span>02</span><p><strong>Predictions with context</strong>Model contributions describe associations. They are not proof of what caused a delay.</p></div><div><span>03</span><p><strong>Limitations stay visible</strong>{historical ? 'Dataset provenance is unverified. Actual test coverage and error are shown in each profile.' : corridorData?.data_mode === 'corridor_simulation' ? 'Synthetic test coverage is not proof of real-world accuracy. The harder disruption scenario shows why official operational validation is still needed.' : 'Mock arrival windows have not yet been validated against real train outcomes.'}</p></div></div></section>
+      <TrackJourney />
+    </main><footer className="site-footer"><a className="rail-brand" href="#main-content"><RailMark /><span>RAILETA</span></a><p>Arrival intelligence, thoughtfully presented.</p><div><a href={surfaceUrl('controller')}>Operations ↗</a><a href={surfaceUrl('station')}>Station board ↗</a><span>Made for the journey.</span></div></footer>
   </div>;
 }
-function DelayedTrains({ trains, coverage, onSearch, onAction, historical }) {
-  const visibleTrains = (historical ? trains : trains.filter((train) => train.delay_minutes == null || train.delay_minutes > 0)).slice(0, 6);
-  return <section className="delayed-trains-panel mt-12 glass-panel p-5 sm:p-6">
-    <div className="delayed-trains-heading"><div><div className="eyebrow mb-2"><Clock3 /> {historical ? 'Profile explorer' : 'Service watch'}</div><h3>{historical ? 'Held-out train profiles' : 'Trains running behind'}</h3><p>{historical ? 'Select a replayed train–station average to inspect its held-out prediction.' : 'Start with a train already moving through the corridor.'}</p><small className="mt-2 block text-[10px] text-slate-600">{coverage?.observed_train_count || trains.length} configured services received · roster is configurable</small></div><span className="delayed-live"><i /> {historical ? 'Historical averages on a timer' : 'Updated from station events'}</span></div>
-    <div className="delayed-trains-list">{visibleTrains.length === 0 ? <p className="text-sm text-slate-500">No train records have been received yet.</p> : visibleTrains.map((train) => <button type="button" key={train.train_number} className="delayed-train" onClick={() => { onAction?.(); onSearch(train.train_number); }}><span className="delayed-train-icon"><Train /></span><span className="delayed-train-copy"><strong>{train.train_name}</strong><small>{train.train_number} <b>·</b> {historical ? `Profile station: ${train.current_station || '—'}` : `${train.current_station || '—'} → ${train.next_station || '—'}`}</small></span><span className="delayed-train-time">{train.delay_minutes == null ? '—' : `${train.delay_minutes > 0 ? '+' : ''}${Math.round(train.delay_minutes)}`}<small>{train.delay_minutes == null ? 'unknown' : 'min'}</small></span><ArrowUpRight className="delayed-train-arrow" /></button>)}</div>
+
+function TrainRoster({ trains, historical, loading, onSearch }) {
+  const [expanded, setExpanded] = useState(false);
+  const [sort, setSort] = useState('default');
+  const sorted = [...trains];
+  if (sort === 'delay') sorted.sort((a, b) => (Number.isFinite(b.delay_minutes) ? b.delay_minutes : -Infinity) - (Number.isFinite(a.delay_minutes) ? a.delay_minutes : -Infinity));
+  if (sort === 'number') sorted.sort((a, b) => String(a.train_number).localeCompare(String(b.train_number), undefined, { numeric: true }));
+  const visible = expanded ? sorted : sorted.slice(0, 6);
+  return <section className="train-roster"><div className="roster-heading"><div><h4>{historical ? 'Held-out train profiles' : 'Available trains'}</h4><p>{historical ? 'Recorded average delays' : 'Latest reported delays'} · minutes</p></div><label className="roster-sort"><span>Sort by</span><select aria-label="Sort trains" value={sort} onChange={event => setSort(event.target.value)}><option value="default">Default order</option><option value="delay">Highest delay</option><option value="number">Train number</option></select></label></div>
+    {loading ? <p className="empty-roster" role="status">Loading available trains…</p> : !trains.length ? <p className="empty-roster">No train records available yet. You can still search by train number.</p> : <div className="roster-grid">{visible.map(train => <button className="roster-train" type="button" key={train.train_number} onClick={() => onSearch(train.train_number)}><span className="train-number">{train.train_number}</span><span className="train-copy"><strong>{train.train_name}</strong><small>{historical ? 'Profile station' : 'Last reported'} <span>{train.current_station || '—'}</span></small></span><span className="train-delay">{Number.isFinite(train.delay_minutes) ? Math.round(train.delay_minutes) : '—'}<small>min</small></span><ArrowUpRight /></button>)}</div>}
+    {!loading && trains.length > 6 && <div className="roster-footer"><span>Showing {visible.length} of {trains.length} trains</span><KiroButton variant="outline" className="utility-button" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}>{expanded ? 'Show fewer trains' : 'Show all ' + trains.length + ' trains'}<span aria-hidden="true">{expanded ? '−' : '+'}</span></KiroButton></div>}
   </section>;
 }
 
-function WeatherContext({ observations }) {
-  const visible = observations.filter((item) => ['MAS', 'KPD', 'JTJ', 'SBC'].includes(item.station_code));
-  if (!visible.length) return null;
-  const latest = visible.map((item) => item.event_time).filter(Boolean).sort().at(-1);
-  return <section className="glass-panel p-4"><div className="mb-3 flex items-center justify-between"><div className="eyebrow"><CloudSun className="h-3.5 w-3.5" /> Weather context</div><span className="text-right text-[10px] text-slate-600">Open-Meteo current model{latest ? ` · ${new Date(latest).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : ''}</span></div><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{visible.map((item) => { const data = item.data || {}; return <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-3" key={item.station_code}><strong className="block text-xs text-slate-300">{item.station_code}</strong><span className="mt-1 block text-lg font-semibold text-violet-100">{data.temperature_c == null ? '—' : `${Math.round(data.temperature_c)}°C`}</span><small className="block text-[10px] text-slate-500">{data.visibility_m == null ? 'Visibility —' : `Visibility ${(data.visibility_m / 1000).toFixed(1)} km`}</small></div>; })}</div></section>;
+function EventReport({ train }) {
+  const status = train.current_status || {};
+  return <div className="event-report animate-enter"><section className="solid-panel p-6"><div className="event-summary"><div><p className="eyebrow"><Activity /> Station-event report</p><h2>{train.train_name}</h2><p className="text-sm text-slate-400">Train {train.train_number} · {train.train_class}</p></div><div className="event-delay"><span>Current delay</span><strong>{Number.isFinite(status.current_delay_minutes) ? Math.round(status.current_delay_minutes) : '—'} <small>min</small></strong></div></div><p className="mt-6 text-sm text-slate-400">Last reported: <strong>{status.last_reported_station || '—'}</strong> <span className="mx-3">→</span> Next: <strong>{status.next_station || '—'}</strong></p></section><p className="text-xs text-slate-400">{train.data_mode === 'simulated' ? 'Simulated CRIS events' : train.fallback_source} · Mock ETAs and reason codes · {train.is_stale ? 'Stale input; last position held' : 'Recent source event'}</p>
+    <JourneyProgress train={train} />
+    <details className="report-details solid-panel"><summary><span>View route map</span><span aria-hidden="true">+</span></summary><RouteNavigator stations={train.upcoming_stations || []} routeGeometry={train.route_geometry} currentStation={status.last_reported_station} /></details>
+    {(train.weather_observations || []).length > 0 && <section className="solid-panel p-5"><p className="eyebrow mb-4">Weather context · Open-Meteo model</p><div className="grid grid-cols-2 gap-4 sm:grid-cols-4">{train.weather_observations.filter(item => ['MAS', 'KPD', 'JTJ', 'SBC'].includes(item.station_code)).map(item => <div key={item.station_code}><p className="text-sm text-slate-400">{item.station_code}</p><strong className="text-xl text-violet-200">{item.data?.temperature_c == null ? '—' : `${Math.round(item.data.temperature_c)}°C`}</strong><p className="text-xs text-slate-500">{item.data?.visibility_m == null ? 'Visibility —' : `Visibility ${(item.data.visibility_m / 1000).toFixed(1)} km`}</p></div>)}</div></section>}
+    {!!train.overall_delay_reasons?.length && <section className="solid-panel p-5"><h3 className="mb-4">What is affecting this journey</h3><div className="grid gap-3 sm:grid-cols-2">{train.overall_delay_reasons.map((reason, index) => <DelayChip key={index} reason={reason} />)}</div></section>}
+    <h3 className="text-xl">Upcoming arrivals</h3>{(train.upcoming_stations || []).map((station, index) => <StationCard key={station.station_code} station={station} isNext={index === 0} />)}<p className="text-xs text-slate-500">Last updated {train.last_updated ? new Date(train.last_updated).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : 'awaiting data'} · Mock prediction window · calibration not yet validated</p>
+  </div>;
 }
-export default App;

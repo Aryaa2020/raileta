@@ -11,7 +11,7 @@ from raileta_api.models import TrainEvent, FeedSnapshot
 from raileta_api.services import resolve_train_state
 
 
-@override_settings(RAILETA_DATA_ADAPTER="simulated", RAILETA_COLLECTOR_INTERVAL_SECONDS=30)
+@override_settings(RAILETA_DATA_ADAPTER="simulated", RAILETA_COLLECTOR_INTERVAL_SECONDS=30, RAILETA_TRAIN_NUMBERS=('12007','12639','12607','22625','12609'))
 class RailEtaApiTests(TestCase):
     def test_eta_contract_has_calibrated_window_and_monotonic_bounds(self):
         now = timezone.now()

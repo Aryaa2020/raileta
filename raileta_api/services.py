@@ -455,6 +455,9 @@ def _reason_codes(
 
 
 def forecast_train(train_number: str, persist=False) -> Dict[str, Any]:
+    if settings.RAILETA_DATA_ADAPTER == 'corridor_simulation':
+        from .corridor_replay import forecast
+        return forecast(train_number)
     if settings.RAILETA_DATA_ADAPTER == "historical_profiles":
         from .profile_replay import profile_forecast
         return profile_forecast(train_number)
@@ -612,6 +615,9 @@ def forecast_train(train_number: str, persist=False) -> Dict[str, Any]:
 
 
 def corridor_status(corridor_name: str) -> Dict[str, Any]:
+    if settings.RAILETA_DATA_ADAPTER == 'corridor_simulation':
+        from .corridor_replay import corridor
+        return corridor(corridor_name)
     if settings.RAILETA_DATA_ADAPTER == "historical_profiles":
         from .profile_replay import profile_corridor
         return profile_corridor()
@@ -702,6 +708,9 @@ def corridor_status(corridor_name: str) -> Dict[str, Any]:
 
 
 def station_departures(station_code: str, limit: int = 10) -> Dict[str, Any]:
+    if settings.RAILETA_DATA_ADAPTER == 'corridor_simulation':
+        from .corridor_replay import departures
+        return departures(station_code, limit)
     if settings.RAILETA_DATA_ADAPTER == "historical_profiles":
         from .profile_replay import profile_departures
         return profile_departures(station_code)

@@ -96,12 +96,15 @@ if TESTING:
     CELERY_BROKER_URL = "memory://"
     CELERY_RESULT_BACKEND = "cache+memory://"
 CELERY_BEAT_SCHEDULE = {
+    'dated-journey-sweep': {'task': 'raileta.sweep_journeys', 'schedule': 60.0},
     # Keep the scheduled worker aligned with the local collector cadence.
     "ingest-data-sources": {"task": "raileta.ingest_data_sources", "schedule": float(os.getenv("RAILETA_COLLECTOR_INTERVAL_SECONDS", "30"))},
     "nightly-retrain": {"task": "raileta.nightly_retrain", "schedule": 86400.0},
 }
 RAILETA_CONFIDENCE_LEVEL = float(os.getenv("RAILETA_CONFIDENCE_LEVEL", "0.80"))
 RAILETA_MODEL_VERSION = os.getenv("RAILETA_MODEL_VERSION", "demo-event-v1")
+RAILETA_JOURNEY_INGEST_TOKEN = os.getenv('RAILETA_JOURNEY_INGEST_TOKEN', '')
+RAILETA_JOURNEY_RETRAIN_ENABLED = os.getenv('RAILETA_JOURNEY_RETRAIN_ENABLED', 'false').lower() == 'true'
 PUBLIC_NTES_URL = os.getenv("PUBLIC_NTES_URL", "")
 IMD_WEATHER_URL = os.getenv("IMD_WEATHER_URL", "")
 OPEN_METEO_URL = os.getenv("OPEN_METEO_URL", "https://api.open-meteo.com/v1/forecast")
@@ -117,6 +120,9 @@ RAILETA_TRAIN_NUMBERS = tuple(
 )
 RAILETA_COLLECTOR_INTERVAL_SECONDS = int(os.getenv("RAILETA_COLLECTOR_INTERVAL_SECONDS", "30"))
 RAILETA_DATA_ADAPTER = os.getenv("RAILETA_DATA_ADAPTER", "historical_profiles").strip().lower()
+if RAILETA_DATA_ADAPTER == 'corridor_simulation' and not TESTING:
+    # Isolate the new demo from any queued legacy collector/reforecast work.
+    CELERY_TASK_DEFAULT_QUEUE = 'raileta-synthetic'
 RAILETA_HISTORICAL_MODEL_DIR = str(BASE_DIR / os.getenv("RAILETA_HISTORICAL_MODEL_DIR", "data/models/etrain-profiles-v1"))
 RAILETA_REPLAY_INTERVAL_SECONDS = max(1, int(os.getenv("RAILETA_REPLAY_INTERVAL_SECONDS", "15")))
 if RAILETA_DATA_ADAPTER == "historical_profiles":

@@ -25,6 +25,12 @@ def api_root(request):
 
 @require_http_methods(["GET"])
 def health(request):
+    if settings.RAILETA_DATA_ADAPTER == 'corridor_simulation':
+        from .corridor_replay import clock
+        from .journey_models import ModelRelease, SimulationSession
+        release = ModelRelease.objects.filter(mode='simulation', active=True).first()
+        session = SimulationSession.objects.filter(pk='mas-sbc').first()
+        return JsonResponse(dict(status='healthy' if session and session.last_tick and (timezone.now()-session.last_tick).total_seconds()<180 else 'degraded',data_mode='corridor_simulation',model_status='trained_synthetic_only' if release else 'baseline_no_model',model_version=release.version if release else None,metrics=release.metrics if release else None,scenario_time=clock(),last_collector_tick=session.last_tick if session else None,note='Five-year synthetic corpus. Not an official feed or real-world accuracy estimate.'))
     if settings.RAILETA_DATA_ADAPTER == "historical_profiles":
         from .profile_replay import profile_health
         return JsonResponse(profile_health())
@@ -109,6 +115,18 @@ def ingest_event(request):
         return JsonResponse({"detail": str(exc), "type": "ValidationError"}, status=400)
 
     from .event_store import store_event, MOVEMENT_TYPES
+    if event.payload.get('journey_id'):
+        import secrets
+        from django.core.exceptions import ObjectDoesNotExist, ValidationError
+        from .journeys import record_canonical
+        token = getattr(settings, 'RAILETA_JOURNEY_INGEST_TOKEN', '')
+        if not token or not secrets.compare_digest(request.headers.get('Authorization', ''), 'Bearer ' + token):
+            return JsonResponse({'detail': 'Dated ingestion requires a configured trusted-adapter token'}, status=403)
+        try:
+            record, created = record_canonical(event)
+            return JsonResponse({'event_id': record.event_id, 'accepted': record.accepted, 'deduplicated': not created, 'journey_id': str(record.journey_id)}, status=201 if created else 200)
+        except (ValueError, KeyError, ObjectDoesNotExist, ValidationError) as exc:
+            return JsonResponse({'detail': str(exc)}, status=400)
     record, created = store_event(event)
     if not created:
         return JsonResponse({"event_id": event.event_id, "accepted": False, "deduplicated": True})

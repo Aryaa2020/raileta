@@ -1,0 +1,214 @@
+{
+  "version": "mas-sbc-synthetic-v1",
+  "mode": "simulation",
+  "target": "dated_arrival_delay_minutes",
+  "features": [
+    "current_delay",
+    "remaining_km",
+    "remaining_stops",
+    "scheduled_minutes",
+    "scheduled_running_minutes",
+    "scheduled_halt_minutes",
+    "recovery_minutes",
+    "junctions",
+    "mean_tracks",
+    "single_track_km",
+    "priority",
+    "condition_severity",
+    "restriction_speed_kmph",
+    "restriction_count",
+    "block_count",
+    "congestion_count",
+    "hour",
+    "weekday",
+    "delay_trend",
+    "average_section_speed",
+    "trains_ahead",
+    "junction_occupancy",
+    "precedence_risk",
+    "rain_mm",
+    "visibility_m",
+    "month",
+    "gps_age_seconds",
+    "report_latency_seconds"
+  ],
+  "conformal_correction": 0.5110539811649788,
+  "monthly_corrections": {
+    "1": 0.6289322857411568,
+    "2": 0.7452633073513,
+    "3": 0.7037643533687612,
+    "4": 0.06770680254543082,
+    "5": 0.24249434577896678,
+    "6": 0.0,
+    "7": 0.6844423126630463,
+    "8": 0.7940439790930967,
+    "9": 0.6838417820926246,
+    "10": 0.5553273766162032,
+    "11": 0.7454566147381406,
+    "12": 0.5220009565042814
+  },
+  "metrics": {
+    "samples": 66388,
+    "mae_minutes": 4.689983119604378,
+    "baseline_mae_minutes": 5.99662092469815,
+    "coverage_percent": 80.14098933542206,
+    "mean_window_minutes": 12.626983505323725,
+    "mode": "simulation",
+    "target_coverage_percent": 80,
+    "evaluation_scope": "held-out synthetic dates; NOT real-world validation",
+    "by_lead_time": {
+      "0\u201330 min": {
+        "samples": 5135,
+        "mae_minutes": 2.1719386503903975,
+        "baseline_mae_minutes": 2.2235437302569965,
+        "coverage_percent": 85.3748782862707,
+        "mean_window_minutes": 7.989585053183515
+      },
+      "30\u201360 min": {
+        "samples": 9369,
+        "mae_minutes": 2.7492364894486157,
+        "baseline_mae_minutes": 3.2143114555168633,
+        "coverage_percent": 83.84032447433025,
+        "mean_window_minutes": 9.54769146651446
+      },
+      "1\u20132 hours": {
+        "samples": 16907,
+        "mae_minutes": 3.7263125978532954,
+        "baseline_mae_minutes": 4.461012073980629,
+        "coverage_percent": 82.26178505944284,
+        "mean_window_minutes": 11.565394337352174
+      },
+      "2+ hours": {
+        "samples": 34977,
+        "mae_minutes": 6.045324945335249,
+        "baseline_mae_minutes": 8.038098113973843,
+        "coverage_percent": 77.35654858907282,
+        "mean_window_minutes": 14.645773459471851
+      }
+    },
+    "by_month": {
+      "1": {
+        "samples": 5544,
+        "mae_minutes": 3.688003495408345,
+        "baseline_mae_minutes": 5.1665252007272935,
+        "coverage_percent": 82.77417027417027,
+        "mean_window_minutes": 12.851974056575823
+      },
+      "2": {
+        "samples": 5049,
+        "mae_minutes": 5.235452967933082,
+        "baseline_mae_minutes": 6.369976529170967,
+        "coverage_percent": 82.96692414339472,
+        "mean_window_minutes": 12.783974783500838
+      },
+      "3": {
+        "samples": 5706,
+        "mae_minutes": 4.891321928269099,
+        "baseline_mae_minutes": 5.455110390005879,
+        "coverage_percent": 80.16123378899405,
+        "mean_window_minutes": 12.494937820290827
+      },
+      "4": {
+        "samples": 5463,
+        "mae_minutes": 4.293250301083512,
+        "baseline_mae_minutes": 5.499782314011155,
+        "coverage_percent": 78.61980596741716,
+        "mean_window_minutes": 11.160340260587752
+      },
+      "5": {
+        "samples": 5649,
+        "mae_minutes": 4.116619707153916,
+        "baseline_mae_minutes": 4.8770283771787595,
+        "coverage_percent": 79.4653921047973,
+        "mean_window_minutes": 11.719543844172462
+      },
+      "6": {
+        "samples": 5393,
+        "mae_minutes": 5.435153687045407,
+        "baseline_mae_minutes": 7.304003983118413,
+        "coverage_percent": 74.91192286297051,
+        "mean_window_minutes": 12.69739294907341
+      },
+      "7": {
+        "samples": 5667,
+        "mae_minutes": 4.6052484672451,
+        "baseline_mae_minutes": 5.942698268746795,
+        "coverage_percent": 81.0834656784895,
+        "mean_window_minutes": 13.07353576474709
+      },
+      "8": {
+        "samples": 5546,
+        "mae_minutes": 4.505610483730048,
+        "baseline_mae_minutes": 5.707597276510325,
+        "coverage_percent": 84.7818247385503,
+        "mean_window_minutes": 12.822009204270081
+      },
+      "9": {
+        "samples": 5420,
+        "mae_minutes": 4.131422476363777,
+        "baseline_mae_minutes": 5.866559434441399,
+        "coverage_percent": 80.75645756457564,
+        "mean_window_minutes": 13.169836218106319
+      },
+      "10": {
+        "samples": 5616,
+        "mae_minutes": 5.964012174232182,
+        "baseline_mae_minutes": 7.213332603293003,
+        "coverage_percent": 75.64102564102564,
+        "mean_window_minutes": 13.189083944685391
+      },
+      "11": {
+        "samples": 5530,
+        "mae_minutes": 5.15315961662888,
+        "baseline_mae_minutes": 6.497621582363888,
+        "coverage_percent": 78.08318264014467,
+        "mean_window_minutes": 13.292495318964727
+      },
+      "12": {
+        "samples": 5805,
+        "mae_minutes": 4.320205749216924,
+        "baseline_mae_minutes": 6.135256558145572,
+        "coverage_percent": 82.48062015503876,
+        "mean_window_minutes": 12.296339987692997
+      }
+    },
+    "stress_scenario": {
+      "samples": 16343,
+      "mae_minutes": 7.855996771720281,
+      "baseline_mae_minutes": 8.697096357608764,
+      "coverage_percent": 72.22664137551246,
+      "note": "Different seed, increased unobserved shocks, blocks and rain; not used for fitting or calibration"
+    }
+  },
+  "split_dates": [
+    [
+      "2021-01-01",
+      "2023-12-31"
+    ],
+    [
+      "2024-01-01",
+      "2024-12-30"
+    ],
+    [
+      "2024-12-31",
+      "2025-12-31"
+    ]
+  ],
+  "split_sizes": [
+    198419,
+    66254,
+    66388
+  ],
+  "corpus_manifest_sha256": "6af9779f6ac2558bccebd7babb9b16514e755622c716ed1e8779865beb74b4dd",
+  "corpus_counts": {
+    "journeys": 7043,
+    "samples": 331061,
+    "feed_events": 4764228,
+    "gps_pings": 4610324
+  },
+  "hashes": {
+    "q10": "797e8124f1168e8137bd6652d7774d9b36fdd58bce07598a7aa33abdc94efd55",
+    "q50": "3268d9c4d033511fe3239b58d372bf6bdf7e9bfb885eca4a7691515ad42c253d",
+    "q90": "84cb55e01e96e31d5050576248792056aea970197238f2e2e764a1bfb4872747"
+  }
+}
