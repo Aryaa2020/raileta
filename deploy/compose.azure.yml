@@ -93,8 +93,6 @@ services:
     ports: ["80:80", "443:443"]
     environment:
       SITE_ADDRESS: ${SITE_ADDRESS:?Set host}
-      TEAM_USERNAME: ${TEAM_USERNAME:?Set team username}
-      TEAM_PASSWORD_HASH: ${TEAM_PASSWORD_HASH:?Set team password hash}
     volumes: [caddydata:/data, caddyconfig:/config]
     depends_on:
       api: {condition: service_healthy}

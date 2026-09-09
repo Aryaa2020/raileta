@@ -2,8 +2,8 @@
 
 This configuration serves the existing passenger dashboard at `/`, controller at
 `/controller/`, and station board at `/station/`. All use the same-origin API.
-Caddy protects all three dashboards and the API with a shared team login and
-obtains HTTPS certificates when public DNS and inbound TCP 80/443 are available.
+Caddy serves all three dashboards and the API publicly, and obtains HTTPS
+certificates when public DNS and inbound TCP 80/443 are available.
 PostgreSQL, Redis and the backend have no host-published ports.
 
 ## Initial setup
@@ -24,10 +24,10 @@ sudo docker compose --env-file .env.azure -f deploy/compose.azure.yml run --rm -
 sudo docker compose --env-file .env.azure -f deploy/compose.azure.yml up -d --no-build
 ```
 
-The initializer refuses to overwrite existing credentials. `.env.azure` and
-`team-access.txt` are private, ignored files. Share the team login privately;
-never publish these files or the SSH private key. Shared authentication does not
-provide individual user accounts or per-person audit trails.
+The initializer refuses to overwrite existing server secrets. `.env.azure` is a
+private, ignored file; never publish it or the SSH private key. Public access is
+intentional for this demo, so add an identity-aware access layer before using
+operational or private data.
 
 ## Operations
 

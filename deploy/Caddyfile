@@ -1,8 +1,5 @@
 {$SITE_ADDRESS} {
     encode zstd gzip
-    basic_auth {
-        {$TEAM_USERNAME} {$TEAM_PASSWORD_HASH}
-    }
     header {
         X-Content-Type-Options nosniff
         X-Frame-Options DENY
@@ -10,11 +7,7 @@
         -Server
     }
     handle /api/* {
-        reverse_proxy api:8000 {
-            # Authentication was checked at the edge. Do not ask DRF to
-            # authenticate this shared team login as a Django database user.
-            header_up -Authorization
-        }
+        reverse_proxy api:8000
     }
     redir /controller /controller/ 308
     redir /station /station/ 308

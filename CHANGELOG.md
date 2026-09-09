@@ -5,6 +5,14 @@ Git commits preserve exact file history; milestone tags identify saved releases.
 
 ## Unreleased
 
+## 0.2.1-demo — 2026-09-09
+
+- Removed the shared username/password gate from the public Azure demo. The
+  passenger, controller, station and same-origin API routes are now reachable
+  without a login prompt; private server secrets remain off-repository.
+- Updated the Caddy deployment, clean-server secret initializer and public smoke
+  test so future releases preserve the public-access behavior.
+
 ## 0.2.0-demo — 2026-09-09
 
 - Rebuilt all three dashboards with a shared black/purple theme, simplified

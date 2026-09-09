@@ -1,5 +1,3 @@
-// Credentials are read locally, never logged or embedded in URLs.
-const fs = require('node:fs');
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright');
 
@@ -13,12 +11,10 @@ const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright'
   };
   const browser = await chromium.launch({ headless: true, channel: 'msedge' });
   try {
-    const anonymous = await browser.newContext();
+    const context = await browser.newContext({ reducedMotion: 'reduce' });
     for (const path of ['/', '/controller/', '/station/', '/api/v1/health']) {
-      assert.equal((await anonymous.request.get(base + path)).status(), 401, 'Team login remains required');
+      assert.equal((await context.request.get(base + path)).status(), 200, 'Public route should load without login');
     }
-    await anonymous.close();
-    const context = await browser.newContext({ httpCredentials, reducedMotion: 'reduce' });
     const errors = [];
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(error.message));
@@ -60,7 +56,7 @@ const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright'
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Controller fits viewport');
     }
     assert.deepEqual(errors, [], 'No browser runtime errors');
-    console.log('PASS: HTTPS/authentication, simulation model/roster, same-origin navigation and desktop/mobile journey dashboards.');
+    console.log('PASS: public HTTPS dashboards/API, simulation model/roster, same-origin navigation and desktop/mobile journey dashboards.');
   } finally {
     await browser.close();
   }
