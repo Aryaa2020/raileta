@@ -5,6 +5,12 @@ Git commits preserve exact file history; milestone tags identify saved releases.
 
 ## Unreleased
 
+## 0.2.3-demo — 2026-09-09
+
+- Restored visible delay factors immediately below the passenger arrival estimate.
+  Factors follow the selected station, show positive and negative model effects,
+  and remain distinct from confirmed causes and the total scheduled delay.
+
 ## 0.2.2-demo — 2026-09-09
 
 - Bundled Ubuntu fonts across the shared theme. Opening a train scrolls to the

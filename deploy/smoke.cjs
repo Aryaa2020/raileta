@@ -53,6 +53,13 @@ const { chromium } = require(process.env.RAILETA_PLAYWRIGHT_PATH || 'playwright'
       });
       assert.ok(await page.evaluate(() => document.fonts.check('400 16px Ubuntu') && getComputedStyle(document.querySelector('.pj-arrival-time')).fontFamily.startsWith('Ubuntu')), 'Bundled Ubuntu font loads');
       assert.equal(await page.locator('.pj-route li').count(), 5);
+      const factors = page.getByRole('region', { name: 'Delay explanations' });
+      await factors.waitFor();
+      const destinationReasons = report.journey.stops.at(-1).forecast.reasons.filter(r => r.description && Number.isFinite(r.minutes)).slice(0, 3);
+      assert.ok(destinationReasons.length > 0, 'Demo destination has model explanations');
+      for (const reason of destinationReasons) {
+        assert.ok((await factors.innerText()).includes(reason.description), 'Visible factors match selected destination forecast');
+      }
       await page.getByRole('combobox', { name: 'Your arrival station' }).selectOption('1');
       assert.equal(await page.locator('.pj-route .is-selected .pj-stop-copy strong').innerText(), 'Katpadi Junction');
       await page.getByText('Full timetable & forecast history', { exact: true }).click();

@@ -18,6 +18,7 @@ export default function PassengerJourney({ journey }) {
   const scheduled = stop.scheduled_arrival || stop.scheduled_departure;
   const shown = actual || expected;
   const window = stop.forecast;
+  const reasons = (Array.isArray(window?.reasons) ? window.reasons : []).filter(reason => reason.description && Number.isFinite(reason.minutes)).slice(0, 3);
   const sameWindowDay = window?.confidence_lower && day(window.confidence_lower) === day(window.confidence_upper) && day(window.confidence_lower) === day(expected);
   const difference = shown && scheduled ? Math.round((new Date(shown) - new Date(scheduled)) / 60000) : null;
   const timing = difference === null ? '' : difference === 0 ? 'On time' : `${Math.abs(difference)} min ${difference > 0 ? 'later' : 'earlier'} than scheduled`;
@@ -32,6 +33,10 @@ export default function PassengerJourney({ journey }) {
       <p className="pj-scheduled">Scheduled {stop.scheduled_arrival ? 'arrival' : 'departure'}: {clock(scheduled)}{scheduled && `, ${day(scheduled)}`}{timing && <span>{timing}</span>}</p>
       {!shown && <p>The timetable is shown above. A prediction will appear when a station report is available.</p>}
       {expected && <p className="pj-estimate-note">An estimate, not a guaranteed arrival time.</p>}
+      {expected && <section className="pj-reasons" aria-label="Delay explanations">
+        <h3>What’s affecting this arrival?</h3>
+        {reasons.length ? <><ul>{reasons.map((reason, index) => <li key={reason.feature || index}><span>{reason.description}</span><span className={`pj-reason-impact ${reason.minutes < 0 ? 'is-earlier' : ''}`}><strong>{reason.minutes > 0 ? '+' : reason.minutes < 0 ? '−' : ''}{Math.abs(reason.minutes) > 0 && Math.abs(reason.minutes) < .1 ? '<0.1' : Math.abs(reason.minutes).toFixed(1)} min</strong><small>{reason.minutes > 0 ? 'Later estimate' : reason.minutes < 0 ? 'Earlier estimate' : 'No change'}</small></span></li>)}</ul><p>Model factors relative to its usual estimate, not confirmed causes. These don’t add up to the delay above.</p></> : <p>No factor breakdown is available for this estimate yet.</p>}
+      </section>}
       </div>
       {journey.is_stale && journey.status !== 'completed' && <p className="pj-stale">Waiting for a newer report. Estimates may have changed. Last report: {clock(journey.last_reported_time)}{journey.last_reported_time && `, ${day(journey.last_reported_time)}`} IST.</p>}
     </div><section className="pj-route" aria-label="Journey stops"><div className="pj-route-heading"><h3>Your route</h3><p>Choose a stop to see its arrival time.</p></div><ol>{stops.map((item, index) => {
